@@ -1,0 +1,36 @@
+&project
+  project_rootname = 'naca64a010_01'
+/
+&governing_equations
+  viscous_terms = "inviscid"
+  flow_solver = "sfe"
+/
+&raw_grid
+  grid_format = 'aflr3'
+  data_format = 'stream'
+/
+&reference_physical_properties
+    angle_of_attack = 0.0
+    mach_number = 0.7
+    temperature = 298.15
+    temperature_units = "Kelvin"
+/
+&code_run_control
+  steps = 20
+  stopping_tolerance = 1.0e-14
+  restart_read = 'on_nohistorykept'
+/
+&global
+  moving_grid = .true.
+  ignore_negative_volumes=.true.
+/
+&nonlinear_solver_parameters
+  time_accuracy = "lfd"
+/
+&elasticity_gmres
+  !linear_solver = 'slat_gmres'
+  tol = 1e-15
+  tol_abs = 1e-15
+  nsearch = 300
+  !nrestarts = 50
+/

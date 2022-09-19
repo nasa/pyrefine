@@ -1,0 +1,87 @@
+&project
+  project_rootname = 'om6ste01'
+/
+&governing_equations
+sfe_flag =.true.
+/
+
+&special_parameters
+  distance_from_file = ''
+/
+&flow_initialization
+  import_from = ''
+/
+&raw_grid
+  grid_format = 'aflr3'
+  data_format = 'stream'
+/
+&force_moment_integ_properties
+  area_reference  = 1.15315084119231
+  x_moment_length = 0.801672958512342
+  y_moment_length = 1.47601797621980
+/
+&reference_physical_properties
+  mach_number       = 0.84
+  angle_of_attack   = 3.06
+  reynolds_number   = 14.6e6
+/
+&nonlinear_solver_parameters
+  schedule_iteration =  1     50
+  schedule_cfl       = 1.0 10.0
+  schedule_cflturb   = 1.0 5.0
+/
+&code_run_control
+  steps              = 4000
+  stopping_tolerance = 1.0e-11
+  restart_read       = 'off'
+/
+
+&global
+  boundary_animation_freq=-1
+  volume_animation_freq=-1
+/
+
+&boundary_output_variables
+  number_of_boundaries = -1 ! compute from following list
+  boundary_list        = '1-12'
+  mach    = .true.
+  cp      = .true.
+  mu_t    = .true.
+  res1    = .true.
+  turres1 = .true.
+  yplus   = .true.
+  cf_x    = .true.
+  cf_y    = .true.
+  cf_z    = .true.
+/
+&volume_output_variables
+ export_to='solb'
+ primitive_variables = .true.
+ turb1 = .true.
+ x = .false.
+ y = .false.
+ z = .false.
+/
+
+&sampling_output_variables
+ rho = .true.
+ u = .true.
+ v = .true.
+ w = .true.
+ p = .true.
+ entropy = .true.
+ mach = .true.
+ temperature = .true.
+ q_criterion = .true.
+/
+
+&sampling_parameters
+    number_of_geometries = 1
+    type_of_geometry(1) = 'quad'
+      sampling_frequency(1)=-1
+      label(1) = 'x1'
+      corner1(:,1)= 1., 0., -1.
+      corner2(:,1)= 1., 2., -1.
+      corner3(:,1)= 1., 2.,  1.
+      corner4(:,1)= 1., 0.,  1.
+/

@@ -1,0 +1,67 @@
+&project
+  project_rootname = 'pacman01'
+/
+&raw_grid
+  grid_format = 'aflr3'
+  data_format = 'stream'
+/
+&governing_equations
+  viscous_terms = 'laminar'
+/
+&reference_physical_properties
+  mach_number       = 2.0
+  angle_of_attack   = 0.0
+  reynolds_number   = 1.0e6
+/
+&inviscid_flux_method
+  flux_limiter = 'barth'
+/
+&nonlinear_solver_parameters
+  time_accuracy = '2ndorderOPT'
+  time_step_nondim   = 0.0025
+  subiterations = 10
+  schedule_cfl = 1  10
+  schedule_cfl = 50.0 50.0
+/
+&code_run_control
+  steps              = 8000
+  stopping_tolerance = 1.0e-8
+  restart_read       = 'off'
+/
+&global
+  boundary_animation_freq=10
+  volume_animation_freq = -1
+  moving_grid = .true.
+/
+&elasticity_gmres
+  deform_from_initial_mesh = .false.
+  elasticity = 2
+/
+
+&boundary_output_variables
+  number_of_boundaries = -1 ! compute from following list
+  boundary_list        = '12'
+  y=.false.
+  v=.false.
+  mach=.true.
+  cp=.true.
+/
+
+&volume_output_variables
+ export_to='solb'
+ x = .false.
+ y = .false.
+ z = .false.
+/
+&sampling_parameters
+ number_of_geometries = 1
+ sampling_frequency(1) = 10
+ type_of_geometry(1) = 'partition'
+ export_to(1) = 'solb'
+ variable_list(1) = 'x,y,z,mach'
+/
+
+&boundary_conditions
+  total_pressure_ratio(7)    = 50
+  total_temperature_ratio(7) = 10
+/

@@ -1,0 +1,20 @@
+&body_definitions
+  n_moving_bodies = 1
+  body_name(1) = 'pacman'
+  n_defining_bndry(1) = 7
+  defining_bndry(1,1) = 5
+  defining_bndry(2,1) = 6
+  defining_bndry(3,1) = 7
+  defining_bndry(4,1) = 8
+  defining_bndry(5,1) = 9
+  defining_bndry(6,1) = 10
+  defining_bndry(7,1) = 11
+  motion_driver(1) = 'forced'
+  mesh_movement(1) = 'deform'
+/
+
+&forced_motion
+  rotate(1) = 2
+  rotation_freq(1) = 0.01
+  rotation_amplitude(1) = 45
+/

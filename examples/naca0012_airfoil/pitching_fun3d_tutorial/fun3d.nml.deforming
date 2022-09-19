@@ -1,0 +1,71 @@
+&project
+  project_rootname = 'naca0012_01'
+/
+&flow_initialization
+  import_from = ''
+/
+&special_parameters
+  distance_from_file = 'naca0012_01-distance.solb'
+  large_angle_fix = "off"
+/
+&global
+  moving_grid = .true.
+  boundary_animation_freq = 50
+  volume_animation_freq = -1
+/
+&raw_grid
+  grid_format = 'aflr3'
+  data_format = 'stream'
+/
+&reference_physical_properties
+  angle_of_attack   = 2.89
+  mach_number       = 0.6
+  reynolds_number   = 4800000.0
+  temperature       = 520.0
+  temperature_units = 'Rankine'
+/
+&nonlinear_solver_parameters
+  time_accuracy        = '2ndorderOPT'
+  time_step_nondim     = 0.064801842  ! 1000 steps/cycle
+  subiterations        = 30
+  schedule_cfl         = 50.0  50.0
+  schedule_cflturb     = 30.0  30.0
+/
+&linear_solver_parameters
+  meanflow_sweeps   = 50
+  turbulence_sweeps = 30
+/
+&code_run_control
+  steps = 2000
+  restart_read = "off"
+/
+&force_moment_integ_properties
+  x_moment_center = 0.25
+/
+&boundary_output_variables
+  number_of_boundaries = 1
+  boundary_list = '6'
+  y = .false.
+  v = .false.
+  turb1 = .true.
+/
+&volume_output_variables
+ export_to='solb'
+ x = .false.
+ y = .false.
+ z = .false.
+ turb1 = .true.
+/
+&sampling_output_variables
+  primitive_variables = .false.
+  y                   = .false.
+  cp                  = .true.
+  mach                = .true.
+/
+&sampling_parameters
+ number_of_geometries = 1
+ sampling_frequency(1) = 50
+ type_of_geometry(1) = 'partition'
+ export_to(1) = 'solb'
+ variable_list(1) = 'x,y,z,mach'
+/

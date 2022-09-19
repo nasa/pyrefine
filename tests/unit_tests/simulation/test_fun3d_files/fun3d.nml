@@ -1,0 +1,14 @@
+&project
+  project_rootname = 'sphere01'
+/
+&special_parameters
+  distance_from_file = ''
+/
+&flow_initialization
+  import_from = ''
+/
+
+&code_run_control
+  use_openmp = .false.
+  grid_coloring = .false.
+/

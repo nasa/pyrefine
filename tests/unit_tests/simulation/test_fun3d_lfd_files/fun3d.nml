@@ -1,0 +1,16 @@
+&project
+project_rootname = 'papa04'
+/
+&special_parameters
+distance_from_file = ''
+/
+&flow_initialization
+import_from = ''
+/
+&reference_physical_properties
+angle_of_attack =     5.
+/
+&code_run_control
+use_openmp = .false.
+grid_coloring = .false.
+/

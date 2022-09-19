@@ -1,0 +1,53 @@
+&project
+  project_rootname = 'naca64a010_01'
+/
+&flow_initialization
+  import_from = ''
+/
+&special_parameters
+  distance_from_file = ''
+/
+&governing_equations
+  viscous_terms = "inviscid"
+  flow_solver = "sfe"
+/
+&raw_grid
+  grid_format = 'aflr3'
+  data_format = 'stream'
+/
+&reference_physical_properties
+    angle_of_attack = 0.0
+    mach_number = 0.7
+    temperature = 298.15
+    temperature_units = "Kelvin"
+/
+&code_run_control
+  steps = 300
+  stopping_tolerance = 1.0e-14
+  restart_read = 'off'
+/
+&global
+  boundary_animation_freq = -1
+  volume_animation_freq = -1
+/
+&boundary_output_variables
+  number_of_boundaries = -1 ! compute from following list
+  boundary_list        = '4'
+  mach                 = .true.
+  cp                   = .true.
+  turb1                = .true.
+/
+&volume_output_variables
+ export_to='solb'
+ primitive_variables = .true.
+ x = .false.
+ y = .false.
+ z = .false.
+/
+
+&massoud_output
+  n_bodies = 1
+  nbndry(1) = 1
+  boundary_list = '3'
+  massoud_output_freq = -1
+/

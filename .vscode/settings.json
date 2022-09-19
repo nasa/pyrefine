@@ -1,0 +1,18 @@
+{
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.testing.cwd": "${workspaceFolder}",
+    "python.formatting.autopep8Args": [
+        "--max-line-length",
+        "120",
+        "--experimental"
+    ],
+    "python.analysis.useImportHeuristic": true,
+    "python.formatting.provider": "autopep8",
+    "editor.formatOnSave": true,
+    "esbonio.sphinx.confDir": "${workspaceFolder}/docs/source",
+}

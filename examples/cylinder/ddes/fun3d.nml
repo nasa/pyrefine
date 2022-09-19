@@ -1,0 +1,84 @@
+&project
+  project_rootname = 'cylinder01'
+/
+
+&flow_initialization
+  import_from = ''
+/
+
+&special_parameters
+  distance_from_file = 'cylinder01-distance.solb'
+  large_angle_fix = 'on'
+/
+
+&raw_grid
+  grid_format   = 'aflr3'
+  data_format   = 'stream'
+/
+
+&governing_equations
+  eqn_type = "compressible"
+  viscous_terms = "turbulent"
+/
+
+&reference_physical_properties
+  mach_number = 0.1
+  reynolds_number =  5000000
+  temperature =    273.0
+/
+
+&inviscid_flux_method
+  flux_construction = "ldroe"
+/
+
+&turbulent_diffusion_models
+  turbulence_model = "des"
+/
+
+&nonlinear_solver_parameters
+  time_accuracy = "2ndorderOPT"
+  time_step_nondim        = 0.15
+  subiterations           = 20
+  schedule_iteration(1:2) = 1     100
+  schedule_cfl(1:2)       = 50.0  50.0
+  schedule_cflturb(1:2)   = 5.0   5.0
+/
+&code_run_control
+  steps              =   1000
+  restart_read =   "off"
+/
+
+&global
+  boundary_animation_freq = 25
+  volume_animation_freq = -1
+/
+
+&boundary_output_variables
+  number_of_boundaries = -1 ! compute from following list
+  boundary_list        = '1,2,3,4,5,6'
+  primitive_variables = .true.,
+  cp = .true.,
+  skinfr = .true.,
+/
+
+&spalart
+  sarc=.true.
+  ddes=.true.
+/
+
+&volume_output_variables
+  export_to='solb'
+  primitive_variables=.true.
+  turb1 = .true.
+  x = .false.
+  y = .false.
+  z = .false.
+/
+
+&sampling_parameters
+ number_of_geometries = 1
+ sampling_frequency(1) = 25
+ type_of_geometry(1) = 'partition'
+ export_to(1) = 'solb'
+ variable_list(1) = 'mach'
+/
