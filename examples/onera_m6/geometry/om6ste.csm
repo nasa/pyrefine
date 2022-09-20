@@ -1,0 +1,28 @@
+# https://turbmodels.larc.nasa.gov/Onerawingnumerics_grids/hcf-grid-generator_description_v4.pdf
+# https://turbmodels.larc.nasa.gov/onerawingnumerics_val.html
+# https://turbmodels.larc.nasa.gov/onerawingnumerics_grids.html
+
+despmtr rchord 810.491484086 #
+despmtr dist   100.0 #
+
+sphere 0 0 0 dist
+attribute .tParams  "20; 10; 15.0;"
+
+import AileM6_with_sharp_TE.stp
+scale 1.0/rchord
+patbeg iface @nface
+    select     face       iface
+    attribute .tParams  "0.1; 0.01; 15.0;"
+patend
+
+subtract
+
+#half domain
+box -2*dist 0 -2*dist 4*dist 2*dist 4*dist
+
+intersect
+
+dump om6ste.egads
+
+end
+

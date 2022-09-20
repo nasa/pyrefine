@@ -1,0 +1,29 @@
+# 2D NACA 0006 Airfoil
+#
+# Note: Uses ESP built-in NACA airfoil generator
+
+# create outer domain
+
+despmtr farfield_distance 20
+
+udprim  ellipse  rx farfield_distance  ry farfield_distance
+select edge
+attribute bc_name $5000_farfield
+
+# create NACA 0012
+
+udprim naca series 0012
+extrude   0    0   1
+select edge
+attribute bc_name $4000_airfoil
+
+# create computational domain
+
+subtract
+
+# write .egads with same basename
+
+set   csmfile   path($file)
+set   rootname  slice(csmfile,1,csmfile.size-4)
+set   filename  rootname+$.egads
+dump !filename
