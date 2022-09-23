@@ -32,6 +32,8 @@ from setuptools import setup, find_packages
 __package_name__ = "pyrefine"
 __package_version__ = "1.0.0"
 
+install_requires = ['numpy', 'f90nml', 'pbs4py']
+
 setup(
     name=__package_name__,
     version=__package_version__,
@@ -44,5 +46,7 @@ setup(
     author="Kevin Jacobson",
     author_email="kevin.e.jacobson@nasa.gov",
     zip_safe=False,
-    packages=find_packages()
+    packages=find_packages(),
+    install_requires=install_requires,
+    python_requires='>=3.6'
 )
