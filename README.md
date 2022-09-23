@@ -2,22 +2,21 @@
 
 A python module for driving the CAD-to-Solution workflow based on [refine](https://github.com/nasa/refine) with [Engineering Sketch Pad](https://acdl.mit.edu/ESP/).
 
-# Set up
-## In place usage of pyrefine using pip
-From this root directory do `pip install -e .` to do a "developer install". This allows you to edit pyrefine without
+# Installation
+If you will be creating custom drivers, controller, etc., it is recommended that you
+clone the pyrefine repository and do a developer (in place) installation of pyrefine:
+from the root directory do `pip install -e .`. This allows you to edit pyrefine without
 having to reinstall to get new changes.
 
-## In place usage of pyrefine
-Add this pyrefine root directory to your PYTHONPATH environment variable.
-To use the monitoring GUIs, add the ./pyrefine/monitoring directory to your PATH environment variable.
+Otherwise, you can use `pip install pyrefine`.
 
-## Installation with setup.py
-
-setup.py in the root directory is a setuptools script for installing pyrefine.
-It is run with `python setup.py install`.
-Typical command line arguments to this script are `--user` to install in ~/.local or `--prefix={path/to/install}`.
+## Post processing scripts
+While not required, for the main pyrefine package, some of the post processing and adaptation monitoring GUIs use [plotly and the open-source version of dash](https://plotly.com/).
+To use these utilities, you'll need to `pip install plotly dash` or `conda install plotly dash`.
 
 # Documentation
+[Documentation is hosted using Github Pages](https://nasa.github.io/pyrefine/)
+
 The pyrefine documentation is generated from the source code with Sphinx.
 If you do not already have sphinx installed, you can use `pip` or `conda` to install it.
 Once you have installed or added pyrefine to your PYTHONPATH, the documentation is built by running `make html` in the docs directory.
@@ -34,7 +33,7 @@ cd examples/onera_m6/geometry
 cd ../steady_sa
 ```
 
-On K, run:
+On the NASA K cluster, run:
 ```
 python adapt.py
 ```
