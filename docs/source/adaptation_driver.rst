@@ -22,9 +22,12 @@ Once the problem is fully set up, the adaptation is started with the `run` metho
 PBS Job submission
 ------------------
 pyrefine uses the pbs4py PBS class to handle PBS job submission.
+You set the information about the queue limits, the compute node description, profile filename for the environment, etc. that you want to be for each PBS job.
+Once you've set up launcher, the adaptation driver will then it to create and submit PBS jobs.
+See the `pbs4py documentation <https://nasa.github.io/pbs4py/>`_ for details about customizing the PBS job launcher.
 You can individually set the `pbs` settings in each component
 to control which queue each phase uses, which profile to source for the environment etc.
-If an individual pbs handler is not specified for a given component, the default value of `pbs` is `None` which means it will get the pbs from the adaptation driver.
+If an individual pbs handler is not specified for a given component, the default value of `pbs` is `None` which means it will get the `pbs` launcher from the adaptation driver.
 That is, if none of the components are given individual `pbs` members, the default behavior is that all the components will use the same `pbs`, which is the one provided to the adaptation driver.
 
 
