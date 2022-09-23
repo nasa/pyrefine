@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Uniform Refinement Regions &#8212; pyrefine  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Basic Controller" href="../controller/basic.html" />
+    <link rel="prev" title="Goal-oriented Metrics" href="goal_oriented.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../controller/basic.html" title="Basic Controller"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="goal_oriented.html" title="Goal-oriented Metrics"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Uniform Refinement Regions</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="uniform-refinement-regions">
+<h1>Uniform Refinement Regions<a class="headerlink" href="#uniform-refinement-regions" title="Permalink to this heading">¶</a></h1>
+<p>Uniform regions let you enforce size constraints in regoins of refine-generated meshes.
+The regions can be boxes or cylinders where the cylinder can have different radii to generalize
+it to a point, line, frustrum, cone, cylinder.
+The base class defines the properties of the size constraint, and the two subclasses define the geometry.</p>
+<p>Uniform regions are stored in the refine classes in the <a class="reference internal" href="base.html#pyrefine.refine.base.RefineBase.uniform_regions" title="pyrefine.refine.base.RefineBase.uniform_regions"><code class="xref py py-attr docutils literal notranslate"><span class="pre">uniform_regions</span></code></a> list of the refine objects.
+They are added to the command line arguments when refine executes.</p>
+<span class="target" id="module-pyrefine.refine.uniform_region"></span><section id="base-class">
+<h2>Base Class<a class="headerlink" href="#base-class" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrefine.refine.uniform_region.UniformRegionBase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.refine.uniform_region.</span></span><span class="sig-name descname"><span class="pre">UniformRegionBase</span></span><a class="headerlink" href="#pyrefine.refine.uniform_region.UniformRegionBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.uniform_region.UniformRegionBase.h0">
+<span class="sig-name descname"><span class="pre">h0</span></span><a class="headerlink" href="#pyrefine.refine.uniform_region.UniformRegionBase.h0" title="Permalink to this definition">¶</a></dt>
+<dd><p>reference element length</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.uniform_region.UniformRegionBase.decay_distance">
+<span class="sig-name descname"><span class="pre">decay_distance</span></span><a class="headerlink" href="#pyrefine.refine.uniform_region.UniformRegionBase.decay_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>reference distance for quadratic decay of sizing constraint enforcement.
+Distance measured from shape surface (positive distance designates interior enforcement).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyrefine.refine.uniform_region.UniformRegionBase.limit">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">limit</span></span><a class="headerlink" href="#pyrefine.refine.uniform_region.UniformRegionBase.limit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type of sizing constraint enforced in region (ceil or floor).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.refine.uniform_region.UniformRegionBase.get_commandline_arguments">
+<span class="sig-name descname"><span class="pre">get_commandline_arguments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.uniform_region.UniformRegionBase.get_commandline_arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the refine commandline arguments to activate a uniform refinement region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="box">
+<h2>Box<a class="headerlink" href="#box" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrefine.refine.uniform_region.UniformBox">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.refine.uniform_region.</span></span><span class="sig-name descname"><span class="pre">UniformBox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ymin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ymax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.uniform_region.UniformBox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyrefine.refine.uniform_region.UniformRegionBase" title="pyrefine.refine.uniform_region.UniformRegionBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniformRegionBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.refine.uniform_region.UniformBox.set_box_bounds">
+<span class="sig-name descname"><span class="pre">set_box_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ymin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ymax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zmax</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.uniform_region.UniformBox.set_box_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define Cartesian box extents by coordinates of two diagonally opposed points.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.refine.uniform_region.UniformBox.get_commandline_arguments">
+<span class="sig-name descname"><span class="pre">get_commandline_arguments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.uniform_region.UniformBox.get_commandline_arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the refine commandline arguments to activate a uniform refinement region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="cylinder">
+<h2>Cylinder<a class="headerlink" href="#cylinder" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrefine.refine.uniform_region.UniformCylinder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.refine.uniform_region.</span></span><span class="sig-name descname"><span class="pre">UniformCylinder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_z</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_z</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.uniform_region.UniformCylinder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyrefine.refine.uniform_region.UniformRegionBase" title="pyrefine.refine.uniform_region.UniformRegionBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniformRegionBase</span></code></a></p>
+<p>A cylinder, in general, has two radii and can degenerate to a point,
+line, cone, fustrum, or cylinder.  A cylinder is defined by the coordinates
+of two points and the radius at those point.  The radii of the cylinder are
+perpendicular to the axis connecting the two points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_x</strong> (<em>float</em>) – x coordinate of cylinder base center</p></li>
+<li><p><strong>base_y</strong> (<em>float</em>) – y coordinate of cylinder base center</p></li>
+<li><p><strong>base_z</strong> (<em>float</em>) – z coordinate of cylinder base center</p></li>
+<li><p><strong>base_radius</strong> (<em>float</em>) – radius of cylinder base</p></li>
+<li><p><strong>top_x</strong> (<em>float</em>) – x coordinate of cylinder top center</p></li>
+<li><p><strong>top_y</strong> (<em>float</em>) – y coordinate of cylinder top center</p></li>
+<li><p><strong>top_z</strong> (<em>float</em>) – z coordinate of cylinder top center</p></li>
+<li><p><strong>top_radius</strong> (<em>float</em>) – radius of cylinder top</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.refine.uniform_region.UniformCylinder.set_base">
+<span class="sig-name descname"><span class="pre">set_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.uniform_region.UniformCylinder.set_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the center and radius of the bottom circle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>float</em>) – x coordinate</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – y coordinate</p></li>
+<li><p><strong>z</strong> (<em>float</em>) – z coordinate</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – radius of face</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.refine.uniform_region.UniformCylinder.set_top">
+<span class="sig-name descname"><span class="pre">set_top</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.uniform_region.UniformCylinder.set_top" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the center and radius of the top circle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>float</em>) – x coordinate</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – y coordinate</p></li>
+<li><p><strong>z</strong> (<em>float</em>) – z coordinate</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – radius of face</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.refine.uniform_region.UniformCylinder.get_commandline_arguments">
+<span class="sig-name descname"><span class="pre">get_commandline_arguments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.uniform_region.UniformCylinder.get_commandline_arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the refine commandline arguments to activate a uniform refinement region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Uniform Refinement Regions</a><ul>
+<li><a class="reference internal" href="#base-class">Base Class</a></li>
+<li><a class="reference internal" href="#box">Box</a></li>
+<li><a class="reference internal" href="#cylinder">Cylinder</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="goal_oriented.html"
+                          title="previous chapter">Goal-oriented Metrics</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../controller/basic.html"
+                          title="next chapter">Basic Controller</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/refine/uniform_regions.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../controller/basic.html" title="Basic Controller"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="goal_oriented.html" title="Goal-oriented Metrics"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Uniform Refinement Regions</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, NASA.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
+    </div>
+  </body>
+</html>

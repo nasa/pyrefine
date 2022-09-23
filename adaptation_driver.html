@@ -1,0 +1,320 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Standard Adaptation Driver &#8212; pyrefine  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Refine Base Class" href="refine/base.html" />
+    <link rel="prev" title="Adaptation Driver" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="refine/base.html" title="Refine Base Class"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Adaptation Driver"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Standard Adaptation Driver</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="standard-adaptation-driver">
+<h1>Standard Adaptation Driver<a class="headerlink" href="#standard-adaptation-driver" title="Permalink to this heading">¶</a></h1>
+<p>The pyrefine class driving an adaptation is <a class="reference internal" href="#pyrefine.adaptation_driver.AdaptationDriver" title="pyrefine.adaptation_driver.AdaptationDriver"><code class="xref py py-class docutils literal notranslate"><span class="pre">AdaptationDriver</span></code></a>.
+The driver uses three components to perform the actions of an adaptation.</p>
+<p>The components and their default objects are:</p>
+<ul class="simple">
+<li><p>refine - <a class="reference internal" href="refine/multiscale.html#pyrefine.refine.multiscale.RefineMultiscale" title="pyrefine.refine.multiscale.RefineMultiscale"><code class="xref py py-class docutils literal notranslate"><span class="pre">RefineMultiscale</span></code></a> - performs the metric computation, the generation of new meshes, and interpolation of the solution onto the new mesh.</p></li>
+<li><p>simulation - <a class="reference internal" href="fun3d_simulations/general.html#pyrefine.simulation.fun3d.SimulationFun3dFV" title="pyrefine.simulation.fun3d.SimulationFun3dFV"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimulationFun3dFV</span></code></a> - performs the set of simulations associated with a given adaptation cycle.</p></li>
+<li><p>controller - <a class="reference internal" href="controller/basic.html#pyrefine.controller.basic.ControllerBasic" title="pyrefine.controller.basic.ControllerBasic"><code class="xref py py-class docutils literal notranslate"><span class="pre">ControllerBasic</span></code></a> - updates any input files at the start of an adaptation cycle, schedules the complexity for the mesh adaptation step, and cleans up files at the end of cycle.</p></li>
+</ul>
+</section>
+<section id="running-an-adaptation">
+<h1>Running an adaptation<a class="headerlink" href="#running-an-adaptation" title="Permalink to this heading">¶</a></h1>
+<p>To set up an adaptation, the user must instantiate an adaptation driver by providing a project name and a pbs handler.
+Next, the user can customize the driver components (see <a class="reference internal" href="#customizing-driver"><span class="std std-ref">Customizing the Driver Components</span></a>).
+The user then can call the <cite>set*</cite> methods of the driver of components.
+Once the problem is fully set up, the adaptation is started with the <cite>run</cite> method of the adaptation driver.</p>
+</section>
+<section id="pbs-job-submission">
+<h1>PBS Job submission<a class="headerlink" href="#pbs-job-submission" title="Permalink to this heading">¶</a></h1>
+<p>pyrefine uses the pbs4py PBS class to handle PBS job submission.
+You set the information about the queue limits, the compute node description, profile filename for the environment, etc. that you want to be for each PBS job.
+Once you’ve set up launcher, the adaptation driver will then it to create and submit PBS jobs.
+See the <a class="reference external" href="https://nasa.github.io/pbs4py/">pbs4py documentation</a> for details about customizing the PBS job launcher.
+You can individually set the <cite>pbs</cite> settings in each component
+to control which queue each phase uses, which profile to source for the environment etc.
+If an individual pbs handler is not specified for a given component, the default value of <cite>pbs</cite> is <cite>None</cite> which means it will get the <cite>pbs</cite> launcher from the adaptation driver.
+That is, if none of the components are given individual <cite>pbs</cite> members, the default behavior is that all the components will use the same <cite>pbs</cite>, which is the one provided to the adaptation driver.</p>
+</section>
+<section id="customizing-the-driver-components">
+<span id="customizing-driver"></span><h1>Customizing the Driver Components<a class="headerlink" href="#customizing-the-driver-components" title="Permalink to this heading">¶</a></h1>
+<p>There are two ways to customize the adaptation driver.</p>
+<p>The first approach is to instantiate the adaptation driver and override one or more of the components.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pbs</span> <span class="o">=</span> <span class="n">PBS</span><span class="o">.</span><span class="n">k4</span><span class="p">()</span>
+<span class="n">project</span> <span class="o">=</span> <span class="s1">&#39;om6&#39;</span>
+<span class="n">driver</span> <span class="o">=</span> <span class="n">AdaptationDriver</span><span class="p">(</span><span class="n">project</span><span class="p">,</span><span class="n">pbs</span><span class="p">)</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">simulation</span> <span class="o">=</span> <span class="n">SimulationFun3dSFE</span><span class="p">(</span><span class="n">project</span><span class="p">):</span>
+</pre></div>
+</div>
+<p>The second approach is to create a new adaptation driver that subclasses <a class="reference internal" href="#pyrefine.adaptation_driver.AdaptationDriver" title="pyrefine.adaptation_driver.AdaptationDriver"><code class="xref py py-class docutils literal notranslate"><span class="pre">AdaptationDriver</span></code></a> and overrides the
+components in the constructor. This approach may be more appropriate if there are multiple components that need the same input data so that the new driver class can have a single method that sets the input data to the components.</p>
+</section>
+<section id="stopping-the-adaptation">
+<h1>Stopping the Adaptation<a class="headerlink" href="#stopping-the-adaptation" title="Permalink to this heading">¶</a></h1>
+<p>The phases of the adaptation each check for an output file to indicate successful
+completion of that step. If the file is not found, the adaptation will stop.</p>
+<p>For early termination, there is also an option to stop the adaptation early with
+a <cite>stop.dat</cite> file in the root directory of the adaptation. The <cite>stop.dat</cite> file should
+contain the adaptation cycle that you wish to stop at.</p>
+</section>
+<section id="continue-running-after-logging-out-of-ssh">
+<h1>Continue running after logging out of ssh<a class="headerlink" href="#continue-running-after-logging-out-of-ssh" title="Permalink to this heading">¶</a></h1>
+<p>Often times, you’d like to start the adaptation script and have it continue after
+logging out of an ssh session. The detached sessions with the <cite>screen</cite> command is one option, but the simplest
+approach is to use <cite>nohup</cite>. For example, <cite>nohup ./adapt.py &gt; adapt.out 2&gt;&amp;1 &amp;</cite></p>
+</section>
+<section id="automated-file-cleanup-during-the-adaptation">
+<h1>Automated file cleanup during the adaptation<a class="headerlink" href="#automated-file-cleanup-during-the-adaptation" title="Permalink to this heading">¶</a></h1>
+<p>When many meshes are run in an adaptation process, the number and size of the input and output files can grow rapidly.
+To avoid filling up disk space with files that are no longer needed, pyrefine’s controllers will clean up unneeded files
+at the end of each adaptation cycle.
+See <a class="reference internal" href="index.html#controller"><span class="std std-ref">Controller</span></a> for methods to select the files to be deleted or saved, how often
+restart information is saved, or how to turn off the clean up operations completely.</p>
+</section>
+<section id="module-pyrefine.adaptation_driver">
+<span id="driver-class"></span><h1>Driver Class<a class="headerlink" href="#module-pyrefine.adaptation_driver" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrefine.adaptation_driver.AdaptationDriver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.adaptation_driver.</span></span><span class="sig-name descname"><span class="pre">AdaptationDriver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.adaptation_driver.AdaptationDriver" title="Permalink to this definition">¶</a></dt>
+<dd><p>The standard adaptation driver which also can run a basic adaptation.</p>
+<p>The default components are set up to run a
+steady adaptation with FUN3D finite volume, increase the complexity
+after a fixed number of meshes, and use the Mach number multiscale metric.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The root name of the project (without any mesh numbers)</p></li>
+<li><p><strong>pbs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PBS</span></code>) – PBS queue helper</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.adaptation_driver.AdaptationDriver.project_name">
+<span class="sig-name descname"><span class="pre">project_name</span></span><a class="headerlink" href="#pyrefine.adaptation_driver.AdaptationDriver.project_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The root name of the project (without any mesh numbers)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.adaptation_driver.AdaptationDriver.pbs">
+<span class="sig-name descname"><span class="pre">pbs</span></span><a class="headerlink" href="#pyrefine.adaptation_driver.AdaptationDriver.pbs" title="Permalink to this definition">¶</a></dt>
+<dd><p>PBS: The pbs queue helper object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>class</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.adaptation_driver.AdaptationDriver.start_iteration">
+<span class="sig-name descname"><span class="pre">start_iteration</span></span><a class="headerlink" href="#pyrefine.adaptation_driver.AdaptationDriver.start_iteration" title="Permalink to this definition">¶</a></dt>
+<dd><p>First iteration to run in adaptation process</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.adaptation_driver.AdaptationDriver.final_iteration">
+<span class="sig-name descname"><span class="pre">final_iteration</span></span><a class="headerlink" href="#pyrefine.adaptation_driver.AdaptationDriver.final_iteration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Last iteration to run in the adaptation process</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.adaptation_driver.AdaptationDriver.vertices_per_cpu_core">
+<span class="sig-name descname"><span class="pre">vertices_per_cpu_core</span></span><a class="headerlink" href="#pyrefine.adaptation_driver.AdaptationDriver.vertices_per_cpu_core" title="Permalink to this definition">¶</a></dt>
+<dd><p>How many mesh vertices per cpu core. Used when determining how many
+compute nodes to request. The default value is 10000.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.adaptation_driver.AdaptationDriver.simulation">
+<span class="sig-name descname"><span class="pre">simulation</span></span><a class="headerlink" href="#pyrefine.adaptation_driver.AdaptationDriver.simulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>the simulation driver object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="simulation/base.html#pyrefine.simulation.base.SimulationBase" title="pyrefine.simulation.base.SimulationBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimulationBase</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.adaptation_driver.AdaptationDriver.controller">
+<span class="sig-name descname"><span class="pre">controller</span></span><a class="headerlink" href="#pyrefine.adaptation_driver.AdaptationDriver.controller" title="Permalink to this definition">¶</a></dt>
+<dd><p>the complexity schedule controller object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="controller/base.html#pyrefine.controller.base.ControllerBase" title="pyrefine.controller.base.ControllerBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ControllerBase</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.adaptation_driver.AdaptationDriver.refine">
+<span class="sig-name descname"><span class="pre">refine</span></span><a class="headerlink" href="#pyrefine.adaptation_driver.AdaptationDriver.refine" title="Permalink to this definition">¶</a></dt>
+<dd><p>the refine driver object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="refine/base.html#pyrefine.refine.base.RefineBase" title="pyrefine.refine.base.RefineBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">RefineBase</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.adaptation_driver.AdaptationDriver.set_iterations">
+<span class="sig-name descname"><span class="pre">set_iterations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_iteration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">final_iteration</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.adaptation_driver.AdaptationDriver.set_iterations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the starting and ending iteration of the adaptation cycle.
+The default starting iteration is 1 which is a new adaptation.
+For restarts, set the starting value to the iteration you want to
+begin with. The default final iteration is 50.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_iteration</strong> (<em>int</em>) – </p></li>
+<li><p><strong>final_iteration</strong> (<em>int</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.adaptation_driver.AdaptationDriver.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.adaptation_driver.AdaptationDriver.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform the adaptation</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Standard Adaptation Driver</a></li>
+<li><a class="reference internal" href="#running-an-adaptation">Running an adaptation</a></li>
+<li><a class="reference internal" href="#pbs-job-submission">PBS Job submission</a></li>
+<li><a class="reference internal" href="#customizing-the-driver-components">Customizing the Driver Components</a></li>
+<li><a class="reference internal" href="#stopping-the-adaptation">Stopping the Adaptation</a></li>
+<li><a class="reference internal" href="#continue-running-after-logging-out-of-ssh">Continue running after logging out of ssh</a></li>
+<li><a class="reference internal" href="#automated-file-cleanup-during-the-adaptation">Automated file cleanup during the adaptation</a></li>
+<li><a class="reference internal" href="#module-pyrefine.adaptation_driver">Driver Class</a></li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Adaptation Driver</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="refine/base.html"
+                          title="next chapter">Refine Base Class</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/adaptation_driver.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="refine/base.html" title="Refine Base Class"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Adaptation Driver"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Standard Adaptation Driver</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, NASA.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
+    </div>
+  </body>
+</html>

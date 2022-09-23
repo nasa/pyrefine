@@ -1,0 +1,330 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Post Processing with Pyrefine &#8212; pyrefine  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="FUN3D Flutter Simulations" href="fun3d_simulations/flutter.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="fun3d_simulations/flutter.html" title="FUN3D Flutter Simulations"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Post Processing with Pyrefine</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="post-processing-with-pyrefine">
+<h1>Post Processing with Pyrefine<a class="headerlink" href="#post-processing-with-pyrefine" title="Permalink to this heading">¶</a></h1>
+<p>Pyrefine has the ability to post-process a series of simulations over a mesh adaptation and extract quantities of interest for each mesh.
+There are premade scripts available or a custom post-processor can be created to manipulate the raw data that is read from the history files.</p>
+</section>
+<section id="scripts">
+<h1>Scripts<a class="headerlink" href="#scripts" title="Permalink to this heading">¶</a></h1>
+<section id="fun3d-steady-history-to-tecplot-pr-post-fun3d-steady-hist-to-tec-py">
+<h2>FUN3D Steady History to tecplot - pr_post_fun3d_steady_hist_to_tec.py<a class="headerlink" href="#fun3d-steady-history-to-tecplot-pr-post-fun3d-steady-hist-to-tec-py" title="Permalink to this heading">¶</a></h2>
+<p><p>A script to write the number of nodes and last line of hist data to tecplot for steady FUN3D adaptations</p>
+</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">pr_post_fun3d_steady_hist_to_tec</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="nb">dir</span> <span class="n">DIR</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">num_meshes</span> <span class="n">NUM_MESHES</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">output_file</span> <span class="n">OUTPUT_FILE</span><span class="p">]</span> <span class="n">project_rootname</span>
+</pre></div>
+</div>
+<section id="Positional Arguments">
+<h3>Positional Arguments<a class="headerlink" href="#Positional Arguments" title="Permalink to this heading">¶</a></h3>
+<dl class="option-list">
+<dt><kbd>project_rootname</kbd></dt>
+<dd><p>Base name of files, e.g. <cite>{project_rootname}01_hist.dat</cite></p>
+</dd>
+</dl>
+</section>
+<section id="options">
+<h3>options<a class="headerlink" href="#options" title="Permalink to this heading">¶</a></h3>
+<dl class="option-list">
+<dt><kbd>--dir</kbd></dt>
+<dd><p>Location of files</p>
+<p>Default: “./Flow”</p>
+</dd>
+<dt><kbd>--num_meshes</kbd></dt>
+<dd><p>Number of meshes, default finds all</p>
+<p>Default: -1</p>
+</dd>
+<dt><kbd>--output_file</kbd></dt>
+<dd><p>Tecplot file name</p>
+<p>Default: “adapt_hist.dat”</p>
+</dd>
+</dl>
+</section>
+</section>
+</section>
+<section id="customizing-the-post-processor">
+<h1>Customizing the Post-Processor<a class="headerlink" href="#customizing-the-post-processor" title="Permalink to this heading">¶</a></h1>
+<p>The post processing class, <a class="reference internal" href="#pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader" title="pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fun3dAdaptationSteadyHistoryReader</span></code></a>, is meant to be flexible.
+Arbitrary commands can be added to the post processor without modifying the source code for the reader class.
+This is possible through the use of the Command design pattern.
+Post-processing steps are encapsulated as “command” objects.
+These commands are added to the reader class through the <a class="reference internal" href="#pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader.register_command" title="pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader.register_command"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_command()</span></code></a> method.
+The commands are stored in a list and can be run in order.</p>
+<p>Each command should be a class that overrides the abstract base class, <a class="reference internal" href="#pyrefine.post_processing.post_processing_command.PostProcessingCommand" title="pyrefine.post_processing.post_processing_command.PostProcessingCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">PostProcessingCommand</span></code></a>.
+Each child class must implement the method <a class="reference internal" href="#pyrefine.post_processing.post_processing_command.PostProcessingCommand.execute" title="pyrefine.post_processing.post_processing_command.PostProcessingCommand.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">execute()</span></code></a>.
+This method is meant to contain the bulk of the post-processing work.
+When the <a class="reference internal" href="#pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader.execute_commands" title="pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader.execute_commands"><code class="xref py py-meth docutils literal notranslate"><span class="pre">execute_commands()</span></code></a> method is called,
+it will call the <cite>execute</cite> method on each command sequentially.</p>
+<p>In this implementation of the command design pattern, the roles are set up as follows:</p>
+<ul class="simple">
+<li><p>Invoker or Dispatcher: <a class="reference internal" href="#pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader" title="pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fun3dAdaptationSteadyHistoryReader</span></code></a></p></li>
+<li><p>Abstract base class for commands: <a class="reference internal" href="#pyrefine.post_processing.post_processing_command.PostProcessingCommand" title="pyrefine.post_processing.post_processing_command.PostProcessingCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">PostProcessingCommand</span></code></a></p></li>
+<li><p>Concrete commands: User-defined</p></li>
+<li><p>Receiver: User-defined.  In order to modify <a class="reference internal" href="#pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader" title="pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fun3dAdaptationSteadyHistoryReader</span></code></a> as part of post-processing,
+the reader object should be setup as the invoker and the receiver.</p></li>
+</ul>
+</section>
+<section id="example">
+<h1>Example<a class="headerlink" href="#example" title="Permalink to this heading">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyrefine.post_processing.fun3d_file_reader</span> <span class="kn">import</span> <span class="n">Fun3dAdaptationSteadyHistoryReader</span> <span class="k">as</span> <span class="n">F3DReader</span>
+<span class="kn">from</span> <span class="nn">pyrefine.post_processing.post_processing_command</span> <span class="kn">import</span> <span class="n">PostProcessingCommand</span>
+
+<span class="k">class</span> <span class="nc">LOverDCommand</span><span class="p">(</span><span class="n">PostProcessingCommand</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A command to compute the lift-to-drag ratio using the existing values</span>
+<span class="sd">    of `C_L` and `C_D`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Override method from abstract base class&quot;&quot;&quot;</span>
+        <span class="n">c_l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">final_hist_values</span><span class="p">[</span><span class="s1">&#39;C_L&#39;</span><span class="p">]</span>
+        <span class="n">c_d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">final_hist_values</span><span class="p">[</span><span class="s1">&#39;C_D&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">final_hist_values</span><span class="p">[</span><span class="s1">&#39;L/D&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">c_l</span> <span class="o">/</span> <span class="n">c_d</span>
+
+<span class="c1"># Setup the reader class</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">F3DReader</span><span class="p">(</span><span class="s1">&#39;folder&#39;</span><span class="p">,</span> <span class="s1">&#39;project&#39;</span><span class="p">)</span>
+<span class="n">new_command</span> <span class="o">=</span> <span class="n">LOverDCommand</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+<span class="n">reader</span><span class="o">.</span><span class="n">register_command</span><span class="p">(</span><span class="n">new_command</span><span class="p">)</span>
+<span class="n">reader</span><span class="o">.</span><span class="n">execute_commands</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">reader</span><span class="o">.</span><span class="n">final_hist_values</span><span class="p">[</span><span class="s1">&#39;L/D&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="module-pyrefine.post_processing.fun3d_file_reader">
+<span id="reader-class"></span><h1>Reader Class<a class="headerlink" href="#module-pyrefine.post_processing.fun3d_file_reader" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.post_processing.fun3d_file_reader.</span></span><span class="sig-name descname"><span class="pre">Fun3dAdaptationSteadyHistoryReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_rootname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_meshes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for post-processing an adaptation run with FUN3D.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_directory</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Location where the history files are</p></li>
+<li><p><strong>project_rootname</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – base name of project (without mesh number)</p></li>
+<li><p><strong>number_of_meshes</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – number of meshes to read. If left as the default value of -1, the number of meshes
+will be counted based on the files found in the <code class="docutils literal notranslate"><span class="pre">data_directory</span></code></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader.number_of_meshes">
+<span class="sig-name descname"><span class="pre">number_of_meshes</span></span><a class="headerlink" href="#pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader.number_of_meshes" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of meshes that were read</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader.number_of_nodes">
+<span class="sig-name descname"><span class="pre">number_of_nodes</span></span><a class="headerlink" href="#pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader.number_of_nodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of nodes in each mesh</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader.final_hist_values">
+<span class="sig-name descname"><span class="pre">final_hist_values</span></span><a class="headerlink" href="#pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader.final_hist_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>history of values. Key is the variable name. Value is the numpy array with the history of that variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader.execute_commands">
+<span class="sig-name descname"><span class="pre">execute_commands</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader.execute_commands" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate through user-specified commands</p>
+<p>The reader class is the invoker for the command design pattern</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader.register_command">
+<span class="sig-name descname"><span class="pre">register_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader.register_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a command to the post-processing list</p>
+<p>The reader class is the invoker for the command design pattern</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>command</strong> (<a class="reference internal" href="#pyrefine.post_processing.post_processing_command.PostProcessingCommand" title="pyrefine.post_processing.post_processing_command.PostProcessingCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">PostProcessingCommand</span></code></a>) – A post-processing command to be added to the list.  These
+commands will be executed in a first-in, first-out sequence.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError:</strong> – Raises a value error if the command is not a valid
+    PostProcessingCommand</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader.write_data_to_tec">
+<span class="sig-name descname"><span class="pre">write_data_to_tec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader.write_data_to_tec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the history information to a tecplot file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader.write_data_to_csv">
+<span class="sig-name descname"><span class="pre">write_data_to_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader.write_data_to_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the history information to a csv file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pyrefine.post_processing.post_processing_command">
+<span id="postprocesscommand-class"></span><h1>PostProcessCommand Class<a class="headerlink" href="#module-pyrefine.post_processing.post_processing_command" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrefine.post_processing.post_processing_command.PostProcessingCommand">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.post_processing.post_processing_command.</span></span><span class="sig-name descname"><span class="pre">PostProcessingCommand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.post_processing.post_processing_command.PostProcessingCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple implementation of the command design pattern</p>
+<p>Overide this abstract base class to add new commands to the
+Fun3d reader.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>target</strong> (<a class="reference internal" href="#pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader" title="pyrefine.post_processing.fun3d_file_reader.Fun3dAdaptationSteadyHistoryReader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fun3dAdaptationSteadyHistoryReader</span></code></a>) – Store a reference to the receiver or target of the command</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.post_processing.post_processing_command.PostProcessingCommand.execute">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.post_processing.post_processing_command.PostProcessingCommand.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>The bulk of the post-processing work should be stored in this method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Post Processing with Pyrefine</a></li>
+<li><a class="reference internal" href="#scripts">Scripts</a><ul>
+<li><a class="reference internal" href="#fun3d-steady-history-to-tecplot-pr-post-fun3d-steady-hist-to-tec-py">FUN3D Steady History to tecplot - pr_post_fun3d_steady_hist_to_tec.py</a><ul>
+<li><a class="reference internal" href="#Positional Arguments">Positional Arguments</a></li>
+<li><a class="reference internal" href="#options">options</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#customizing-the-post-processor">Customizing the Post-Processor</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#module-pyrefine.post_processing.fun3d_file_reader">Reader Class</a></li>
+<li><a class="reference internal" href="#module-pyrefine.post_processing.post_processing_command">PostProcessCommand Class</a></li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="fun3d_simulations/flutter.html"
+                          title="previous chapter">FUN3D Flutter Simulations</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/post_processing.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="fun3d_simulations/flutter.html" title="FUN3D Flutter Simulations"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Post Processing with Pyrefine</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, NASA.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
+    </div>
+  </body>
+</html>

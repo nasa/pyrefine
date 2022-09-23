@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>FUN3D Flutter Simulations &#8212; pyrefine  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Post Processing with Pyrefine" href="../post_processing.html" />
+    <link rel="prev" title="Two Phase Time Domain FUN3D Simulation" href="time_domain.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../post_processing.html" title="Post Processing with Pyrefine"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="time_domain.html" title="Two Phase Time Domain FUN3D Simulation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">FUN3D Flutter Simulations</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-pyrefine.simulation.fun3d_flutter">
+<span id="fun3d-flutter-simulations"></span><h1>FUN3D Flutter Simulations<a class="headerlink" href="#module-pyrefine.simulation.fun3d_flutter" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d_flutter.SimulationFlutterFV">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.simulation.fun3d_flutter.</span></span><span class="sig-name descname"><span class="pre">SimulationFlutterFV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external_wall_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.simulation.fun3d_flutter.SimulationFlutterFV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="general.html#pyrefine.simulation.fun3d.SimulationFun3dFV" title="pyrefine.simulation.fun3d.SimulationFun3dFV"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimulationFun3dFV</span></code></a></p>
+<p>Base class to run the three standard phases of a fun3d flutter analysis:
+fixed mesh, static aeroelastic, and dynamic aeroelastic</p>
+<p>Designed for use with the fun3d internal mode solver.
+The _project_modes_shapes method need to be implemented for your problem
+in order to have mode shapes on the aerodynamic surface for each mesh.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_name</strong> (<em>str</em>) – The root name of the project (without any mesh numbers)</p></li>
+<li><p><strong>pbs</strong> (<em>:class:PBS</em>) – PBS queue helper</p></li>
+<li><p><strong>external_wall_distance</strong> (<em>bool</em>) – Whether the wall distance needs to be computed by a stand alone wall
+distance calculator</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d_flutter.SimulationFlutterFV.get_expected_file_list">
+<span class="sig-name descname"><span class="pre">get_expected_file_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.simulation.fun3d_flutter.SimulationFlutterFV.get_expected_file_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tell the adaptation driver what files related to this component
+should be in the adaptation root directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The list of strings with the names of files. If no root directory
+files are needed by this component, return None</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>expected_files</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d_flutter.SimulationFlutterFV.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">istep</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.simulation.fun3d_flutter.SimulationFlutterFV.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prep the fun3d namelist and submit a job to run the flow solver</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d_flutter.SimulationPapaFlutterFV">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.simulation.fun3d_flutter.</span></span><span class="sig-name descname"><span class="pre">SimulationPapaFlutterFV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.simulation.fun3d_flutter.SimulationPapaFlutterFV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyrefine.simulation.fun3d_flutter.SimulationFlutterFV" title="pyrefine.simulation.fun3d_flutter.SimulationFlutterFV"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimulationFlutterFV</span></code></a></p>
+<p>Base class to run the three standard phases of a fun3d flutter analysis:
+fixed mesh, static aeroelastic, and dynamic aeroelastic</p>
+<p>Designed for use with the fun3d internal mode solver.
+The _project_modes_shapes method need to be implemented for your problem
+in order to have mode shapes on the aerodynamic surface for each mesh.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_name</strong> (<em>str</em>) – The root name of the project (without any mesh numbers)</p></li>
+<li><p><strong>pbs</strong> (<em>:class:PBS</em>) – PBS queue helper</p></li>
+<li><p><strong>external_wall_distance</strong> (<em>bool</em>) – Whether the wall distance needs to be computed by a stand alone wall
+distance calculator</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="time_domain.html"
+                          title="previous chapter">Two Phase Time Domain FUN3D Simulation</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../post_processing.html"
+                          title="next chapter">Post Processing with Pyrefine</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/fun3d_simulations/flutter.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../post_processing.html" title="Post Processing with Pyrefine"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="time_domain.html" title="Two Phase Time Domain FUN3D Simulation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">FUN3D Flutter Simulations</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, NASA.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
+    </div>
+  </body>
+</html>

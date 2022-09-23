@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Controller Base Class &#8212; pyrefine  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Simulation Base Class" href="../simulation/base.html" />
+    <link rel="prev" title="Refine Base Class" href="../refine/base.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../simulation/base.html" title="Simulation Base Class"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../refine/base.html" title="Refine Base Class"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Controller Base Class</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-pyrefine.controller.base">
+<span id="controller-base-class"></span><h1>Controller Base Class<a class="headerlink" href="#module-pyrefine.controller.base" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrefine.controller.base.ControllerBase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.controller.base.</span></span><span class="sig-name descname"><span class="pre">ControllerBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.controller.base.ControllerBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Driver for the complexity controller and updating any other inputs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The root name of the project (without any mesh numbers)</p></li>
+<li><p><strong>pbs</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">PBS</span></code>]) – PBS queue helper</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.controller.base.ControllerBase.project_name">
+<span class="sig-name descname"><span class="pre">project_name</span></span><a class="headerlink" href="#pyrefine.controller.base.ControllerBase.project_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The root name of the project (without any mesh numbers)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.controller.base.ControllerBase.pbs">
+<span class="sig-name descname"><span class="pre">pbs</span></span><a class="headerlink" href="#pyrefine.controller.base.ControllerBase.pbs" title="Permalink to this definition">¶</a></dt>
+<dd><p>PBS: The pbs queue helper object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>class</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.controller.base.ControllerBase.initial_complexity">
+<span class="sig-name descname"><span class="pre">initial_complexity</span></span><a class="headerlink" href="#pyrefine.controller.base.ControllerBase.initial_complexity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complexity at iteration 1 of the adaptation cycle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.controller.base.ControllerBase.restart_save_frequency">
+<span class="sig-name descname"><span class="pre">restart_save_frequency</span></span><a class="headerlink" href="#pyrefine.controller.base.ControllerBase.restart_save_frequency" title="Permalink to this definition">¶</a></dt>
+<dd><p>How often to save a meshb and -restart.solb file for restarting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.controller.base.ControllerBase.save_all">
+<span class="sig-name descname"><span class="pre">save_all</span></span><a class="headerlink" href="#pyrefine.controller.base.ControllerBase.save_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set to True to keep all files (no clean up operations).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.controller.base.ControllerBase.set_file_extensions_to_cleanup_every_step">
+<span class="sig-name descname"><span class="pre">set_file_extensions_to_cleanup_every_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">extensions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.controller.base.ControllerBase.set_file_extensions_to_cleanup_every_step" title="Permalink to this definition">¶</a></dt>
+<dd><p>If left unchecked, the directories growing quickly during the adaptation
+process. The basic controller will delete some intermediate files
+to reduce directory size. The list of file extensions to be deleted  at
+the end of each adaptation cycle can be customized with this function.</p>
+<p>The cleanup functionality can be turned off with
+<code class="xref py py-func docutils literal notranslate"><span class="pre">save_all()</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>extensions</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – list of strings representing the end of the file names, e.g.
+for <cite>rm {project_name}*.txt {project_name}*.dat</cite>, set extensions=[‘.txt’, ‘.dat’]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.controller.base.ControllerBase.set_file_extensions_to_save_only_on_restart_iterations">
+<span class="sig-name descname"><span class="pre">set_file_extensions_to_save_only_on_restart_iterations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">extensions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.controller.base.ControllerBase.set_file_extensions_to_save_only_on_restart_iterations" title="Permalink to this definition">¶</a></dt>
+<dd><p>If left unchecked, the directories growing quickly during the adaptation
+process. The basic controller will delete some intermediate files
+to reduce directory size. File extensions set with this method will be
+deleted at the end of adaptation cycle except restart steps as
+determined by <code class="xref py py-attr docutils literal notranslate"><span class="pre">restart_save_frequency</span></code>.
+The default extensions are [“.meshb”, “-restart.solb”]</p>
+<p>The cleanup functionality can be turned off with
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">save_all</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>extensions</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – list of strings representing the end of the file names, e.g.
+for <cite>rm {project}*.txt {project}*.dat</cite>, set extensions=[‘.txt’, ‘.dat’]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.controller.base.ControllerBase.cleanup">
+<span class="sig-name descname"><span class="pre">cleanup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">istep</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.controller.base.ControllerBase.cleanup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clean up files at the end of the adaptation cycle</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.controller.base.ControllerBase.update_inputs">
+<span class="sig-name descname"><span class="pre">update_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">istep</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.controller.base.ControllerBase.update_inputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update any input files for the given adaptation cycle</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.controller.base.ControllerBase.compute_complexity">
+<span class="sig-name descname"><span class="pre">compute_complexity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">istep</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_complexity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.controller.base.ControllerBase.compute_complexity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the complexity for the upcoming adaptation cycle, istep.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>istep</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Adaptation step number</p></li>
+<li><p><strong>current_complexity</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – The current complexity in the driver. If doing a restart, the current
+complexity will be <cite>None</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>complexity</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.controller.base.ControllerBase.check_for_early_stop_condition">
+<span class="sig-name descname"><span class="pre">check_for_early_stop_condition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">istep</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.controller.base.ControllerBase.check_for_early_stop_condition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether some condition has been met to stop the adaptation cycle
+loop but not raise an exception to kill python altogether</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>istep</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Adaptation step number</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>early_stop</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="../refine/base.html"
+                          title="previous chapter">Refine Base Class</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../simulation/base.html"
+                          title="next chapter">Simulation Base Class</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/controller/base.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../simulation/base.html" title="Simulation Base Class"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../refine/base.html" title="Refine Base Class"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Controller Base Class</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, NASA.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
+    </div>
+  </body>
+</html>

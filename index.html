@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Adaptation Driver &#8212; pyrefine  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Standard Adaptation Driver" href="adaptation_driver.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="adaptation_driver.html" title="Standard Adaptation Driver"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Adaptation Driver</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="adaptation-driver">
+<h1>Adaptation Driver<a class="headerlink" href="#adaptation-driver" title="Permalink to this heading">¶</a></h1>
+<p>The adaptatation driver orchestrates the adaptation components to perform the adaptation.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="adaptation_driver.html">Standard Adaptation Driver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adaptation_driver.html#running-an-adaptation">Running an adaptation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adaptation_driver.html#pbs-job-submission">PBS Job submission</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adaptation_driver.html#customizing-the-driver-components">Customizing the Driver Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adaptation_driver.html#stopping-the-adaptation">Stopping the Adaptation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adaptation_driver.html#continue-running-after-logging-out-of-ssh">Continue running after logging out of ssh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adaptation_driver.html#automated-file-cleanup-during-the-adaptation">Automated file cleanup during the adaptation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adaptation_driver.html#module-pyrefine.adaptation_driver">Driver Class</a></li>
+</ul>
+</div>
+</section>
+<section id="adaptation-components">
+<h1>Adaptation Components<a class="headerlink" href="#adaptation-components" title="Permalink to this heading">¶</a></h1>
+<p>The components are responsible for performing the actions required to run a refine adaptation.</p>
+<section id="component-base-classes">
+<h2>Component Base Classes<a class="headerlink" href="#component-base-classes" title="Permalink to this heading">¶</a></h2>
+<p>The component base classes define how the driver and user interact with all versions of the particular component.
+Class inhertiance is used to create particular versions that perform the task in different manners or use different
+underlying codes.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="refine/base.html">Refine Base Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="controller/base.html">Controller Base Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulation/base.html">Simulation Base Class</a></li>
+</ul>
+</div>
+</section>
+<section id="refine">
+<h2>Refine<a class="headerlink" href="#refine" title="Permalink to this heading">¶</a></h2>
+<p>The refine object performs the metric computation, the generation of new meshes, and interpolation of the solution onto the new mesh.
+The methods to access this functionality are defined in <a class="reference internal" href="refine/base.html#pyrefine.refine.base.RefineBase" title="pyrefine.refine.base.RefineBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">RefineBase</span></code></a>.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="refine/multiscale.html">Refine Multiscale Metric</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refine/goal_oriented.html">Goal-oriented Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refine/uniform_regions.html">Uniform Refinement Regions</a></li>
+</ul>
+</div>
+</section>
+<section id="controller">
+<span id="id1"></span><h2>Controller<a class="headerlink" href="#controller" title="Permalink to this heading">¶</a></h2>
+<p>The controller object updates any input files at the start of an adaptation cycle, schedules the complexity for the mesh adaptation step, and cleans up files at the end of cycle.
+The methods to access this functionality are defined in <a class="reference internal" href="controller/base.html#pyrefine.controller.base.ControllerBase" title="pyrefine.controller.base.ControllerBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ControllerBase</span></code></a>.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="controller/basic.html">Basic Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="controller/smooth_transition.html">Smooth Transition Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="controller/monitoring.html">Quantity Monitoring Controllers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="controller/aoa_sweep.html">Angle of Attack Sweep Controller</a></li>
+</ul>
+</div>
+</section>
+<section id="fun3d-simulations">
+<h2>FUN3D Simulations<a class="headerlink" href="#fun3d-simulations" title="Permalink to this heading">¶</a></h2>
+<p>The simulation object performs the analysis required for the adaptation step.
+The methods to access this functionality are defined in <a class="reference internal" href="simulation/base.html#pyrefine.simulation.base.SimulationBase" title="pyrefine.simulation.base.SimulationBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimulationBase</span></code></a>.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fun3d_simulations/general.html">General FUN3D Simulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fun3d_simulations/adjoint.html">FUN3D Adjoint Simulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fun3d_simulations/time_domain.html">Two Phase Time Domain FUN3D Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fun3d_simulations/flutter.html">FUN3D Flutter Simulations</a></li>
+</ul>
+</div>
+</section>
+</section>
+<section id="post-processing">
+<h1>Post Processing<a class="headerlink" href="#post-processing" title="Permalink to this heading">¶</a></h1>
+<p>Pyrefine comes with a small set of post-processing options.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="post_processing.html">Post Processing with Pyrefine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="post_processing.html#scripts">Scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="post_processing.html#customizing-the-post-processor">Customizing the Post-Processor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="post_processing.html#example">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="post_processing.html#module-pyrefine.post_processing.fun3d_file_reader">Reader Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="post_processing.html#module-pyrefine.post_processing.post_processing_command">PostProcessCommand Class</a></li>
+</ul>
+</div>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="#">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Adaptation Driver</a></li>
+<li><a class="reference internal" href="#adaptation-components">Adaptation Components</a><ul>
+<li><a class="reference internal" href="#component-base-classes">Component Base Classes</a></li>
+<li><a class="reference internal" href="#refine">Refine</a></li>
+<li><a class="reference internal" href="#controller">Controller</a></li>
+<li><a class="reference internal" href="#fun3d-simulations">FUN3D Simulations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#post-processing">Post Processing</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="adaptation_driver.html"
+                          title="next chapter">Standard Adaptation Driver</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="adaptation_driver.html" title="Standard Adaptation Driver"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Adaptation Driver</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, NASA.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
+    </div>
+  </body>
+</html>

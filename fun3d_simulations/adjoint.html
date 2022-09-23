@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>FUN3D Adjoint Simulations &#8212; pyrefine  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Two Phase Time Domain FUN3D Simulation" href="time_domain.html" />
+    <link rel="prev" title="Refine Distance Calculator" href="distance/refine.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="time_domain.html" title="Two Phase Time Domain FUN3D Simulation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="distance/refine.html" title="Refine Distance Calculator"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">FUN3D Adjoint Simulations</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="fun3d-adjoint-simulations">
+<span id="adjoint-simulations"></span><h1>FUN3D Adjoint Simulations<a class="headerlink" href="#fun3d-adjoint-simulations" title="Permalink to this heading">¶</a></h1>
+<p>Adjoint solutions serve as a basis of <a class="reference internal" href="../refine/goal_oriented.html#goal-oriented-metrics"><span class="std std-ref">Goal-oriented Metrics</span></a>.
+These simulation classes run one FUN3D forward analysis and an adjoint analysis.</p>
+<section id="module-pyrefine.simulation.fun3d_adjoint">
+<span id="stabilized-finite-element"></span><h2>Stabilized Finite Element<a class="headerlink" href="#module-pyrefine.simulation.fun3d_adjoint" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d_adjoint.SimulationFun3dSFEAdjoint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.simulation.fun3d_adjoint.</span></span><span class="sig-name descname"><span class="pre">SimulationFun3dSFEAdjoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fwd_omp_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adj_omp_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external_wall_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.simulation.fun3d_adjoint.SimulationFun3dSFEAdjoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="general.html#pyrefine.simulation.fun3d.SimulationFun3dSFE" title="pyrefine.simulation.fun3d.SimulationFun3dSFE"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimulationFun3dSFE</span></code></a></p>
+<p>Runs a steady FUN3D SFE forward and adjoint analysis.
+The preconditioners in the SFE adjoint benefit from larger partition sizes,
+so use of the <cite>adj_omp_threads</cite> argument is encouraged.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_name</strong> (<em>str</em>) – The root name of the project (without any mesh numbers)</p></li>
+<li><p><strong>pbs</strong> (<em>:class:PBS</em>) – PBS queue helper for forward and adjoint solves</p></li>
+<li><p><strong>fwd_omp_threads</strong> (<em>int</em>) – Number of OpenMP threads per mpi process to run in the forward analysis
+if doing hybrid parallelism. If not doing hybrid parallelism, this
+optional argument should be left as None.</p></li>
+<li><p><strong>adj_omp_threads</strong> (<em>int</em>) – Number of OpenMP threads per mpi process to run in the adjoint analysis
+if doing hybrid parallelism. If not doing hybrid parallelism, this
+optional argument should be left as None.</p></li>
+<li><p><strong>external_wall_distance</strong> (<em>bool</em>) – Whether FUN3D needs to read the wall distance from a file generated by
+an external distance calculator</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d_adjoint.SimulationFun3dSFEAdjoint.fun3d_nml_adjoint">
+<span class="sig-name descname"><span class="pre">fun3d_nml_adjoint</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d_adjoint.SimulationFun3dSFEAdjoint.fun3d_nml_adjoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the namelist file in the adaptation root directory to use for
+the adjoint portion of the simulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d_adjoint.SimulationFun3dSFEAdjoint.sfe_cfg_adjoint">
+<span class="sig-name descname"><span class="pre">sfe_cfg_adjoint</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d_adjoint.SimulationFun3dSFEAdjoint.sfe_cfg_adjoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the sfe.cfg file in the adaptation root directory to use for the
+adjoint portion of the simulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d_adjoint.SimulationFun3dSFEAdjoint.sfe_cfg">
+<span class="sig-name descname"><span class="pre">sfe_cfg</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d_adjoint.SimulationFun3dSFEAdjoint.sfe_cfg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the sfe.cfg file in the adaptation root directory to use for the
+forward portion of the simulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d_adjoint.SimulationFun3dSFEAdjoint.import_adjoint_from_previous_mesh">
+<span class="sig-name descname"><span class="pre">import_adjoint_from_previous_mesh</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d_adjoint.SimulationFun3dSFEAdjoint.import_adjoint_from_previous_mesh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the simulation should read the refine-interpolated
+adjoint, i.e., whether or not to use the adjoint initialization cfg.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d_adjoint.SimulationFun3dSFEAdjoint.get_expected_file_list">
+<span class="sig-name descname"><span class="pre">get_expected_file_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.simulation.fun3d_adjoint.SimulationFun3dSFEAdjoint.get_expected_file_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tell the adaptation driver what files related to this component
+should be in the adaptation root directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The list of strings with the names of files. If no root directory
+files are needed by this component, return None</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>expected_files</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d_adjoint.SimulationFun3dSFEAdjoint.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">istep</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.simulation.fun3d_adjoint.SimulationFun3dSFEAdjoint.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a forward SFE solve and then the adjoint</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">FUN3D Adjoint Simulations</a><ul>
+<li><a class="reference internal" href="#module-pyrefine.simulation.fun3d_adjoint">Stabilized Finite Element</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="distance/refine.html"
+                          title="previous chapter">Refine Distance Calculator</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="time_domain.html"
+                          title="next chapter">Two Phase Time Domain FUN3D Simulation</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/fun3d_simulations/adjoint.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="time_domain.html" title="Two Phase Time Domain FUN3D Simulation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="distance/refine.html" title="Refine Distance Calculator"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">FUN3D Adjoint Simulations</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, NASA.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
+    </div>
+  </body>
+</html>

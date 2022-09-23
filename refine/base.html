@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Refine Base Class &#8212; pyrefine  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Controller Base Class" href="../controller/base.html" />
+    <link rel="prev" title="Standard Adaptation Driver" href="../adaptation_driver.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../controller/base.html" title="Controller Base Class"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../adaptation_driver.html" title="Standard Adaptation Driver"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Refine Base Class</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-pyrefine.refine.base">
+<span id="refine-base-class"></span><h1>Refine Base Class<a class="headerlink" href="#module-pyrefine.refine.base" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrefine.refine.base.RefineBase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.refine.base.</span></span><span class="sig-name descname"><span class="pre">RefineBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.base.RefineBase" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.base.RefineBase.project_name">
+<span class="sig-name descname"><span class="pre">project_name</span></span><a class="headerlink" href="#pyrefine.refine.base.RefineBase.project_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The root name of the project (without any mesh numbers)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.base.RefineBase.pbs">
+<span class="sig-name descname"><span class="pre">pbs</span></span><a class="headerlink" href="#pyrefine.refine.base.RefineBase.pbs" title="Permalink to this definition">¶</a></dt>
+<dd><p>PBS: The pbs queue helper object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>class</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.base.RefineBase.gradation">
+<span class="sig-name descname"><span class="pre">gradation</span></span><a class="headerlink" href="#pyrefine.refine.base.RefineBase.gradation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Refine input that controls the amount of smoothing applied
+to the metric field. The default value is -1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int or float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.base.RefineBase.extrude_2d_mesh_to_3d">
+<span class="sig-name descname"><span class="pre">extrude_2d_mesh_to_3d</span></span><a class="headerlink" href="#pyrefine.refine.base.RefineBase.extrude_2d_mesh_to_3d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set extrude_2d_mesh_to_3d flag to True when using a 2D mesh of
+triangles that needs to be extruded to a single layer of prisms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.base.RefineBase.use_kexact">
+<span class="sig-name descname"><span class="pre">use_kexact</span></span><a class="headerlink" href="#pyrefine.refine.base.RefineBase.use_kexact" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use K-exact least-squares reconstruction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.base.RefineBase.use_deforming">
+<span class="sig-name descname"><span class="pre">use_deforming</span></span><a class="headerlink" href="#pyrefine.refine.base.RefineBase.use_deforming" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the deforming option in refine for meshes where coordinates in the
+simulation are different from the original mesh</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.base.RefineBase.number_of_sweeps">
+<span class="sig-name descname"><span class="pre">number_of_sweeps</span></span><a class="headerlink" href="#pyrefine.refine.base.RefineBase.number_of_sweeps" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of sweeps for refine. If None, use the refine default</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None or int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.base.RefineBase.uniform_regions">
+<span class="sig-name descname"><span class="pre">uniform_regions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="uniform_regions.html#pyrefine.refine.uniform_region.UniformRegionBase" title="pyrefine.refine.uniform_region.UniformRegionBase"><span class="pre">UniformRegionBase</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pyrefine.refine.base.RefineBase.uniform_regions" title="Permalink to this definition">¶</a></dt>
+<dd><p>uniform refinement regions to be applied <a class="reference internal" href="uniform_regions.html#pyrefine.refine.uniform_region.UniformRegionBase" title="pyrefine.refine.uniform_region.UniformRegionBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniformRegionBase</span></code></a>:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.refine.base.RefineBase.translate_mesh">
+<span class="sig-name descname"><span class="pre">translate_mesh</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.base.RefineBase.translate_mesh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the first meshb file into a ugrid file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.refine.base.RefineBase.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">istep</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">complexity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.base.RefineBase.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the metric, generates the mesh, and interpolates the solution to the new mesh</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="../adaptation_driver.html"
+                          title="previous chapter">Standard Adaptation Driver</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../controller/base.html"
+                          title="next chapter">Controller Base Class</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/refine/base.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../controller/base.html" title="Controller Base Class"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../adaptation_driver.html" title="Standard Adaptation Driver"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Refine Base Class</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, NASA.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
+    </div>
+  </body>
+</html>

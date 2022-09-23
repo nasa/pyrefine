@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Goal-oriented Metrics &#8212; pyrefine  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Uniform Refinement Regions" href="uniform_regions.html" />
+    <link rel="prev" title="Refine Multiscale Metric" href="multiscale.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="uniform_regions.html" title="Uniform Refinement Regions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="multiscale.html" title="Refine Multiscale Metric"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Goal-oriented Metrics</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="goal-oriented-metrics">
+<span id="id1"></span><h1>Goal-oriented Metrics<a class="headerlink" href="#goal-oriented-metrics" title="Permalink to this heading">¶</a></h1>
+<p>Goal-oriented metrics are based on adjoint solutions which is a more target
+adaptation metric focusing on a single cost function like lift or drag.
+The goal-oriented metric objects need to be paired with simulation objects that
+compute an adjoint solution (see <a class="reference internal" href="../fun3d_simulations/adjoint.html#adjoint-simulations"><span class="std std-ref">FUN3D Adjoint Simulations</span></a>).</p>
+<span class="target" id="module-pyrefine.refine.goal_oriented"></span><dl class="py class">
+<dt class="sig sig-object py" id="pyrefine.refine.goal_oriented.RefineGoalOriented">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.refine.goal_oriented.</span></span><span class="sig-name descname"><span class="pre">RefineGoalOriented</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_strong_bc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.goal_oriented.RefineGoalOriented" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="base.html#pyrefine.refine.base.RefineBase" title="pyrefine.refine.base.RefineBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">RefineBase</span></code></a></p>
+<p>Refine goal-oriented adaptation metric. Options for the ‘opt-goal’ or
+cons-visc’ versions of the metric</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.goal_oriented.RefineGoalOriented.mask_strong_bc">
+<span class="sig-name descname"><span class="pre">mask_strong_bc</span></span><a class="headerlink" href="#pyrefine.refine.goal_oriented.RefineGoalOriented.mask_strong_bc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mask strong boundaries in the adjoint field to create a smooth adjoint field</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.goal_oriented.RefineGoalOriented.mach">
+<span class="sig-name descname"><span class="pre">mach</span></span><a class="headerlink" href="#pyrefine.refine.goal_oriented.RefineGoalOriented.mach" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reference Mach number. Only needed for metric_from=`’cons-visc’`</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.goal_oriented.RefineGoalOriented.reynolds_number">
+<span class="sig-name descname"><span class="pre">reynolds_number</span></span><a class="headerlink" href="#pyrefine.refine.goal_oriented.RefineGoalOriented.reynolds_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reference Reynolds number. Only needed for metric_from=`’cons-visc’`</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.goal_oriented.RefineGoalOriented.temperature">
+<span class="sig-name descname"><span class="pre">temperature</span></span><a class="headerlink" href="#pyrefine.refine.goal_oriented.RefineGoalOriented.temperature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reference Temperature in Kelvin. Only needed for metric_from=`’cons-visc’`</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyrefine.refine.goal_oriented.RefineGoalOriented.metric_form">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">metric_form</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#pyrefine.refine.goal_oriented.RefineGoalOriented.metric_form" title="Permalink to this definition">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">The type of goal oriented metric to use in refine.</div>
+<div class="line">Options are:</div>
+<div class="line">1. ‘opt-goal’ - the Euler metric</div>
+<div class="line">2. ‘cons_visc’ - the viscous metric. Requires also setting the
+properties: mach, reynolds_number, and temperature</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.refine.goal_oriented.RefineGoalOriented.set_metric_form_opt_goal">
+<span class="sig-name descname"><span class="pre">set_metric_form_opt_goal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.goal_oriented.RefineGoalOriented.set_metric_form_opt_goal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the type of goal oriented metric to ‘opt-goal’</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.refine.goal_oriented.RefineGoalOriented.set_metric_form_cons_visc">
+<span class="sig-name descname"><span class="pre">set_metric_form_cons_visc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mach</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reynolds_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.goal_oriented.RefineGoalOriented.set_metric_form_cons_visc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the type of goal oriented metric to cons-visc and set related
+properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mach</strong> (<em>float</em>) – The reference Mach number</p></li>
+<li><p><strong>reynolds_number</strong> (<em>float</em>) – The reference Reynolds number</p></li>
+<li><p><strong>temperature</strong> (<em>float</em>) – The reference temperature in Kelvin</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.refine.goal_oriented.RefineGoalOriented.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">istep</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">complexity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.goal_oriented.RefineGoalOriented.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a primal and dual field in the form of prim_dual.solb
+and complexity, call refine to compute a goal-oriented metric and adapt.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="multiscale.html"
+                          title="previous chapter">Refine Multiscale Metric</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="uniform_regions.html"
+                          title="next chapter">Uniform Refinement Regions</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/refine/goal_oriented.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="uniform_regions.html" title="Uniform Refinement Regions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="multiscale.html" title="Refine Multiscale Metric"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Goal-oriented Metrics</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, NASA.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
+    </div>
+  </body>
+</html>

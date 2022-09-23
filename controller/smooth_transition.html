@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Smooth Transition Controller &#8212; pyrefine  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Quantity Monitoring Controllers" href="monitoring.html" />
+    <link rel="prev" title="Basic Controller" href="basic.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="monitoring.html" title="Quantity Monitoring Controllers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="basic.html" title="Basic Controller"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Smooth Transition Controller</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-pyrefine.controller.smooth_transition">
+<span id="smooth-transition-controller"></span><h1>Smooth Transition Controller<a class="headerlink" href="#module-pyrefine.controller.smooth_transition" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrefine.controller.smooth_transition.ControllerSmoothTransition">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.controller.smooth_transition.</span></span><span class="sig-name descname"><span class="pre">ControllerSmoothTransition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.controller.smooth_transition.ControllerSmoothTransition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="base.html#pyrefine.controller.base.ControllerBase" title="pyrefine.controller.base.ControllerBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ControllerBase</span></code></a></p>
+<p>A controller to smoothly transition between complexity levels
+instead of increasing the complexity by complexity_multiplier
+over a single adaptation cycle.
+This smoother transition can help maintain solver robustness on cases
+where flow features like shocks may move as the mesh refines.</p>
+<p>An example of the complexity schedule with the default parameters of
+<code class="docutils literal notranslate"><span class="pre">steps_per_complexity=5</span></code>, <code class="docutils literal notranslate"><span class="pre">complexity_multiplier=2</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">steps_per_transition</span> <span class="pre">=</span> <span class="pre">4</span></code>:
+the first 5 steps will have the initial complexity.
+Over the next 4 steps, the complexity will gradually increase.
+For step 10, the complexity will be double the initial complexity.
+This pattern of 5 fixed complexity steps and doubling over 4 transition
+steps will continue until the adaptation is stopped.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The root name of the project (without any mesh numbers)</p></li>
+<li><p><strong>pbs</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">PBS</span></code>]) – PBS queue helper</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.controller.smooth_transition.ControllerSmoothTransition.steps_per_complexity">
+<span class="sig-name descname"><span class="pre">steps_per_complexity</span></span><a class="headerlink" href="#pyrefine.controller.smooth_transition.ControllerSmoothTransition.steps_per_complexity" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of meshes at constant complexity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.controller.smooth_transition.ControllerSmoothTransition.complexity_multiplier">
+<span class="sig-name descname"><span class="pre">complexity_multiplier</span></span><a class="headerlink" href="#pyrefine.controller.smooth_transition.ControllerSmoothTransition.complexity_multiplier" title="Permalink to this definition">¶</a></dt>
+<dd><p>The multiplicative factor to mutiple the complexity by</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.controller.smooth_transition.ControllerSmoothTransition.steps_per_transition">
+<span class="sig-name descname"><span class="pre">steps_per_transition</span></span><a class="headerlink" href="#pyrefine.controller.smooth_transition.ControllerSmoothTransition.steps_per_transition" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of meshes used to transition to the next complexity</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.controller.smooth_transition.ControllerSmoothTransition.compute_complexity">
+<span class="sig-name descname"><span class="pre">compute_complexity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">istep</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_complexity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.controller.smooth_transition.ControllerSmoothTransition.compute_complexity" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>istep</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Adaptation step number</p></li>
+<li><p><strong>current_complexity</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – The current complexity in the driver. If doing a restart, the current
+complexity will be <cite>None</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>complexity</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="basic.html"
+                          title="previous chapter">Basic Controller</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="monitoring.html"
+                          title="next chapter">Quantity Monitoring Controllers</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/controller/smooth_transition.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="monitoring.html" title="Quantity Monitoring Controllers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="basic.html" title="Basic Controller"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Smooth Transition Controller</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, NASA.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
+    </div>
+  </body>
+</html>
