@@ -27,6 +27,7 @@ STATES GOVERNMENT, ITS CONTRACTORS AND SUBCONTRACTORS, AS WELL AS ANY PRIOR
 RECIPIENT, TO THE EXTENT PERMITTED BY LAW.  RECIPIENT'S SOLE REMEDY FOR ANY SUCH
 MATTER SHALL BE THE IMMEDIATE, UNILATERAL TERMINATION OF THIS AGREEMENT.
 """
+import os
 from setuptools import setup, find_packages
 
 __package_name__ = "pyrefine"
@@ -34,10 +35,16 @@ __package_version__ = "1.0.0"
 
 install_requires = ['numpy', 'f90nml', 'pbs4py']
 
+root = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(root, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
+
 setup(
     name=__package_name__,
     version=__package_version__,
-    description=("Components and related code for refine adaptation"),
+    description=("Python scripting for CFD mesh adaptation with refine"),
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     scripts=["pyrefine/monitoring/pr_gui_fun3d_steady.py",
              "pyrefine/monitoring/pr_gui_fun3d_sfe_steady.py",
              "pyrefine/monitoring/pr_gui_fun3d_sfe_steady_adjoint.py",
