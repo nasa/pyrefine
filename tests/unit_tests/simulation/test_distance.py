@@ -4,7 +4,7 @@ from pyrefine.simulation.distance_base import DistanceBase
 from pyrefine.simulation.distance_refine import DistanceRefine
 from pyrefine.simulation.distance_tinf import DistanceTinf
 from pyrefine.directory_utils import cd
-from pyrefine.pbs import FakePBS
+from pbs4py import FakePBS
 
 # defined here since used by fun3d simulation test too
 refine_expected_dist_command = 'mpiexec refmpi distance test03.lb8.ugrid test03-distance.solb --fun3d test03.mapbc > distance03.out 2>&1'

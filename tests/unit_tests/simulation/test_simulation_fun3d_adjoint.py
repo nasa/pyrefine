@@ -3,7 +3,7 @@ import pytest
 import f90nml
 
 from pyrefine.simulation.fun3d_adjoint import SimulationFun3dSFEAdjoint
-from pyrefine import FakePBS
+from pbs4py import FakePBS
 from pyrefine.directory_utils import cd
 from pyrefine.simulation.sfe_cfg import SFEconfig
 

@@ -3,7 +3,7 @@ import pytest
 import f90nml
 
 from pyrefine.simulation.fun3d_lfd import SimulationPapaFlutterLfd, SimulationModalFlutterLfd
-from pyrefine import FakePBS
+from pbs4py import FakePBS
 from test_simulation_fun3d import check_expected_files
 from pyrefine.directory_utils import cd
 
@@ -12,9 +12,11 @@ test_dir = f'{os.path.dirname(os.path.abspath(__file__))}/test_fun3d_lfd_files'
 papa_project = 'papa'
 modal_project = 'modal'
 
+
 @pytest.fixture
 def papa():
     return SimulationPapaFlutterLfd(papa_project, FakePBS())
+
 
 @pytest.fixture
 def modal():
@@ -22,13 +24,15 @@ def modal():
 
 
 def test_papa_expected_file_list(papa: SimulationPapaFlutterLfd):
-    expected = ['papa01.meshb', 'papa01.mapbc', 'fun3d.nml', 'sfe.cfg', 'fun3d.nml_lfd', 'sfe.cfg_lfd', 'moving_body.input_lfd', 'flutter_terms.input']
+    expected = ['papa01.meshb', 'papa01.mapbc', 'fun3d.nml', 'sfe.cfg',
+                'fun3d.nml_lfd', 'sfe.cfg_lfd', 'moving_body.input_lfd', 'flutter_terms.input']
     actual = papa.get_expected_file_list()
     check_expected_files(expected, actual)
 
 
 def test_modal_expected_file_list(modal: SimulationModalFlutterLfd):
-    expected = ['modal01.meshb', 'modal01.mapbc', 'fun3d.nml', 'sfe.cfg', 'fun3d.nml_lfd', 'sfe.cfg_lfd', 'moving_body.input_lfd', 'flutter_terms.input', 'fun3d.nml_output_massoud', 'model.bdf', 'model.op2']
+    expected = ['modal01.meshb', 'modal01.mapbc', 'fun3d.nml', 'sfe.cfg', 'fun3d.nml_lfd', 'sfe.cfg_lfd',
+                'moving_body.input_lfd', 'flutter_terms.input', 'fun3d.nml_output_massoud', 'model.bdf', 'model.op2']
     actual = modal.get_expected_file_list()
     check_expected_files(expected, actual)
 
@@ -39,14 +43,14 @@ def test_papa_nml_filenames(papa: SimulationPapaFlutterLfd):
     job_name = 'lfd'
     assert f'../fun3d.nml_{job_name}' == papa._get_template_fun3d_nml_filename(job_name)
 
-   
+
 def test_modal_nml_filenames(modal: SimulationModalFlutterLfd):
     job_name = 'steady'
     assert '../fun3d.nml' == modal._get_template_fun3d_nml_filename(job_name)
     job_name = 'lfd'
-    assert f'../fun3d.nml_{job_name}' == modal._get_template_fun3d_nml_filename(job_name) 
+    assert f'../fun3d.nml_{job_name}' == modal._get_template_fun3d_nml_filename(job_name)
     job_name = 'output_massoud'
-    assert f'../fun3d.nml_{job_name}' == modal._get_template_fun3d_nml_filename(job_name) 
+    assert f'../fun3d.nml_{job_name}' == modal._get_template_fun3d_nml_filename(job_name)
 
 
 def test_sfe_cfg_filenames(papa: SimulationPapaFlutterLfd):
@@ -67,17 +71,17 @@ def test_simulation_nodet(papa: SimulationPapaFlutterLfd):
     job_name = 'steady'
     assert 'nodet_mpi' == papa._get_simulation_nodet(job_name)
     job_name = 'lfd'
-    assert 'complex_nodet_mpi' == papa._get_simulation_nodet(job_name)  
+    assert 'complex_nodet_mpi' == papa._get_simulation_nodet(job_name)
 
 
-def test_papa_simulation_command_line_args(papa: SimulationPapaFlutterLfd): 
+def test_papa_simulation_command_line_args(papa: SimulationPapaFlutterLfd):
     job_name = 'steady'
     assert ' --write_massoud_file' == papa._get_simulation_specific_fun3d_command_line_args_str(job_name)
     job_name = 'lfd'
     assert ' --aeroelastic_internal' == papa._get_simulation_specific_fun3d_command_line_args_str(job_name)
 
 
-def test_modal_simulation_command_line_args(modal: SimulationModalFlutterLfd):      
+def test_modal_simulation_command_line_args(modal: SimulationModalFlutterLfd):
     job_name = 'steady'
     assert ' --aeroelastic_internal' == modal._get_simulation_specific_fun3d_command_line_args_str(job_name)
     job_name = 'lfd'
@@ -134,4 +138,3 @@ def test_modal_fun3d_nml_fields(modal: SimulationModalFlutterLfd):
         nml = f90nml.read(modal.fun3d_nml)
         modal._update_fun3d_nml_fields(istep, job_name, nml)
         assert not nml['flow_initialization']['import_from']
-

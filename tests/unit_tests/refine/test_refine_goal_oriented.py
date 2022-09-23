@@ -1,7 +1,7 @@
 import pytest
 
 from pyrefine.refine.goal_oriented import RefineGoalOriented
-from pyrefine.pbs import FakePBS
+from pbs4py import FakePBS
 
 project = 'box'
 

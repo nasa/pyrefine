@@ -1,6 +1,6 @@
 import pytest
 from pyrefine.simulation.fun3d_flutter import SimulationFlutterFV
-from pyrefine import FakePBS
+from pbs4py import FakePBS
 from test_simulation_fun3d import check_expected_files
 
 

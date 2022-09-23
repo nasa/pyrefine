@@ -3,7 +3,7 @@ import pytest
 import f90nml
 
 from pyrefine.simulation.fun3d import SimulationFun3dFV, SimulationFun3dSFE
-from pyrefine import FakePBS
+from pbs4py import FakePBS
 from pyrefine.directory_utils import cd
 
 from test_distance import refine_expected_dist_command, distance_test_dir

@@ -3,7 +3,7 @@ import pytest
 import f90nml
 
 from pyrefine.simulation.fun3d_two_phase_unsteady import SimulationFun3dTwoPhase, SimulationSFETwoPhase
-from pyrefine import FakePBS
+from pbs4py import FakePBS
 from pyrefine.directory_utils import cd
 
 test_dir = f'{os.path.dirname(os.path.abspath(__file__))}/test_fun3d_two_phase_unsteady_files'
