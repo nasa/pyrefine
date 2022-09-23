@@ -4,6 +4,8 @@
 *egg-info
 .DS_Store
 
+dist
+
 #docs
 build
 _build
