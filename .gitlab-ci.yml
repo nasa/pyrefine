@@ -28,8 +28,10 @@ checkout_branch:
     - echo $PWD
     - hostname
     - whoami
-    - "ssh -o LogLevel=error ${user_name}@${build_machine} \"cd ${build_directory} && mkdir -p ${build_tag}
-           && cd ${build_tag} && git clone ${project_repo} ${project_name} \"  "
+    - "ssh -o LogLevel=error ${user_name}@${build_machine} \"cd ${build_directory}
+                                                          && mkdir -p ${build_tag}
+                                                          && cd ${build_tag}
+                                                          && git clone ${project_repo} ${project_name} \"  "
     - "ssh -tt -o LogLevel=error  ${user_name}@${build_machine} \"cd ${project_dir}
            && git checkout ${branch_name} && git checkout ${checkout_sha} \" "
 
@@ -43,7 +45,9 @@ unit_tests:
     - gitlab_runner
   script:
     - "ssh -tt -o LogLevel=error  ${user_name}@${build_machine} \"cd ${project_dir}
-           && module load Python_3.7.1 && setenv PYTHONPATH `pwd`:$PYTHONPATH && pytest -vs \" "
+                                                                  && module load Python_3.7.1
+                                                                  && setenv PYTHONPATH `pwd`:$PYTHONPATH
+                                                                  && pytest -vs \" "
 
 
 test_doc_build:
@@ -56,6 +60,7 @@ test_doc_build:
     - gitlab_runner
   script:
     - "ssh -tt -o LogLevel=error  ${user_name}@${build_machine} \"cd ${project_dir}
-           && module load Python_3.7.1 && setenv PYTHONPATH `pwd`:$PYTHONPATH
-           && setenv PATH /u/fun3d/.local/bin:$PATH && cd docs
-           && make html SPHINXOPTS='-W --keep-going' \" "
+                                                                && module load Python_3.7.1
+                                                                && setenv PYTHONPATH `pwd`:$PYTHONPATH
+                                                                && setenv PATH /u/fun3d/.local/bin:$PATH && cd docs
+                                                                && make html SPHINXOPTS='-W --keep-going' \" "
