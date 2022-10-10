@@ -1,0 +1,61 @@
+stages:
+  - checkout
+  - test
+  - docs
+
+variables:
+  user_name: fun3d
+  build_machine: k4
+  build_directory: /hpnobackup2/fun3d/component-ci
+  project_repo: git@gitlab.larc.nasa.gov:sketch-to-solution/pyrefine.git
+  project_name: pyrefine
+  build_tag:   pyrefine-$CI_PIPELINE_ID
+  project_dir: ${build_directory}/pyrefine-$CI_PIPELINE_ID/${project_name}
+
+
+checkout_branch:
+  only:
+    refs:
+      - main
+      - merge_requests
+  stage: checkout
+  variables:
+    branch_name: $CI_COMMIT_REF_NAME
+    checkout_sha: $CI_COMMIT_SHA
+  tags:
+    - gitlab_runner
+  script:
+    - echo $PWD
+    - hostname
+    - whoami
+    - "ssh -o LogLevel=error ${user_name}@${build_machine} \"cd ${build_directory} && mkdir -p ${build_tag}
+           && cd ${build_tag} && git clone ${project_repo} ${project_name} \"  "
+    - "ssh -tt -o LogLevel=error  ${user_name}@${build_machine} \"cd ${project_dir}
+           && git checkout ${branch_name} && git checkout ${checkout_sha} \" "
+
+unit_tests:
+  stage: test
+  only:
+    refs:
+      - main
+      - merge_requests
+  tags:
+    - gitlab_runner
+  script:
+    - "ssh -tt -o LogLevel=error  ${user_name}@${build_machine} \"cd ${project_dir}
+           && module load Python_3.7.1 && setenv PYTHONPATH `pwd`:$PYTHONPATH && pytest -vs \" "
+
+
+test_doc_build:
+  stage: docs
+  only:
+    refs:
+      - main
+      - merge_requests
+  tags:
+    - gitlab_runner
+  script:
+    - "ssh -tt -o LogLevel=error  ${user_name}@${build_machine} \"cd ${project_dir}
+           && module load Python_3.7.1 && setenv PYTHONPATH `pwd`:$PYTHONPATH
+           && setenv PATH /u/fun3d/.local/bin:$PATH && cd docs
+           && make html SPHINXOPTS='-W --keep-going' \" "
