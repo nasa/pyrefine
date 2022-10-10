@@ -1,0 +1,49 @@
+FUN3D 13.7-bd5c31a Flow started 04/28/2021 at 19:10:23 with 400 processes
+Contents of fun3d.nml file below------------------------
+&project
+project_rootname = 'test_project_m03'
+/
+Contents of fun3d.nml file above------------------------
+ The default "stream" data format is being used for the grid format "aflr3".
+ Found user-defined sampling type: Plane            2
+  ... Use the reference Mach number for the freestream:  T
+ Preparing to read binary AFLR3 grid: test_project_m03.lb8.ugrid
+ 
+  nnodes              1047133
+  ntface,nqface       61458 0
+  ntet,npyr,nprz,nhex 6056887 0 0 0
+ 
+cell statistics: type,      min volume,      max volume, max face angle
+cell statistics:  tet,  0.24320263E-07,  0.12604619E+02,  178.826442341
+cell statistics:  all,  0.24320263E-07,  0.12604619E+02,  178.826442341
+
+     ... PM (64,skip_do_min) :  T T
+     ... Calling ParMETIS (ParMETIS_V3_PartKway) .... T T
+     ... edgeCut                 826507
+     ... Time for ParMETIS: .2 s
+     ... Constructing partition node sets for level-0...               6056887 T
+     ... Edge Partitioning ....
+     ... Boundary partitioning....
+     ... Reordering for cache efficiency....
+     ... Write global grid information to test_project_m03.grid_info
+     ... Time after preprocess TIME/Mem(MB):   31006419.04    334.77    334.77
+  NOTE: kappa_umuscl set by grid: .00
+ 
+ Grid read complete
+ 
+ Turbulent diffusion : gradients via : Green-Gauss (element assembly) fl=1
+ Turbulent sources : gradients via : turbgrad fl=1
+ Iter            density_RMS  density_MAX   X-location   Y-location   Z-location
+                    turb_RMS     turb_MAX   X-location   Y-location   Z-location
+    1  0.987970950802957E-03  0.21664E-01  0.21636E+02  0.89883E+01  0.44466E+01
+       0.167818482136781E+01  0.78977E+02  0.74104E+01 -0.76897E+00 -0.24942E+01
+       Lift  0.344279825171909E+00         Drag  0.134338142491923E+01
+ 2000  0.223958601786485E-06  0.17473E-03  0.21110E+02 -0.17100E+02 -0.19550E+02
+       0.261138165600298E-04  0.58256E-03  0.31692E+02  0.16544E+01 -0.84223E+01
+       Lift  0.330000000000000E+00         Drag  0.153000000000000E+01
+ 
+ Writing test_project_m03.flow (version 12.2)
+  inserting current history iterations 2000
+ Time for write: .1 s
+ 
+ Done.

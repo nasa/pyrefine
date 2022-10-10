@@ -1,0 +1,11 @@
+ Wall clock time for residual =    1.7238552000e-02
+      2 rms = [    1.7830579729e-01    9.7292647211e-01    5.4730286373e+00    1.0246393684e-03    1.3467136208e-03    2.6071848588e-03    2.6071848588e-03 ] cfl =             0.10000
+Pressure forces from inviscid surface bc =    0.0000000000e+00    0.0000000000e+00    0.0000000000e+00
+Pressure forces from viscous surface bc  =    5.7844076109e-02   -1.0814434110e-02    1.6303900349e-01
+Viscous forces from viscous surface bc   =    6.0886390768e-06    4.0818339077e-07    4.2722288316e-07
+Total forces from viscous surface bc     =    5.7850164748e-02   -1.0814025927e-02    1.6303943072e-01
+Total forces from all surfaces           =    5.7850164748e-02   -1.0814025927e-02    1.6303943072e-01
+CL =    1.3850644752e-01 CD =    5.7642936922e-02 CLp =    1.3850635942e-01 CDp =    5.7637644671e-02 CLv =    8.8099401074e-08 CDv =    5.2922509716e-06
+CMx =    1.1942125376e-01 CMxp =    1.1942083863e-01 CMxv =    4.1512705900e-07
+CMy =   -5.2271318915e-02 CMyp =   -5.2271149660e-02 CMyv =   -1.6925532518e-07
+CMz =   -2.9031462904e-02 CMzp =   -2.9027466316e-02 CMzv =   -3.9965878629e-06
