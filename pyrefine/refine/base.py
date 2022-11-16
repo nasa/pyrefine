@@ -21,8 +21,8 @@ class RefineBase(ComponentBase):
         self.gradation = -1
 
         #: int or float: Refine input acts as an upper bound of element aspect ratio.
-        # The default value of -1 does not limit the aspect ratio, otherwise
-        # the value must be greater than or equal to 1.
+        #: The default value of -1 does not limit the aspect ratio, otherwise
+        #: the value must be greater than or equal to 1.
         self.aspect_ratio = -1
 
         #: bool: Set extrude_2d_mesh_to_3d flag to True when using a 2D mesh of
