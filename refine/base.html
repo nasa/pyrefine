@@ -85,6 +85,19 @@ to the metric field. The default value is -1.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.base.RefineBase.aspect_ratio">
+<span class="sig-name descname"><span class="pre">aspect_ratio</span></span><a class="headerlink" href="#pyrefine.refine.base.RefineBase.aspect_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Refine input acts as an upper bound of element aspect ratio.
+The default value of -1 does not limit the aspect ratio, otherwise
+the value must be greater than or equal to 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int or float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="pyrefine.refine.base.RefineBase.extrude_2d_mesh_to_3d">
 <span class="sig-name descname"><span class="pre">extrude_2d_mesh_to_3d</span></span><a class="headerlink" href="#pyrefine.refine.base.RefineBase.extrude_2d_mesh_to_3d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set extrude_2d_mesh_to_3d flag to True when using a 2D mesh of
@@ -172,6 +185,7 @@ simulation are different from the original mesh</p>
 <li><a class="reference internal" href="#pyrefine.refine.base.RefineBase.project_name"><code class="docutils literal notranslate"><span class="pre">RefineBase.project_name</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.refine.base.RefineBase.pbs"><code class="docutils literal notranslate"><span class="pre">RefineBase.pbs</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.refine.base.RefineBase.gradation"><code class="docutils literal notranslate"><span class="pre">RefineBase.gradation</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.base.RefineBase.aspect_ratio"><code class="docutils literal notranslate"><span class="pre">RefineBase.aspect_ratio</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.refine.base.RefineBase.extrude_2d_mesh_to_3d"><code class="docutils literal notranslate"><span class="pre">RefineBase.extrude_2d_mesh_to_3d</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.refine.base.RefineBase.use_kexact"><code class="docutils literal notranslate"><span class="pre">RefineBase.use_kexact</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.refine.base.RefineBase.use_deforming"><code class="docutils literal notranslate"><span class="pre">RefineBase.use_deforming</span></code></a></li>
