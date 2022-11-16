@@ -55,20 +55,20 @@ def test_fv_expected_file_list_with_moving_body(fv: SimulationFun3dFV):
 
 def test_create_fun3d_command(fv: SimulationFun3dFV):
     istep = 3
-    expected = 'mpiexec nodet_mpi > flow03.out 2>&1'
+    expected = 'mpiexec nodet_mpi &> flow03.out'
     assert expected == fv._create_fun3d_command(istep)
 
 
 def test_create_fun3d_command_with_clo(fv: SimulationFun3dFV):
     istep = 4
     fv.fun3d_command_line_args = '--gamma 1.0'
-    expected = 'mpiexec nodet_mpi --gamma 1.0 > flow04.out 2>&1'
+    expected = 'mpiexec nodet_mpi --gamma 1.0 &> flow04.out'
     assert expected == fv._create_fun3d_command(istep)
 
 
 def test_fun3d_command_with_alternative_output_name(fv: SimulationFun3dFV):
     istep = 8
-    expected = 'mpiexec nodet_mpi > static08.out 2>&1'
+    expected = 'mpiexec nodet_mpi &> static08.out'
     assert expected == fv._create_fun3d_command(istep, job_name='static')
 
 
@@ -90,7 +90,7 @@ def test_fv_command_list(fv: SimulationFun3dFV):
     job_name = 'flow'
     fv.project_name = 'test'
     expected = [refine_expected_dist_command,
-                'mpiexec nodet_mpi > flow03.out 2>&1']
+                'mpiexec nodet_mpi &> flow03.out']
 
     with cd(distance_test_dir):
         commands = fv._create_list_of_commands_to_run(istep, job_name)
@@ -105,7 +105,7 @@ def test_fv_command_list_no_external_distance(fv: SimulationFun3dFV):
     job_name = 'flow'
     fv.project_name = 'test'
     fv.external_wall_distance = False
-    expected = ['mpiexec nodet_mpi > flow04.out 2>&1']
+    expected = ['mpiexec nodet_mpi &> flow04.out']
 
     with cd(distance_test_dir):
         commands = fv._create_list_of_commands_to_run(istep, job_name)
@@ -120,7 +120,7 @@ def test_fv_command_list_skip_external_distance(fv: SimulationFun3dFV):
     job_name = 'flow'
     fv.project_name = 'test'
     fv.external_wall_distance = True
-    expected = ['mpiexec nodet_mpi > flow04.out 2>&1']
+    expected = ['mpiexec nodet_mpi &> flow04.out']
 
     with cd(distance_test_dir):
         commands = fv._create_list_of_commands_to_run(istep, job_name, skip_external_distance=True)

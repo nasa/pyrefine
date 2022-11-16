@@ -43,6 +43,14 @@ def test_add_gradation(refine: RefineBase):
     assert 'test --gradation 4.0' == refine._add_gradation_to_ref_loop_command(initial_command)
 
 
+def test_add_aspect_ratio(refine: RefineBase):
+    initial_command = 'test'
+    assert 'test' == refine._add_aspect_ratio_to_ref_loop_command(initial_command)
+
+    refine.aspect_ratio = 2.0
+    assert 'test --aspect-ratio 2.0' == refine._add_aspect_ratio_to_ref_loop_command(initial_command)
+
+
 def test_add_uniform_refinement_regions_no_regions(refine: RefineBase):
 
     initial_command = 'test'
