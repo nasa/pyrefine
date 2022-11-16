@@ -14,6 +14,7 @@
     <script src="../_static/underscore.js"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="General FUN3D Simulations" href="../fun3d_simulations/general.html" />
@@ -61,7 +62,7 @@ problem is incremented to the next angle of attack.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>project_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The root name of the project (without any mesh numbers)</p></li>
-<li><p><strong>pbs</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">PBS</span></code>]) – PBS queue helper</p></li>
+<li><p><strong>pbs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PBS</span></code>) – PBS queue helper</p></li>
 </ul>
 </dd>
 </dl>
@@ -177,6 +178,27 @@ complexity will be <cite>None</cite></p></li>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Angle of Attack Sweep Controller</a><ul>
+<li><a class="reference internal" href="#pyrefine.controller.aoa_sweep.ControllerAoaSweep"><code class="docutils literal notranslate"><span class="pre">ControllerAoaSweep</span></code></a><ul>
+<li><a class="reference internal" href="#pyrefine.controller.aoa_sweep.ControllerAoaSweep.steps_per_complexity_at_aoa"><code class="docutils literal notranslate"><span class="pre">ControllerAoaSweep.steps_per_complexity_at_aoa</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.controller.aoa_sweep.ControllerAoaSweep.complexity_multiplier"><code class="docutils literal notranslate"><span class="pre">ControllerAoaSweep.complexity_multiplier</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.controller.aoa_sweep.ControllerAoaSweep.complexity_levels_per_aoa"><code class="docutils literal notranslate"><span class="pre">ControllerAoaSweep.complexity_levels_per_aoa</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.controller.aoa_sweep.ControllerAoaSweep.steps_per_aoa_transition"><code class="docutils literal notranslate"><span class="pre">ControllerAoaSweep.steps_per_aoa_transition</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.controller.aoa_sweep.ControllerAoaSweep.aoa_step_size"><code class="docutils literal notranslate"><span class="pre">ControllerAoaSweep.aoa_step_size</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.controller.aoa_sweep.ControllerAoaSweep.initial_aoa"><code class="docutils literal notranslate"><span class="pre">ControllerAoaSweep.initial_aoa</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.controller.aoa_sweep.ControllerAoaSweep.fun3d_nml_list"><code class="docutils literal notranslate"><span class="pre">ControllerAoaSweep.fun3d_nml_list</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.controller.aoa_sweep.ControllerAoaSweep.update_inputs"><code class="docutils literal notranslate"><span class="pre">ControllerAoaSweep.update_inputs()</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.controller.aoa_sweep.ControllerAoaSweep.compute_complexity"><code class="docutils literal notranslate"><span class="pre">ControllerAoaSweep.compute_complexity()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
     <h4>Previous topic</h4>
     <p class="topless"><a href="monitoring.html"
                           title="previous chapter">Quantity Monitoring Controllers</a></p>
@@ -228,7 +250,7 @@ complexity will be <cite>None</cite></p></li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2022, NASA.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
   </body>
 </html>

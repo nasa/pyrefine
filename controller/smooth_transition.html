@@ -14,6 +14,7 @@
     <script src="../_static/underscore.js"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Quantity Monitoring Controllers" href="monitoring.html" />
@@ -67,7 +68,7 @@ steps will continue until the adaptation is stopped.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>project_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The root name of the project (without any mesh numbers)</p></li>
-<li><p><strong>pbs</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">PBS</span></code>]) – PBS queue helper</p></li>
+<li><p><strong>pbs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PBS</span></code>) – PBS queue helper</p></li>
 </ul>
 </dd>
 </dl>
@@ -133,6 +134,22 @@ complexity will be <cite>None</cite></p></li>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Smooth Transition Controller</a><ul>
+<li><a class="reference internal" href="#pyrefine.controller.smooth_transition.ControllerSmoothTransition"><code class="docutils literal notranslate"><span class="pre">ControllerSmoothTransition</span></code></a><ul>
+<li><a class="reference internal" href="#pyrefine.controller.smooth_transition.ControllerSmoothTransition.steps_per_complexity"><code class="docutils literal notranslate"><span class="pre">ControllerSmoothTransition.steps_per_complexity</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.controller.smooth_transition.ControllerSmoothTransition.complexity_multiplier"><code class="docutils literal notranslate"><span class="pre">ControllerSmoothTransition.complexity_multiplier</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.controller.smooth_transition.ControllerSmoothTransition.steps_per_transition"><code class="docutils literal notranslate"><span class="pre">ControllerSmoothTransition.steps_per_transition</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.controller.smooth_transition.ControllerSmoothTransition.compute_complexity"><code class="docutils literal notranslate"><span class="pre">ControllerSmoothTransition.compute_complexity()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
     <h4>Previous topic</h4>
     <p class="topless"><a href="basic.html"
                           title="previous chapter">Basic Controller</a></p>
@@ -184,7 +201,7 @@ complexity will be <cite>None</cite></p></li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2022, NASA.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
   </body>
 </html>

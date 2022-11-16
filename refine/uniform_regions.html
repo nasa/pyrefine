@@ -14,6 +14,7 @@
     <script src="../_static/underscore.js"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Basic Controller" href="../controller/basic.html" />
@@ -215,9 +216,33 @@ perpendicular to the axis connecting the two points.</p>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Uniform Refinement Regions</a><ul>
-<li><a class="reference internal" href="#base-class">Base Class</a></li>
-<li><a class="reference internal" href="#box">Box</a></li>
-<li><a class="reference internal" href="#cylinder">Cylinder</a></li>
+<li><a class="reference internal" href="#base-class">Base Class</a><ul>
+<li><a class="reference internal" href="#pyrefine.refine.uniform_region.UniformRegionBase"><code class="docutils literal notranslate"><span class="pre">UniformRegionBase</span></code></a><ul>
+<li><a class="reference internal" href="#pyrefine.refine.uniform_region.UniformRegionBase.h0"><code class="docutils literal notranslate"><span class="pre">UniformRegionBase.h0</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.uniform_region.UniformRegionBase.decay_distance"><code class="docutils literal notranslate"><span class="pre">UniformRegionBase.decay_distance</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.uniform_region.UniformRegionBase.limit"><code class="docutils literal notranslate"><span class="pre">UniformRegionBase.limit</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.uniform_region.UniformRegionBase.get_commandline_arguments"><code class="docutils literal notranslate"><span class="pre">UniformRegionBase.get_commandline_arguments()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#box">Box</a><ul>
+<li><a class="reference internal" href="#pyrefine.refine.uniform_region.UniformBox"><code class="docutils literal notranslate"><span class="pre">UniformBox</span></code></a><ul>
+<li><a class="reference internal" href="#pyrefine.refine.uniform_region.UniformBox.set_box_bounds"><code class="docutils literal notranslate"><span class="pre">UniformBox.set_box_bounds()</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.uniform_region.UniformBox.get_commandline_arguments"><code class="docutils literal notranslate"><span class="pre">UniformBox.get_commandline_arguments()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cylinder">Cylinder</a><ul>
+<li><a class="reference internal" href="#pyrefine.refine.uniform_region.UniformCylinder"><code class="docutils literal notranslate"><span class="pre">UniformCylinder</span></code></a><ul>
+<li><a class="reference internal" href="#pyrefine.refine.uniform_region.UniformCylinder.set_base"><code class="docutils literal notranslate"><span class="pre">UniformCylinder.set_base()</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.uniform_region.UniformCylinder.set_top"><code class="docutils literal notranslate"><span class="pre">UniformCylinder.set_top()</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.uniform_region.UniformCylinder.get_commandline_arguments"><code class="docutils literal notranslate"><span class="pre">UniformCylinder.get_commandline_arguments()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -275,7 +300,7 @@ perpendicular to the axis connecting the two points.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2022, NASA.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
   </body>
 </html>
