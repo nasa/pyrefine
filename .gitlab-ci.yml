@@ -46,7 +46,7 @@ unit_tests:
   script:
     - "ssh -tt -o LogLevel=error  ${user_name}@${build_machine} \"cd ${project_dir}
                                                                   && module load Python_3.7.1
-                                                                  && pip install --user pbs4py
+                                                                  && pip install --upgrade --user pbs4py
                                                                   && setenv PYTHONPATH `pwd`:$PYTHONPATH
                                                                   && pytest -vs \" "
 
