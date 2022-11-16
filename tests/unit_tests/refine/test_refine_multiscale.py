@@ -54,11 +54,11 @@ def test_fixed_point_multiscale_options(refine_fixedpoint: RefineMultiscaleFixed
 
 
 class PbsSpy(PBS):
-    def __init__(self):
+    def __init__(self, profile_filename=''):
         self.expected_commands = []
         self.expected_jobname = ''
         self.expected_output_files = []
-        super().__init__()
+        super().__init__(profile_file=profile_filename)
 
     def launch(self, job_name, job_body) -> str:
         assert job_name == self.expected_jobname
@@ -79,7 +79,7 @@ def test_multiscale_run(refine: RefineMultiscale):
     pbs.mpiexec = 'mpirun'
     pbs.expected_jobname = 'refine05'
     pbs.expected_commands.append(
-        'mpirun refmpi loop sphere05 sphere06 350.0 --norm-power 2 --interpolant htot --gradation 10.0 --buffer > refine05.out 2>&1')
+        'mpirun refmpi loop sphere05 sphere06 350.0 --norm-power 2 --interpolant htot --gradation 10.0 --buffer &> refine05.out')
     pbs.expected_output_files = ['sphere06.meshb', 'sphere06.lb8.ugrid', 'sphere06-restart.solb']
 
     refine.pbs = pbs
@@ -113,7 +113,7 @@ def test_multiscale_fixed_point_run(refine_fixedpoint: RefineMultiscaleFixedPoin
     pbs.mpiexec = 'mpirun'
     pbs.expected_jobname = 'refine05'
     pbs.expected_commands.append(
-        'mpirun refmpi loop sphere05 sphere06 350.0 --norm-power 2 --interpolant htot --fixed-point _sampling_geom1_timestep 1 50 200 --gradation 10.0 --buffer > refine05.out 2>&1')
+        'mpirun refmpi loop sphere05 sphere06 350.0 --norm-power 2 --interpolant htot --fixed-point _sampling_geom1_timestep 1 50 200 --gradation 10.0 --buffer &> refine05.out')
     pbs.expected_output_files = ['sphere06.meshb', 'sphere06.lb8.ugrid', 'sphere06-restart.solb']
 
     refine_fixedpoint.pbs = pbs

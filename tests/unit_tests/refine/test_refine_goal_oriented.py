@@ -98,8 +98,8 @@ def test_full_command_list(refine: RefineGoalOriented):
     complexity = 3000.0
     expected = [
         'cp box03_volume.solb box03_flow.solb', 'cp prim_dual.solb box03_volume.solb',
-        'mpiexec refmpi loop box03 box04 3000.0 --gradation -1 --opt-goal > refine03.out 2>&1',
-        'mpiexec refmpi interpolate box03.meshb box03_volume.solb box04.meshb box04_volume_init.solb > refine_interp03.out 2>&1']
+        'mpiexec refmpi loop box03 box04 3000.0 --gradation -1 --opt-goal &> refine03.out',
+        'mpiexec refmpi interpolate box03.meshb box03_volume.solb box04.meshb box04_volume_init.solb &> refine_interp03.out']
     actual = refine._create_command_list_for_pbs_job(istep, complexity)
     assert len(expected) == len(actual)
     for a, e in zip(actual, expected):
