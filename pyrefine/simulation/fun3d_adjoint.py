@@ -32,6 +32,7 @@ class SimulationFun3dSFEAdjoint(SimulationFun3dSFE):
         """
         super().__init__(project_name, pbs, external_wall_distance, fwd_omp_threads)
 
+        self.fwd_omp_threads = fwd_omp_threads
         self.adj_omp_threads = adj_omp_threads
 
         #: str: Name of the namelist file in the adaptation root directory to use for
@@ -65,10 +66,20 @@ class SimulationFun3dSFEAdjoint(SimulationFun3dSFE):
         """
         Perform a forward SFE solve and then the adjoint
         """
+        self._run_forward_simulation(istep)
+        self._run_adjoint_simulation(istep)
+
+    def _run_forward_simulation(self, istep):
+        """
+        Perform a forward SFE solve and then the adjoint
+        """
         print('Running the flow forward solver')
+        self.omp_threads = self.fwd_omp_threads
         self._run_fun3d_simulation(istep, 'forward')
 
+    def _run_adjoint_simulation(self, istep):
         print('Running the flow adjoint solver')
+        self.omp_threads = self.adj_omp_threads
         self._run_fun3d_simulation(istep, 'adjoint', skip_external_distance=True)
 
     def _check_for_output_files(self, istep, job_name):
