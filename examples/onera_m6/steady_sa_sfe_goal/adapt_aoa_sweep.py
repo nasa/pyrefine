@@ -3,7 +3,7 @@ from pyrefine import AdaptationDriver
 from pyrefine.refine import RefineGoalOriented
 from pyrefine.simulation import SimulationFun3dSFEAdjoint
 from pyrefine.controller import ControllerAoaSweep
-from pyrefine.pbs import PBS
+from pbs4py import PBS
 
 project = "om6ste"
 
