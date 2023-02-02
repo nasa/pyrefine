@@ -1,0 +1,6 @@
+smoothing = .true.
+weakBC = 0
+nd_boost = 10.0
+
+linear_solver = slat_fgmres   ! supported: sparskit, sparskit_fgmres, slat, slat_fgmres
+preconditioner = lsiluk       ! supported: iluk, lsbilu, parnqilu, parbilu, parsbilu
