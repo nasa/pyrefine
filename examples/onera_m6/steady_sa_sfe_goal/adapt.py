@@ -5,7 +5,7 @@ from pbs4py import PBS
 
 project = "om6ste"
 
-pbs = PBS.k3(time=4)
+pbs = PBS.k4(time=4)
 pbs.mpiexec = 'mpiexec_mpt'
 
 adapt_driver = AdaptationDriver(project, pbs)
