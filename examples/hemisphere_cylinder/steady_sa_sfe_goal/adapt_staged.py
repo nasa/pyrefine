@@ -4,7 +4,7 @@ from pyrefine import AdaptationDriver
 from pyrefine.controller import ControllerSmoothTransition
 from pyrefine.refine import RefineGoalOriented
 from pyrefine.simulation import SimulationFun3dSFE, SimulationFun3dSFEAdjoint
-from pbs4py import PBS
+from pyrefine.pbs import PBS
 
 
 project = 'hemisphere-cylinder'
