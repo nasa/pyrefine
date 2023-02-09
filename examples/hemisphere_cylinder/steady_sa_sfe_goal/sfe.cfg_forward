@@ -1,0 +1,7 @@
+viscosity_model = 0
+thermal_conductivity_model = 1
+weak_bc = 0
+
+adiabatic = 0
+use_adiabatic_temp = .false.
+round_off_termination = 0

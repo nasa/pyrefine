@@ -1,0 +1,19 @@
+viscosity_model = 0
+thermal_conductivity_model = 1
+weak_bc = 0
+
+cost_function = 8
+adjoint = .true.
+
+krylov_dimension = 1000
+max_matvecs = 5000
+linear_report_interval = 10
+linear_solver = fgmres
+preconditioner = lsiluk
+reorder = cmk
+reverse = .true.
+q_ordering = 1
+prune_width = 0.1
+stationary_nodes = .false.
+relative_linear_residual_tolerance = 1e-15
+absolute_linear_residual_tolerance = 1e-15
