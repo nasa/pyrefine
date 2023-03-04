@@ -2,7 +2,7 @@
   project_rootname = 'om6ste01'
 /
 &governing_equations
-sfe_flag =.true.
+flow_solver = 'sfe'
 /
 
 &special_parameters
