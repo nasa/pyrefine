@@ -146,10 +146,10 @@ def test_check_for_solb_file(fv: SimulationFun3dFV):
         istep = 3
         expected_file = 'sphere03_volume.solb'
         os.system(f'touch {expected_file}')
-        fv._check_for_volume_solb(istep)
+        fv._check_for_volume_output(istep)
         os.system(f'rm {expected_file}')
         with pytest.raises(FileNotFoundError):
-            fv._check_for_volume_solb(istep)
+            fv._check_for_volume_output(istep)
 
 
 def test_read_restart_solb(fv: SimulationFun3dFV):
