@@ -46,12 +46,12 @@ class RefineBase(ComponentBase):
         #: list: uniform refinement regions to be applied :class:`~pyrefine.refine.uniform_region.UniformRegionBase`:
         self.uniform_regions: List[UniformRegionBase] = []
 
-    def translate_mesh(self):
+    def translate_mesh(self, istep=1):
         """
-        Convert the first meshb file into a ugrid file
+        Convert the meshb file into a ugrid file
         """
-        print("Converting first mesh")
-        ugrid_file = self._create_first_ugrid_filename()
+        print("Converting mesh")
+        ugrid_file = self._get_ugrid_mesh_filename(istep)
         command = self._create_translate_command(ugrid_file)
 
         os.system(command)
@@ -66,9 +66,8 @@ class RefineBase(ComponentBase):
             command += " --extrude"
         return command
 
-    def _create_first_ugrid_filename(self) -> str:
-        project = self._create_project_rootname(istep=1)
-        return f'{project}.lb8.ugrid'
+    def _get_ugrid_mesh_filename(self, istep: int):
+        return f'{self._create_project_rootname(istep)}.lb8.ugrid'
 
     def run(self, istep: int, complexity: float):
         """
