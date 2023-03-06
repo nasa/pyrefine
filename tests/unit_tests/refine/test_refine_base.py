@@ -26,14 +26,22 @@ def test_first_ugrid_filename(refine: RefineBase):
 def test_translate_mesh_command(refine: RefineBase):
     expected = 'ref translate sphere01.meshb sphere01.lb8.ugrid'
     ugrid = refine._get_ugrid_mesh_filename(1)
-    assert expected == refine._create_translate_command(ugrid)
+    assert expected == refine._create_translate_command(ugrid, istep=1)
+
+
+def test_translate_mesh_command_step2(refine: RefineBase):
+    istep = 2
+    expected = 'ref translate sphere02.meshb sphere02.lb8.ugrid'
+    ugrid = refine._get_ugrid_mesh_filename(2)
+    assert expected == refine._create_translate_command(ugrid, istep)
 
 
 def test_translate_mesh_command_with_extrude(refine: RefineBase):
+    istep = 1
     refine.extrude_2d_mesh_to_3d = True
     expected = 'ref translate sphere01.meshb sphere01.lb8.ugrid --extrude'
     ugrid = refine._get_ugrid_mesh_filename(1)
-    assert expected == refine._create_translate_command(ugrid)
+    assert expected == refine._create_translate_command(ugrid, istep)
 
 
 def test_add_gradation(refine: RefineBase):
