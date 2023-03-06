@@ -79,12 +79,10 @@ flow_solver = 'sfe'
     number_of_geometries = 2
     type_of_geometry(1) = 'partition'
     sampling_frequency(1)=-1
-    label(1) = 'solution'
     export_to(1) = 'solb'
     variable_list(1) = 'mach'
     type_of_geometry(2) = 'partition'
     sampling_frequency(2)=-1
-    label(2) = 'solution'
     export_to(2) = 'solb'
     variable_list(2) = 'temperature'
 /
