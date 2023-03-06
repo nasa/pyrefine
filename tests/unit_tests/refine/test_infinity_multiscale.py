@@ -35,6 +35,14 @@ def test_csv_to_snap_command(infinity_csv: TinfinityMultiscale):
     assert command == expected
 
 
+def test_solb_to_snap_command(infinity: TinfinityMultiscale):
+    istep = 2
+    field = '_sampling_geom1.solb'
+    command = infinity._create_solb_to_snap_command(istep, field)
+    expected = 'mpiexec inf plot --mesh om6ste02.meshb --snap om6ste02_sampling_geom1.solb -o om6ste02_sampling_geom1.snap &> om6ste02_sampling_geom1_solb_to_snap.out'
+    assert command == expected
+
+
 def test_create_multiscale_metric_command_csv(infinity_csv: TinfinityMultiscale):
     istep = 3
     complexity = 15000
@@ -49,7 +57,7 @@ def test_create_multiscale_metric_command(infinity: TinfinityMultiscale):
     complexity = 15000
     field = '_sample2.solb'
     command = infinity._create_multiscale_metric_command(istep, complexity, field)
-    expected = 'mpiexec inf metric --mesh om6ste03.lb8.ugrid --snap om6ste03_sample2.solb -o om6ste03_sample2_metric.snap --target-node-count 30000 &> om6ste03_sample2_metric.out'
+    expected = 'mpiexec inf metric --mesh om6ste03.lb8.ugrid --snap om6ste03_sample2.snap -o om6ste03_sample2_metric.snap --target-node-count 30000 &> om6ste03_sample2_metric.out'
     assert command == expected
 
 
