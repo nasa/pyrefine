@@ -89,7 +89,7 @@ class Fun3dAdaptationSteadyHistoryReader:
             filepath = Path(f'{self.data_directory}/{self.project_rootname}{imesh:02}.grid_info')
             if filepath.exists():
                 print(filepath)
-                number_of_nodes[imesh-1] = self._read_number_of_nodes_from_grid_info(filepath)
+                number_of_nodes[imesh-1] = self._read_number_of_nodes_from_grid_info(str(filepath))
             else:
                 filepath = Path(f'{self.data_directory}/{self.project_rootname}{imesh:02}_flow_out')
                 number_of_nodes[imesh-1] = self._read_number_of_nodes_from_flow_out(filepath)
@@ -99,7 +99,7 @@ class Fun3dAdaptationSteadyHistoryReader:
         node_line = grep('number of nodes', file, head=1)[0]
         return int(node_line.split(':')[-1])
 
-    def _read_number_of_nodes_from_flow_out(self, file: str):
+    def _read_number_of_nodes_from_flow_out(self, file: Path):
         with open(file, 'r') as infile:
             for line in infile.readlines():
                 if 'nnodes' in line:
