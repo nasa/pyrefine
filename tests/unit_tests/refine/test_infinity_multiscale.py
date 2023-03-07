@@ -1,28 +1,28 @@
 import pytest
 
 from pyrefine.refine.tinfinity_multiscale import TinfinityMultiscale
-from pbs4py import PBS
+from pbs4py import PBS, FakePBS
 
 project = 'om6ste'
 
 
 @pytest.fixture
 def infinity():
-    pbs = PBS()
+    pbs = FakePBS()
     pbs.mpiexec = 'mpiexec'
     return TinfinityMultiscale(project, pbs=pbs, field_file_extensions=['_sample1.solb'])
 
 
 @pytest.fixture
 def infinity_csv():
-    pbs = PBS()
+    pbs = FakePBS()
     pbs.mpiexec = 'mpiexec'
     return TinfinityMultiscale(project, pbs=pbs, field_file_extensions=['_sample1.csv'])
 
 
 @pytest.fixture
 def infinity_two_field():
-    pbs = PBS()
+    pbs = FakePBS()
     pbs.mpiexec = 'mpiexec'
     return TinfinityMultiscale(project, pbs=pbs, field_file_extensions=['_sample1.csv', '_sample3.csv'])
 
