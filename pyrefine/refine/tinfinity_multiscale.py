@@ -22,8 +22,6 @@ class TinfinityMultiscale(RefineBase):
         for field in self.field_file_extensions:
             if self._using_csv_file(field):
                 commands.append(self._create_csv_to_snap_command(istep, field))
-            elif self._using_solb_file(field):
-                commands.append(self._create_solb_to_snap_command(istep, field))
             commands.append(self._create_multiscale_metric_command(istep, complexity, field))
 
         if self._have_multiple_fields():
@@ -32,12 +30,12 @@ class TinfinityMultiscale(RefineBase):
         commands.append(self._create_adapt_command(istep))
         commands.append(self._create_interpolate_solution_command(istep))
 
+        ugrid_file = self._get_ugrid_mesh_filename(istep+1)
+        commands.append(self._create_translate_command(ugrid_file, istep+1))
+
         job_name = f'infinity{istep:02d}'
         self.pbs.launch(job_name, commands)
-
-        self._check_for_new_mesh_file(istep)
-
-        self.translate_mesh(istep+1)
+        self._check_for_expected_output_files(istep)
 
     def _using_csv_file(self, field):
         return 'csv' in field
@@ -45,8 +43,25 @@ class TinfinityMultiscale(RefineBase):
     def _using_solb_file(self, field):
         return 'solb' in field
 
-    def _check_for_new_mesh_file(self, istep):
-        expected_file = self._get_meshb_filename(istep+1)
+    def _check_for_expected_output_files(self, istep):
+        self._check_for_ugrid_mesh_file(istep+1)
+        self._check_for_meshb_file(istep+1)
+        self._check_for_flow_restart_file(istep+1)
+
+    def _check_for_ugrid_mesh_file(self, istep):
+        expected_file = self._get_ugrid_mesh_filename(istep)
+        if not os.path.isfile(expected_file):
+            raise FileNotFoundError(
+                f'Expected file: {expected_file} was not found. Something failed with t-infinity')
+
+    def _check_for_meshb_file(self, istep):
+        expected_file = self._get_meshb_filename(istep)
+        if not os.path.isfile(expected_file):
+            raise FileNotFoundError(
+                f'Expected file: {expected_file} was not found. Something failed with t-infinity')
+
+    def _check_for_flow_restart_file(self, istep):
+        expected_file = self._get_restart_solb_filename(istep)
         if not os.path.isfile(expected_file):
             raise FileNotFoundError(
                 f'Expected file: {expected_file} was not found. Something failed with t-infinity')
@@ -58,15 +73,6 @@ class TinfinityMultiscale(RefineBase):
         snap_file = self._get_flow_field_snap_filename(istep, field)
         raw_command = f'inf csv-to-snap --file {flow_output_file} -o {snap_file}'
         return self.pbs.create_mpi_command(raw_command, f'{project_root}{field_root}_csv_to_snap')
-
-    def _create_solb_to_snap_command(self, istep: int, field: str):
-        project_root = self._create_project_rootname(istep)
-        mesh_file = self._get_meshb_filename(istep)
-        field_root = self._get_field_root_name_from_field_ext(field)
-        solb_file = f'{project_root}{field}'
-        snap_file = self._get_flow_field_snap_filename(istep, field)
-        raw_command = f'inf plot --mesh {mesh_file} --snap {solb_file} -o {snap_file}'
-        return self.pbs.create_mpi_command(raw_command, f'{project_root}{field_root}_solb_to_snap')
 
     def _create_multiscale_metric_command(self, istep: int, complexity: float, field: str):
         mesh_file = self._get_ugrid_mesh_filename(istep)
@@ -121,13 +127,10 @@ class TinfinityMultiscale(RefineBase):
 
     def _get_flow_field_snap_filename(self, istep: int, field: str) -> str:
         field_root = self._get_field_root_name_from_field_ext(field)
-        return f'{self._create_project_rootname(istep)}{field_root}.snap'
-
-        # TODO use this once metric can directly use solb
-        # if self._using_solb_file(field):
-        #    return f'{self._create_project_rootname(istep)}{field_root}.solb'
-        # else:
-        #    return f'{self._create_project_rootname(istep)}{field_root}.snap'
+        if self._using_solb_file(field):
+            return f'{self._create_project_rootname(istep)}{field_root}.solb'
+        else:
+            return f'{self._create_project_rootname(istep)}{field_root}.snap'
 
     def _get_metric_snap_filename(self, istep: int, field: str) -> str:
         field_root = self._get_field_root_name_from_field_ext(field)
