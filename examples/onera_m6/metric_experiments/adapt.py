@@ -17,6 +17,6 @@ adapt_driver.refine = TinfinityMultiscale(project, field_file_extensions=[
                                           '_sampling_geom1.solb', '_sampling_geom2.solb'])
 
 adapt_driver.controller.initial_complexity = 10000.0
-adapt_driver.set_iterations(11, 40)
+adapt_driver.set_iterations(1, 40)
 
 adapt_driver.run()
