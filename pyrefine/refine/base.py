@@ -8,12 +8,7 @@ from .uniform_region import UniformRegionBase
 
 class RefineBase(ComponentBase):
     def __init__(self, project_name: str, pbs: PBS = None):
-
-        #: str: The root name of the project (without any mesh numbers)
-        self.project_name = project_name
-
-        #: :class:PBS: The pbs queue helper object
-        self.pbs = pbs
+        super().__init__(project_name, pbs)
 
         # refine options
         #: int or float: Refine input that controls the amount of smoothing applied

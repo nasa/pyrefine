@@ -17,11 +17,7 @@ class ControllerBase(ComponentBase):
             PBS queue helper
 
         """
-        #: str: The root name of the project (without any mesh numbers)
-        self.project_name = project_name
-
-        #: :class:PBS: The pbs queue helper object
-        self.pbs = pbs
+        super().__init__(project_name, pbs)
 
         #: float: Complexity at iteration 1 of the adaptation cycle
         self.initial_complexity = 1000.0
