@@ -54,6 +54,9 @@ class SimulationFun3dFV(SimulationBase):
         #: :class:`~pyrefine.simulation.distance_base.DistanceBase`: the distance calculator
         self.distance = DistanceRefine(project_name, pbs)
 
+        #: :str: type of file to write expect for fields written
+        self.field_file_extension = 'solb'
+
     def get_expected_file_list(self):
         project = self._create_project_rootname(1)
         first_mesh_file = f'{project}.meshb'
@@ -77,16 +80,16 @@ class SimulationFun3dFV(SimulationBase):
     def _check_for_output_files(self, istep, job_name):
         if self.external_wall_distance:
             self._check_for_distance_file(istep)
-        self._check_for_volume_solb(istep)
+        self._check_for_volume_output(istep)
 
     def _check_for_distance_file(self, istep):
         expected_file = self.distance.create_distance_filename(istep)
         if not os.path.isfile(expected_file):
             raise FileNotFoundError(f'Expected file: {expected_file} was not found. Distance calculator failed.')
 
-    def _check_for_volume_solb(self, istep):
+    def _check_for_volume_output(self, istep):
         project = self._create_project_rootname(istep)
-        expected_file = f'{project}_volume.solb'
+        expected_file = f'{project}_volume.{self.field_file_extension}'
         if not os.path.isfile(expected_file):
             raise FileNotFoundError(f'Expected file: {expected_file} was not found. Something failed with flow solver.')
 

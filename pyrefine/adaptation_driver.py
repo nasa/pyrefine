@@ -85,6 +85,7 @@ class AdaptationDriver:
                                                     self.refine]
 
         self._check_pbs()
+        self._check_component_vertices_per_core()
         self._check_if_ready()
         self._prepare_flow_directory()
 
@@ -109,6 +110,15 @@ class AdaptationDriver:
         for component in self.component_list:
             if component.pbs is None:
                 component.pbs = self.pbs
+
+    def _check_component_vertices_per_core(self):
+        """
+        If a component already has a value, let them use that, else
+        give them one
+        """
+        for component in self.component_list:
+            if component.vertices_per_cpu_core is None:
+                component.vertices_per_cpu_core = self.vertices_per_cpu_core
 
     def _run_adapt_iteration(self, istep: int) -> bool:
         """

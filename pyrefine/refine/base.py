@@ -8,12 +8,7 @@ from .uniform_region import UniformRegionBase
 
 class RefineBase(ComponentBase):
     def __init__(self, project_name: str, pbs: PBS = None):
-
-        #: str: The root name of the project (without any mesh numbers)
-        self.project_name = project_name
-
-        #: :class:PBS: The pbs queue helper object
-        self.pbs = pbs
+        super().__init__(project_name, pbs)
 
         # refine options
         #: int or float: Refine input that controls the amount of smoothing applied
@@ -46,29 +41,28 @@ class RefineBase(ComponentBase):
         #: list: uniform refinement regions to be applied :class:`~pyrefine.refine.uniform_region.UniformRegionBase`:
         self.uniform_regions: List[UniformRegionBase] = []
 
-    def translate_mesh(self):
+    def translate_mesh(self, istep=1):
         """
-        Convert the first meshb file into a ugrid file
+        Convert the meshb file into a ugrid file
         """
-        print("Converting first mesh")
-        ugrid_file = self._create_first_ugrid_filename()
-        command = self._create_translate_command(ugrid_file)
+        print(f"Converting mesh {istep}")
+        ugrid_file = self._get_ugrid_mesh_filename(istep)
+        command = self._create_translate_command(ugrid_file, istep)
 
         os.system(command)
         if not os.path.isfile(ugrid_file):
             raise FileNotFoundError(f'Expected file: {ugrid_file} was not found. Failure in refine translate.')
 
-    def _create_translate_command(self, ugrid_file: str):
-        project = self._create_project_rootname(istep=1)
-        first_mesh_file = f'{project}.meshb'
-        command = f'ref translate {first_mesh_file} {ugrid_file}'
+    def _create_translate_command(self, ugrid_file: str, istep):
+        project = self._create_project_rootname(istep)
+        meshb_file = f'{project}.meshb'
+        command = f'ref translate {meshb_file} {ugrid_file}'
         if self.extrude_2d_mesh_to_3d:
             command += " --extrude"
         return command
 
-    def _create_first_ugrid_filename(self) -> str:
-        project = self._create_project_rootname(istep=1)
-        return f'{project}.lb8.ugrid'
+    def _get_ugrid_mesh_filename(self, istep: int):
+        return f'{self._create_project_rootname(istep)}.lb8.ugrid'
 
     def run(self, istep: int, complexity: float):
         """

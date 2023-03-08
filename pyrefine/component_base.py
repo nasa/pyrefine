@@ -4,8 +4,14 @@ from pbs4py import PBS
 
 class ComponentBase:
     def __init__(self, project_name: str, pbs: PBS = None):
+        #: str: The root name of the project (without any mesh numbers)
         self.project_name = project_name
+
+        #: :class:PBS: The pbs queue helper object
         self.pbs = pbs
+
+        #: int: target number of mesh vertices per cpu core for pbs jobs
+        self.vertices_per_cpu_core = None
 
     def get_expected_file_list(self) -> List[str]:
         """

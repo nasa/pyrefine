@@ -6,6 +6,7 @@ import os
 import shutil
 import glob
 import re
+from collections import deque
 
 from typing import List
 
@@ -30,13 +31,15 @@ def grep(pattern: str, filename: str, tail=-1, head=-1, match_only=False) -> Lis
     return found_lines
 
 
+def get_file_basename(file: str):
+    return os.path.basename(os.path.abspath(file))
+
+
 def grep_one_file(pattern: str, file: str, match_only: bool, found_lines: List[str]):
+    regex = re.compile(pattern)
     with open(file, 'r') as fh:
-        while True:
-            line = fh.readline()
-            if not line:
-                break
-            match = re.search(pattern, line)
+        for line in fh:
+            match = regex.search(line)
             if match:
                 if match_only:
                     found_lines.append(match.group(0))
@@ -45,15 +48,24 @@ def grep_one_file(pattern: str, file: str, match_only: bool, found_lines: List[s
 
 
 def tail(file: str, n=10) -> List[str]:
+    buffer = deque(maxlen=n)
     with open(file, 'r') as fh:
-        return fh.readlines()[-n:]
+        while True:
+            line = fh.readline()
+            if not line:
+                break
+            buffer.append(line)
+    return list(buffer)
 
 
 def head(file: str, n=10) -> List[str]:
-    lines = []
     with open(file, 'r') as fh:
-        for _ in range(n):
-            lines.append(fh.readline())
+        lines = [fh.readline() for _ in range(n)]
+
+    # if the number of lines in the file is less than n, remove the trailing
+    # blank lines read in
+    while lines and lines[-1] == '':
+        lines.pop()
     return lines
 
 
@@ -68,16 +80,14 @@ def rm(files: str):
 def mv(files: str, destination: str):
     for file in unglob(files):
         if os.path.isdir(destination):
-            file_basename = os.path.basename(os.path.abspath(file))
-            shutil.move(file, f'{destination}/{file_basename}')
+            shutil.move(file, f'{destination}/{get_file_basename(file)}')
         else:
             shutil.move(file, destination)
 
 
-def are_the_same_file(file1, file2) -> bool:
+def are_the_same_file(file1: str, file2: str) -> bool:
     if os.path.isdir(file2):
-        file_basename = os.path.basename(os.path.abspath(file1))
-        file2 = f'{file2}/{file_basename}'
+        file2 = f'{file2}/{get_file_basename(file1)}'
 
     if os.path.isfile(file1) and os.path.isfile(file2):
         if os.path.samefile(file1, file2):
@@ -90,8 +100,7 @@ def cp(files: str, destination: str):
         if are_the_same_file(file, destination):
             continue
         if os.path.isdir(destination):
-            file_basename = os.path.basename(os.path.abspath(file))
-            shutil.copy(file, f'{destination}/{file_basename}')
+            shutil.copy(file, f'{destination}/{get_file_basename(file)}')
         else:
             shutil.copy(file, destination)
 

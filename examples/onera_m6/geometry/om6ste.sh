@@ -4,11 +4,21 @@ set -e
 set -u
 set -x
 
-serveCSM -batch om6ste.csm | tee om6ste-csm.txt
+PROJECT=om6ste
+INIT_COMPLEXITY=5000
+YPLUS_ONE=1e-3
 
-ref bootstrap om6ste.egads | tee om6ste-boot.txt
+rm -f ${PROJECT}.egads
+serveCSM -batch ${PROJECT}.csm | tee ${PROJECT}-csm.txt
 
-ref_driver -i om6ste-vol.meshb \
-	   -g om6ste.egads \
-	   -x om6ste01.meshb \
-    | tee om6ste-crv.txt
+rm -f ${PROJECT}-vol.meshb
+ref bootstrap ${PROJECT}.egads | tee ${PROJECT}-boot.txt
+
+rm -f ${PRJOECT}01.meshb
+mpiexec_mpt refmpi adapt ${PROJECT}-vol.meshb \
+                         -g ${PROJECT}.egads \
+                         --spalding ${YPLUS_ONE} ${INIT_COMPLEXITY} \
+                         --viscous-tags 5,6 \
+                         -x ${PROJECT}01.meshb \
+                         -x ${PROJECT}01.lb8.ugrid \
+                       | tee ${PROJECT}01-bla-dpt.txt
