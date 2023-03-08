@@ -103,6 +103,10 @@ class RefineMultiscaleFixedPoint(RefineMultiscale):
         #: The default name is "_sampling_geom1_timestep"
         self.sampling_data_filename_body = '_sampling_geom1_timestep'
 
+        self.hlres = False
+        self.mach = -1.0
+        self.reynolds_number = -1.0
+
     def set_timestep_range_and_frequency(self, first_step, last_step, metric_freq):
         """
         Set the window of timesteps from which refine should compute the metric
@@ -119,6 +123,23 @@ class RefineMultiscaleFixedPoint(RefineMultiscale):
         self.window_last_step = last_step
         self.window_metric_freq = metric_freq
 
+    def set_hlres(self, mach, reynolds_number):
+        """
+        Set the window of timesteps from which refine should compute the metric
+        and set the metric step frequency, i.e. the frequency at which solution
+        files were saved during the analysis in window.
+
+        Parameters
+        ----------
+        mach: float
+            The reference Mach number
+        reynolds_number: float
+            The reference Reynolds number per unit length
+        """
+        self.hlres = True
+        self.mach = mach
+        self.reynolds_number = reynolds_number
+
     def run(self, istep: int, complexity: float):
         """
         Run refine in fixed-point mode for unsteady problems
@@ -134,7 +155,14 @@ class RefineMultiscaleFixedPoint(RefineMultiscale):
         first_step = self.window_first_step
         freq = self.window_metric_freq
         last_step = self.window_last_step
-        return options + f' --fixed-point {file_body} {first_step} {freq} {last_step}'
+        options += f' --fixed-point {file_body} {first_step} {freq} {last_step}'
+
+        if self.hlres:
+            self._check_that_hrles_values_are_valid()
+            # tags should be the same so just use the project01 mapbc
+            project = self._create_project_rootname(1)
+            options += f' --hrles {self.mach} {self.reynolds_number} --fun3d-mapbc {project}.mapbc'
+        return options
 
     def _check_that_window_values_are_valid(self):
         if self.window_first_step < 0:
@@ -143,3 +171,9 @@ class RefineMultiscaleFixedPoint(RefineMultiscale):
             raise ValueError('Refine window_last_step not set. Must specify window parameters')
         if self.window_metric_freq < 0:
             raise ValueError('Refine window_metric_freq not set. Must specify window parameters')
+
+    def _check_that_hrles_values_are_valid(self):
+        if self.mach < 0.0:
+            raise ValueError('Refine mach not set. Must specify if running with hrles option')
+        if self.reynolds_number < 0.0:
+            raise ValueError('Refine reynolds number not set. Must specify if running with hrles option')

@@ -53,6 +53,21 @@ def test_fixed_point_multiscale_options(refine_fixedpoint: RefineMultiscaleFixed
     assert expected == refine_fixedpoint._create_multiscale_command_line_options()
 
 
+def test_fixed_point_hrles_options(refine_fixedpoint: RefineMultiscaleFixedPoint):
+    start = 40
+    end = 440
+    freq = 3
+    mach = 0.5
+    reynolds_number = 1000000.0
+    refine_fixedpoint.lp_norm = 5
+    refine_fixedpoint.interpolant = 'htot'
+    refine_fixedpoint.set_hlres(mach, reynolds_number)
+    refine_fixedpoint.set_timestep_range_and_frequency(start, end, freq)
+    refine_fixedpoint.sampling_data_filename_body = 'sample0_timestep'
+    expected = ' --norm-power 5 --interpolant htot --fixed-point sample0_timestep 40 3 440 --hrles 0.5 1000000.0 --fun3d-mapbc sphere01.mapbc'
+    assert expected == refine_fixedpoint._create_multiscale_command_line_options()
+
+
 class PbsSpy(PBS):
     def __init__(self, profile_filename=''):
         self.expected_commands = []
