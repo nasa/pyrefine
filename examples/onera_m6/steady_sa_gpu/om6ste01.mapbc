@@ -1,0 +1,14 @@
+12
+1 5000 riemann_inflow
+2 6662 y_symmetry
+3 4000 solid_wall_wing_lower
+4 4000 solid_wall_wing_upper
+5 4000 solid_wall_te_upper
+6 4000 solid_wall_te_lower
+7 4000 solid_wall_tip_lower
+8 4000 solid_wall_tip_fore_lower
+9 4000 solid_wall_tip_fore_upper
+10 4000 solid_wall_tip_upper
+11 4000 solid_wall_tip_aft_upper
+12 4000 solid_wall_tip_aft_lower
+
