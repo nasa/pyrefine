@@ -160,9 +160,8 @@ class AdaptationDriver:
             complexity = self.current_complexity
         vertex_estimate = complexity * 2
 
-        cores_request = vertex_estimate / self.vertices_per_cpu_core
-
         for component in self.component_list:
+            cores_request = vertex_estimate / component.vertices_per_cpu_core
             request = int(np.ceil(cores_request/component.pbs.ncpus_per_node))
             component.pbs.requested_number_of_nodes = request
 
