@@ -36,10 +36,10 @@ class SimulationFun3dFV(SimulationBase):
         self.external_wall_distance = external_wall_distance
 
         #: str: Name of the namelist file in the adaptation root directory
-        self.fun3d_nml = 'fun3d.nml'
+        self.fun3d_nml = "fun3d.nml"
 
         #: str: The command line arguments that will be added to calls to nodet_mpi
-        self.fun3d_command_line_args = ''
+        self.fun3d_command_line_args = ""
 
         #: bool: Whether the simulation should read the refine-interpolated
         #: solution, i.e., whether or not to use the flow_initialization nml.
@@ -49,32 +49,36 @@ class SimulationFun3dFV(SimulationBase):
         self.expect_moving_body_input = False
 
         #: str: moving_body.input file name in root directory
-        self.moving_body_input = 'moving_body.input'
+        self.moving_body_input = "moving_body.input"
 
         #: :class:`~pyrefine.simulation.distance_base.DistanceBase`: the distance calculator
         self.distance = DistanceRefine(project_name, pbs)
 
-        #: :str: type of file to write expect for fields written
-        self.field_file_extension = 'solb'
+        #: str: type of file to write expect for fields written
+        self.field_file_extension = "solb"
+
+        #: list: list of extra input files that should also be copied into the Flow directory
+        self.extra_input_files = []
 
     def get_expected_file_list(self):
         project = self._create_project_rootname(1)
-        first_mesh_file = f'{project}.meshb'
-        first_mapbc_file = f'{project}.mapbc'
+        first_mesh_file = f"{project}.meshb"
+        first_mapbc_file = f"{project}.mapbc"
         expected_files = [self.fun3d_nml, first_mesh_file, first_mapbc_file]
         if self.expect_moving_body_input:
             expected_files.append(self.moving_body_input)
+        expected_files.extend(self.extra_input_files)
         return expected_files
 
     def run(self, istep: int):
-        print('Running the flow simulation')
-        self._run_fun3d_simulation(istep, 'flow')
+        print("Running the flow simulation")
+        self._run_fun3d_simulation(istep, "flow")
 
     def _run_fun3d_simulation(self, istep: int, job_name: str, skip_external_distance=False):
         self._prepare_input_files(istep, job_name)
         self._save_a_copy_of_solver_inputs(istep, job_name)
         command_list = self._create_list_of_commands_to_run(istep, job_name, skip_external_distance)
-        self.pbs.launch(f'{job_name}{istep:02d}', command_list)
+        self.pbs.launch(f"{job_name}{istep:02d}", command_list)
         self._check_for_output_files(istep, job_name)
 
     def _check_for_output_files(self, istep, job_name):
@@ -85,13 +89,13 @@ class SimulationFun3dFV(SimulationBase):
     def _check_for_distance_file(self, istep):
         expected_file = self.distance.create_distance_filename(istep)
         if not os.path.isfile(expected_file):
-            raise FileNotFoundError(f'Expected file: {expected_file} was not found. Distance calculator failed.')
+            raise FileNotFoundError(f"Expected file: {expected_file} was not found. Distance calculator failed.")
 
     def _check_for_volume_output(self, istep):
         project = self._create_project_rootname(istep)
-        expected_file = f'{project}_volume.{self.field_file_extension}'
+        expected_file = f"{project}_volume.{self.field_file_extension}"
         if not os.path.isfile(expected_file):
-            raise FileNotFoundError(f'Expected file: {expected_file} was not found. Something failed with flow solver.')
+            raise FileNotFoundError(f"Expected file: {expected_file} was not found. Something failed with flow solver.")
 
     def _prepare_input_files(self, istep: int, job_name: str):
         self._prepare_fun3d_nml(istep, job_name)
@@ -102,13 +106,13 @@ class SimulationFun3dFV(SimulationBase):
         nml = f90nml.read(self._get_template_fun3d_nml_filename(job_name))
         import_from = self._read_restart_solb(istep)
         self._update_fun3d_nml_fields(istep, job_name, nml, import_from)
-        nml.write('fun3d.nml', force=True)
+        nml.write("fun3d.nml", force=True)
 
     def _get_template_fun3d_nml_filename(self, job_name):
-        return f'../{self.fun3d_nml}'
+        return f"../{self.fun3d_nml}"
 
     def _read_restart_solb(self, istep):
-        return (istep > 1 and self.import_solution_from_previous_mesh)
+        return istep > 1 and self.import_solution_from_previous_mesh
 
     def _update_fun3d_nml_fields(self, istep: int, job_name: str, nml: f90nml.Namelist, import_from=True):
         self._set_project_rootname_in_nml(istep, nml)
@@ -119,30 +123,30 @@ class SimulationFun3dFV(SimulationBase):
         self._set_openmp_inputs_in_nml(nml, self.omp_threads)
 
     def _set_project_rootname_in_nml(self, istep: int, nml: f90nml.Namelist):
-        nml['project']['project_rootname'] = self._create_project_rootname(istep)
+        nml["project"]["project_rootname"] = self._create_project_rootname(istep)
 
     def _set_import_from_in_nml(self, istep: int, nml: f90nml.Namelist):
-        nml['flow_initialization']['import_from'] = f'{self._create_project_rootname(istep)}-restart.solb'
+        nml["flow_initialization"]["import_from"] = f"{self._create_project_rootname(istep)}-restart.solb"
 
     def _set_distance_from_file_in_nml(self, istep: int, nml: f90nml.Namelist):
-        nml['special_parameters']['distance_from_file'] = self.distance.create_distance_filename(istep)
+        nml["special_parameters"]["distance_from_file"] = self.distance.create_distance_filename(istep)
 
     def _set_openmp_inputs_in_nml(self, nml: f90nml.Namelist, omp_threads: int):
         value = True if omp_threads is not None else False
-        nml['code_run_control']['use_openmp'] = value
-        nml['code_run_control']['grid_coloring'] = value
+        nml["code_run_control"]["use_openmp"] = value
+        nml["code_run_control"]["grid_coloring"] = value
 
     def _prepare_moving_body_input(self, istep: int, job_name: str):
-        cp(self._get_template_moving_body_filename(job_name), 'moving_body.input')
+        cp(self._get_template_moving_body_filename(job_name), "moving_body.input")
 
     def _get_template_moving_body_filename(self, job_name):
-        return f'../{self.moving_body_input}'
+        return f"../{self.moving_body_input}"
 
     def _save_a_copy_of_solver_inputs(self, istep, job_name):
-        job_name_with_step_number = f'{job_name}{istep:02d}'
-        cp('fun3d.nml', f'fun3d.nml_{job_name_with_step_number}')
+        job_name_with_step_number = f"{job_name}{istep:02d}"
+        cp("fun3d.nml", f"fun3d.nml_{job_name_with_step_number}")
         if self.expect_moving_body_input:
-            cp('moving_body.input', f'moving_body.input_{job_name_with_step_number}')
+            cp("moving_body.input", f"moving_body.input_{job_name_with_step_number}")
 
     def _create_list_of_commands_to_run(self, istep, job_name, skip_external_distance=False) -> List[str]:
         command_list = []
@@ -156,8 +160,8 @@ class SimulationFun3dFV(SimulationBase):
         self.distance.project_name = self.project_name
         return self.distance.create_distance_command(istep)
 
-    def _create_fun3d_command(self, istep: int, job_name='flow') -> str:
-        job_name_with_number = f'{job_name}{istep:02d}'
+    def _create_fun3d_command(self, istep: int, job_name="flow") -> str:
+        job_name_with_number = f"{job_name}{istep:02d}"
 
         command = self._get_simulation_nodet(job_name)
         command += self._get_user_specified_fun3d_command_line_args_str()
@@ -166,14 +170,14 @@ class SimulationFun3dFV(SimulationBase):
 
     def _get_user_specified_fun3d_command_line_args_str(self):
         if len(self.fun3d_command_line_args) > 0:
-            return f' {self.fun3d_command_line_args}'
-        return ''
+            return f" {self.fun3d_command_line_args}"
+        return ""
 
     def _get_simulation_nodet(self, job_name) -> str:
-        return 'nodet_mpi'
+        return "nodet_mpi"
 
     def _get_simulation_specific_fun3d_command_line_args_str(self, job_name) -> str:
-        return ''
+        return ""
 
 
 class SimulationFun3dSFE(SimulationFun3dFV):
@@ -198,7 +202,7 @@ class SimulationFun3dSFE(SimulationFun3dFV):
         """
         super().__init__(project_name, pbs, external_wall_distance, omp_threads)
 
-        self.sfe_cfg = 'sfe.cfg'
+        self.sfe_cfg = "sfe.cfg"
 
     def get_expected_file_list(self):
         expected_files = super().get_expected_file_list()
@@ -207,14 +211,14 @@ class SimulationFun3dSFE(SimulationFun3dFV):
 
     def _save_a_copy_of_solver_inputs(self, istep, job_name):
         super()._save_a_copy_of_solver_inputs(istep, job_name)
-        cp('sfe.cfg', f'sfe.cfg_{job_name}{istep:02d}')
+        cp("sfe.cfg", f"sfe.cfg_{job_name}{istep:02d}")
 
     def _prepare_input_files(self, istep: int, job_name: str):
         self._prepare_sfe_cfg(istep, job_name)
         super()._prepare_input_files(istep, job_name)
 
     def _prepare_sfe_cfg(self, istep: int, job_name: str):
-        cp(self._get_template_sfe_cfg_filename(job_name), 'sfe.cfg')
+        cp(self._get_template_sfe_cfg_filename(job_name), "sfe.cfg")
 
     def _get_template_sfe_cfg_filename(self, job_name):
-        return f'../{self.sfe_cfg}'
+        return f"../{self.sfe_cfg}"
