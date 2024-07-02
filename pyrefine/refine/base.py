@@ -20,6 +20,9 @@ class RefineBase(ComponentBase):
         #: the value must be greater than or equal to 1.
         self.aspect_ratio = -1
 
+        #: float: initial wall spacing for the spalding option of refine
+        self.initial_wall_spacing = None
+
         #: bool: Set extrude_2d_mesh_to_3d flag to True when using a 2D mesh of
         #: triangles that needs to be extruded to a single layer of prisms.
         self.extrude_2d_mesh_to_3d = False
@@ -51,33 +54,39 @@ class RefineBase(ComponentBase):
 
         os.system(command)
         if not os.path.isfile(ugrid_file):
-            raise FileNotFoundError(f'Expected file: {ugrid_file} was not found. Failure in refine translate.')
+            raise FileNotFoundError(f"Expected file: {ugrid_file} was not found. Failure in refine translate.")
 
     def _create_translate_command(self, ugrid_file: str, istep):
         project = self._create_project_rootname(istep)
-        meshb_file = f'{project}.meshb'
-        command = f'ref translate {meshb_file} {ugrid_file}'
+        meshb_file = f"{project}.meshb"
+        command = f"ref translate {meshb_file} {ugrid_file}"
         if self.extrude_2d_mesh_to_3d:
             command += " --extrude"
         return command
 
     def _get_ugrid_mesh_filename(self, istep: int):
-        return f'{self._create_project_rootname(istep)}.lb8.ugrid'
+        return f"{self._create_project_rootname(istep)}.lb8.ugrid"
 
     def run(self, istep: int, complexity: float):
         """
         Compute the metric, generates the mesh, and interpolates the solution to the new mesh
         """
-        raise NotImplementedError('Refine classes must implement the run method')
+        raise NotImplementedError("Refine classes must implement the run method")
 
     def _add_aspect_ratio_to_ref_loop_command(self, command: str) -> str:
         if self.aspect_ratio >= (1 - 1e-7):
-            return command + f' --aspect-ratio {self.aspect_ratio}'
+            return command + f" --aspect-ratio {self.aspect_ratio}"
         else:
             return command
 
     def _add_gradation_to_ref_loop_command(self, command: str) -> str:
-        return command + f' --gradation {self.gradation}'
+        return command + f" --gradation {self.gradation}"
+
+    def _add_initial_wall_spacing_to_ref_loop_command(self, command: str) -> str:
+        if self.initial_wall_spacing is not None:
+            return command + f" --spalding {self.initial_wall_spacing}"
+        else:
+            return command
 
     def _add_uniform_refinement_regions_command(self, command: str) -> str:
         for region in self.uniform_regions:
@@ -87,13 +96,14 @@ class RefineBase(ComponentBase):
     def _add_common_ref_loop_options(self, command: str) -> str:
         command = self._add_aspect_ratio_to_ref_loop_command(command)
         command = self._add_gradation_to_ref_loop_command(command)
+        command = self._add_initial_wall_spacing_to_ref_loop_command(command)
         command = self._add_uniform_refinement_regions_command(command)
         if self.use_buffer:
-            command += ' --buffer'
+            command += " --buffer"
         if self.use_kexact:
-            command += ' --kexact'
+            command += " --kexact"
         if self.use_deforming:
-            command += ' --deforming'
+            command += " --deforming"
         if self.number_of_sweeps is not None:
-            command += f' -s {self.number_of_sweeps}'
+            command += f" -s {self.number_of_sweeps}"
         return command
