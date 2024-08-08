@@ -13,7 +13,7 @@ from typing import List
 
 
 def unglob(pattern: str) -> List[str]:
-    if "*" in pattern:
+    if "*" in str(pattern):
         expanded = glob.glob(pattern)
     else:
         expanded = [pattern]
