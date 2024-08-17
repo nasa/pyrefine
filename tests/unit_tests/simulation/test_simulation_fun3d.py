@@ -41,20 +41,20 @@ def check_files_exist(files):
 
 
 def test_fv_expected_file_list(fv: SimulationFun3dFV):
-    expected = ["sphere01.meshb", "sphere01.mapbc", "fun3d.nml"]
+    expected = ["fun3d.nml"]
     actual = fv.get_expected_file_list()
     check_expected_files(expected, actual)
 
 
 def test_fv_expected_file_list_with_moving_body(fv: SimulationFun3dFV):
-    expected = ["sphere01.meshb", "sphere01.mapbc", "fun3d.nml", "moving_body.input"]
+    expected = ["fun3d.nml", "moving_body.input"]
     fv.expect_moving_body_input = True
     actual = fv.get_expected_file_list()
     check_expected_files(expected, actual)
 
 
 def test_fv_expected_file_list_with_tdata(fv: SimulationFun3dFV):
-    expected = ["sphere01.meshb", "sphere01.mapbc", "fun3d.nml", "moving_body.input", "tdata"]
+    expected = ["fun3d.nml", "moving_body.input", "tdata"]
     fv.expect_moving_body_input = True
     fv.extra_input_files = ["tdata"]
     actual = fv.get_expected_file_list()
@@ -81,7 +81,7 @@ def test_fun3d_command_with_alternative_output_name(fv: SimulationFun3dFV):
 
 
 def test_sfe_expected_file_list(sfe: SimulationFun3dSFE):
-    expected = ["box01.meshb", "box01.mapbc", "fun3d.nml", "sfe.cfg"]
+    expected = ["fun3d.nml", "sfe.cfg"]
     actual = sfe.get_expected_file_list()
     check_expected_files(expected, actual)
 

@@ -61,10 +61,7 @@ class SimulationFun3dFV(SimulationBase):
         self.extra_input_files = []
 
     def get_expected_file_list(self):
-        project = self._create_project_rootname(1)
-        first_mesh_file = f"{project}.meshb"
-        first_mapbc_file = f"{project}.mapbc"
-        expected_files = [self.fun3d_nml, first_mesh_file, first_mapbc_file]
+        expected_files = [self.fun3d_nml]
         if self.expect_moving_body_input:
             expected_files.append(self.moving_body_input)
         expected_files.extend(self.extra_input_files)

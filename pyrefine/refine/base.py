@@ -56,6 +56,13 @@ class RefineBase(ComponentBase):
         if not os.path.isfile(ugrid_file):
             raise FileNotFoundError(f"Expected file: {ugrid_file} was not found. Failure in refine translate.")
 
+    def get_expected_file_list(self):
+        project = self._create_project_rootname(1)
+        first_mesh_file = f"{project}.meshb"
+        first_mapbc_file = f"{project}.mapbc"
+        expected_files = [first_mesh_file, first_mapbc_file]
+        return expected_files
+
     def _create_translate_command(self, ugrid_file: str, istep):
         project = self._create_project_rootname(istep)
         meshb_file = f"{project}.meshb"
