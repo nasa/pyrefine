@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-from __future__ import division, print_function
-
 import numpy as np
 import os
+import subprocess
 from typing import List
 
 from pbs4py import PBS
@@ -80,21 +79,19 @@ class AdaptationDriver:
         """
         Perform the adaptation
         """
-        self.component_list: List[ComponentBase] = [self.simulation,
-                                                    self.controller,
-                                                    self.refine]
+        self.component_list: List[ComponentBase] = [self.simulation, self.controller, self.refine]
 
         self._check_pbs()
         self._check_component_vertices_per_core()
         self._check_if_ready()
         self._prepare_flow_directory()
 
-        with cd('./Flow'):
+        with cd("./Flow"):
             if self.start_iteration == 1:
                 self.refine.translate_mesh()
 
-            for istep in range(self.start_iteration, self.final_iteration+1):
-                print(f'Begin adaptation step {istep}')
+            for istep in range(self.start_iteration, self.final_iteration + 1):
+                print(f"Begin adaptation step {istep}")
                 self._check_for_stop_file(istep)
                 early_stop = self._run_adapt_iteration(istep)
                 self.controller.cleanup(istep)
@@ -138,8 +135,7 @@ class AdaptationDriver:
         self.simulation.run(istep)
 
         # adaptation prep for next step
-        self.current_complexity = self.controller.compute_complexity(istep + 1,
-                                                                     self.current_complexity)
+        self.current_complexity = self.controller.compute_complexity(istep + 1, self.current_complexity)
         self.refine.run(istep, self.current_complexity)
 
         early_stop = self.controller.check_for_early_stop_condition(istep)
@@ -150,20 +146,30 @@ class AdaptationDriver:
         Set how many compute nodes to request given the current complexity
         and desired grid vertices per cpu core
         """
-
-        if istep == 1:
-            complexity = self.controller.initial_complexity
-        else:
-            if self.current_complexity is None:  # handle restarts
-                self.current_complexity = self.controller.compute_complexity(istep,
-                                                                             self.current_complexity)
-            complexity = self.current_complexity
-        vertex_estimate = complexity * 2
-
+        vertex_count = self._get_vertex_count_from_ref_examine(istep)
+        print("Mesh node count =", vertex_count)
         for component in self.component_list:
-            cores_request = vertex_estimate / component.vertices_per_cpu_core
-            request = int(np.ceil(cores_request/component.pbs.ncpus_per_node))
+            cores_request = vertex_count / component.vertices_per_cpu_core
+            request = int(np.ceil(cores_request / component.pbs.ncpus_per_node))
             component.pbs.requested_number_of_nodes = request
+
+    def _get_vertex_count_from_ref_examine(self, istep: int):
+        filename = f"{self._create_project_rootname(istep)}.lb8.ugrid"
+        command = ["ref", "examine", filename]
+        try:
+            result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
+            command_output = result.stdout
+
+            lines = command_output.splitlines()
+            for line in lines:
+                if line.startswith(" 0:"):
+                    parts = line.split()
+                    if len(parts) > 1:
+                        return int(parts[1])
+            raise ValueError("Could not find a line starting with '0:'")
+
+        except subprocess.CalledProcessError as e:
+            raise RuntimeError(f"Cound not run ref examine on grid: {e.stderr}")
 
     def _check_if_ready(self):
         """
@@ -175,7 +181,7 @@ class AdaptationDriver:
 
         for expected_file in self.expected_input_files:
             if not os.path.isfile(expected_file):
-                raise FileNotFoundError(f'Expected input file: {expected_file} was not found')
+                raise FileNotFoundError(f"Expected input file: {expected_file} was not found")
 
     def _check_for_stop_file(self, istep):
         """
@@ -184,12 +190,12 @@ class AdaptationDriver:
         """
         stop = 1e99
         try:
-            stop = np.loadtxt('../stop.dat')
+            stop = np.loadtxt("../stop.dat")
         except:
             return
         if stop < istep:
-            print('Adaptation found stop.dat in root directory. Stopping...')
-            os.remove('../stop.dat')
+            print("Adaptation found stop.dat in root directory. Stopping...")
+            os.remove("../stop.dat")
             quit()
 
     def _prepare_flow_directory(self):
@@ -197,18 +203,18 @@ class AdaptationDriver:
         Make the Flow directory if it does not exist, then fill it with the
         expected input files from each component
         """
-        run_dir = './Flow'
+        run_dir = "./Flow"
         mkdir(run_dir)
         with cd(run_dir):
             for filename in self.expected_input_files:
-                cp(f'../{filename}', '.')
+                cp(f"../{filename}", ".")
 
     def _copy_mapbc_file(self, istep):
         """
         Copy the original mapbc file to the current mesh name
         """
-        first_mapbc_file = f'../{self._create_project_rootname(1)}.mapbc'
-        new_mapbc_file = f'{self._create_project_rootname(istep)}.mapbc'
+        first_mapbc_file = f"../{self._create_project_rootname(1)}.mapbc"
+        new_mapbc_file = f"{self._create_project_rootname(istep)}.mapbc"
         cp(first_mapbc_file, new_mapbc_file)
 
     def _create_project_rootname(self, istep):
