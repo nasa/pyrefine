@@ -28,8 +28,6 @@ class NodeRatioController(ControllerBase):
 
     def compute_complexity(self, istep: int, current_complexity: float) -> float:
         """
-        Basic complexity schedule that will double the value after n iterations
-
         Parameters
         ----------
         istep:
@@ -42,9 +40,12 @@ class NodeRatioController(ControllerBase):
         -------
         complexity:
         """
-        current_number_of_nodes = self._get_vertex_count(istep)
 
-        if istep == 1 or current_complexity is None:
+        if istep == 1:
+            return self.initial_complexity
+
+        current_number_of_nodes = self._get_vertex_count(istep - 1)
+        if istep == 2 or current_complexity is None:
             complexity = self.initial_complexity
         else:
             node_ratio = current_number_of_nodes / self.previous_number_of_nodes
