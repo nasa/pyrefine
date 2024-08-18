@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import numpy as np
 import os
-import subprocess
 from typing import List
 
 from pbs4py import PBS
@@ -146,30 +145,12 @@ class AdaptationDriver:
         Set how many compute nodes to request given the current complexity
         and desired grid vertices per cpu core
         """
-        vertex_count = self._get_vertex_count_from_ref_examine(istep)
+        vertex_count = self._get_vertex_count(istep)
         print("Mesh node count =", vertex_count)
         for component in self.component_list:
             cores_request = vertex_count / component.vertices_per_cpu_core
             request = int(np.ceil(cores_request / component.pbs.ncpus_per_node))
             component.pbs.requested_number_of_nodes = request
-
-    def _get_vertex_count_from_ref_examine(self, istep: int):
-        filename = f"{self._create_project_rootname(istep)}.lb8.ugrid"
-        command = ["ref", "examine", filename]
-        try:
-            result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
-            command_output = result.stdout
-
-            lines = command_output.splitlines()
-            for line in lines:
-                if line.startswith(" 0:"):
-                    parts = line.split()
-                    if len(parts) > 1:
-                        return int(parts[1])
-            raise ValueError("Could not find a line starting with '0:'")
-
-        except subprocess.CalledProcessError as e:
-            raise RuntimeError(f"Cound not run ref examine on grid: {e.stderr}")
 
     def _check_if_ready(self):
         """
@@ -219,3 +200,6 @@ class AdaptationDriver:
 
     def _create_project_rootname(self, istep):
         return self.refine._create_project_rootname(istep)
+
+    def _get_vertex_count(self, istep: int):
+        return self.refine._get_vertex_count(istep)
