@@ -5,6 +5,7 @@ import f90nml
 from .base import SimulationBase
 from .distance_refine import DistanceRefine
 from pyrefine.shell_utils import cp
+import datetime
 
 
 class SimulationFun3dFV(SimulationBase):
@@ -69,7 +70,13 @@ class SimulationFun3dFV(SimulationBase):
 
     def run(self, istep: int):
         print("Running the flow simulation")
+        start_time = datetime.datetime.now()
+        print(f'Flow{istep} Queue Start Time: {start_time}')
         self._run_fun3d_simulation(istep, "flow")
+        end_time = datetime.datetime.now()
+        elapsed_time = end_time - start_time
+        print(f'Flow{istep} Queue End Time: {end_time}')
+        print(f'Flow{istep} Elapsed Time: {elapsed_time}')
 
     def _run_fun3d_simulation(self, istep: int, job_name: str, skip_external_distance=False):
         self._prepare_input_files(istep, job_name)
@@ -117,21 +124,27 @@ class SimulationFun3dFV(SimulationBase):
             self._set_distance_from_file_in_nml(istep, nml)
         if import_from:
             self._set_import_from_in_nml(istep, nml)
-        self._set_openmp_inputs_in_nml(nml, self.omp_threads)
+        # note: FV does not use openmp and should not use this
+        if (self.__class__ is not SimulationFun3dFV):
+            self._set_openmp_inputs_in_nml(nml, self.omp_threads)
 
     def _set_project_rootname_in_nml(self, istep: int, nml: f90nml.Namelist):
         nml["project"]["project_rootname"] = self._create_project_rootname(istep)
 
     def _set_import_from_in_nml(self, istep: int, nml: f90nml.Namelist):
-        nml["flow_initialization"]["import_from"] = f"{self._create_project_rootname(istep)}-restart.solb"
+        # if namelist not defined, skip it to enable restarting from scratch
+        if "flow_initialization" in nml:
+            if "import_from" in nml["flow_initialization"]:
+                nml["flow_initialization"]["import_from"] = f"{self._create_project_rootname(istep)}-restart.solb"
 
     def _set_distance_from_file_in_nml(self, istep: int, nml: f90nml.Namelist):
         nml["special_parameters"]["distance_from_file"] = self.distance.create_distance_filename(istep)
 
     def _set_openmp_inputs_in_nml(self, nml: f90nml.Namelist, omp_threads: int):
         value = True if omp_threads is not None else False
-        nml["code_run_control"]["use_openmp"] = value
-        nml["code_run_control"]["grid_coloring"] = value
+        if (value):
+            nml["code_run_control"]["use_openmp"] = value
+            nml["code_run_control"]["grid_coloring"] = value
 
     def _prepare_moving_body_input(self, istep: int, job_name: str):
         cp(self._get_template_moving_body_filename(job_name), "moving_body.input")
@@ -150,6 +163,10 @@ class SimulationFun3dFV(SimulationBase):
         if self.external_wall_distance and not skip_external_distance:
             command_list.append(self._create_distance_command(istep))
         command_list.append(self._create_fun3d_command(istep, job_name))
+        time_command_start = f'printf "Flow{istep} Start Time: " && date' # (command sent to pbs script)
+        time_command_end = f'printf "Flow{istep} End Time: " && date'
+        command_list.insert(0, time_command_start)
+        command_list.append(time_command_end)
         return command_list
 
     def _create_distance_command(self, istep: int):

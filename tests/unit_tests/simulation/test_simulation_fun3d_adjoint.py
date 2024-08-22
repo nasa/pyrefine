@@ -92,12 +92,13 @@ def sim_no_input_files():
 def test_fun3d_forward_command(sim_no_input_files: SimulationFun3dSFEAdjointNoInputFiles):
 
     pbs = PbsSpy()
-    pbs.mpiexec = "mpirun"
-    pbs.expected_jobname = "forward05"
+    pbs.mpiexec = 'mpirun'
+    pbs.expected_jobname = 'forward05'
+    pbs.expected_commands.append('printf "Flow5 Start Time: " && date')
     pbs.expected_commands.append(
-        "OMP_NUM_THREADS=2 OMP_PLACES=cores OMP_PROC_BIND=close mpirun -np 20 nodet_mpi &> forward05.out"
-    )
-    pbs.expected_output_files = ["box05_volume.solb", "box05-distance.solb"]
+        'OMP_NUM_THREADS=2 OMP_PLACES=cores OMP_PROC_BIND=close mpirun -np 20 nodet_mpi &> forward05.out')
+    pbs.expected_commands.append('printf "Flow5 End Time: " && date')
+    pbs.expected_output_files = ['box05_volume.solb', 'box05-distance.solb']
 
     sim_no_input_files.pbs = pbs
 
@@ -120,12 +121,13 @@ def test_fun3d_forward_command(sim_no_input_files: SimulationFun3dSFEAdjointNoIn
 def test_fun3d_adjoint_command(sim_no_input_files: SimulationFun3dSFEAdjointNoInputFiles):
 
     pbs = PbsSpy()
-    pbs.mpiexec = "mpirun"
-    pbs.expected_jobname = "adjoint05"
+    pbs.mpiexec = 'mpirun'
+    pbs.expected_jobname = 'adjoint05'
+    pbs.expected_commands.append('printf "Flow5 Start Time: " && date')
     pbs.expected_commands.append(
-        "OMP_NUM_THREADS=20 OMP_PLACES=cores OMP_PROC_BIND=close mpirun -np 2 nodet_mpi &> adjoint05.out"
-    )
-    pbs.expected_output_files = ["prim_dual.solb"]
+        'OMP_NUM_THREADS=20 OMP_PLACES=cores OMP_PROC_BIND=close mpirun -np 2 nodet_mpi &> adjoint05.out')
+    pbs.expected_commands.append('printf "Flow5 End Time: " && date')
+    pbs.expected_output_files = ['prim_dual.solb']
 
     sim_no_input_files.pbs = pbs
 

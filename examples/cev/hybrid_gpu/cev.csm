@@ -1,0 +1,11 @@
+box -10 -15 -15 20 30 30
+select face
+attribute bc_name $5000_farfield
+select face 2
+attribute bc_name $5051_outflow
+import cev.iges # cev iges file
+select face
+attribute bc_name $4000_cev
+subtract # cev from box
+scale 0.073025 # scale
+dump cev.egads

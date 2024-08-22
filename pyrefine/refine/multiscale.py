@@ -2,6 +2,7 @@ import os
 
 from .base import RefineBase
 from pbs4py import PBS
+import datetime
 
 
 class RefineMultiscale(RefineBase):
@@ -24,10 +25,13 @@ class RefineMultiscale(RefineBase):
         #:  lower gradient regions too much. The default value is 4.
         self.lp_norm = 4
 
-        #: str: The name of the scalar field used as the interpolant.
+        #: str: The name or file of the scalar field used as the interpolant.
         #:  mach (default), incomp (incompressible vel magnitude),
-        #:  htot, pressure, density, temperature.
+        #:  htot, pressure, density, temperature, or file.
         self.interpolant = 'mach'
+
+        #: str: The label for the interpolant file option.
+        self.interpolant_label = 'sampling_geom1'
 
     def run(self, istep: int, complexity: float):
         """
@@ -35,13 +39,23 @@ class RefineMultiscale(RefineBase):
         interpolate the solution to the new mesh.
         """
         print('Running multiscale refine')
+        start_time = datetime.datetime.now()
+        print(f'Refine{istep} Queue Start Time: {start_time}')
         self._run_multiscale_refine(istep, complexity)
+        end_time = datetime.datetime.now()
+        elapsed_time = end_time - start_time
+        print(f'Refine{istep} Queue End Time: {end_time}')
+        print(f'Refine{istep} Elapsed Time: {elapsed_time}')
 
     def _run_multiscale_refine(self, istep: int, complexity: float):
         ref_command = self._create_multiscale_refine_command(istep, complexity)
-
         job_name = f'refine{istep:02d}'
+
         command_list = [self.pbs.create_mpi_command(ref_command, job_name)]
+        time_command_start = f'printf "Refine{istep} Start Time: " && date'
+        time_command_end = f'printf "Refine{istep} End Time: " && date'
+        command_list.insert(0, time_command_start)
+        command_list.append(time_command_end)
         self.pbs.launch(job_name, command_list)
         self._check_for_refine_output_files(istep)
 
@@ -59,6 +73,8 @@ class RefineMultiscale(RefineBase):
         current = self._create_project_rootname(istep)
         next = self._create_project_rootname(istep+1)
 
+        self._create_interpolant_option(istep)
+
         command = f'refmpi loop {current} {next} {complexity}'
         command += self._create_multiscale_command_line_options()
         return self._add_common_ref_loop_options(command)
@@ -66,6 +82,16 @@ class RefineMultiscale(RefineBase):
     def _create_multiscale_command_line_options(self) -> str:
         return f' --norm-power {self.lp_norm} --interpolant {self.interpolant}'
 
+    def _create_interpolant_option(self, istep):
+        current = self._create_project_rootname(istep)
+        last = self._create_project_rootname(istep-1)
+
+        print(f'current, last = {current}, {last}')
+        if self.interpolant == 'file':
+            self.interpolant = f'{current}_{self.interpolant_label}.solb'
+
+        if self.interpolant == f'{last}_{self.interpolant_label}.solb':
+            self.interpolant = f'{current}_{self.interpolant_label}.solb'
 
 class RefineMultiscaleFixedPoint(RefineMultiscale):
     """

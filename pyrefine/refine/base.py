@@ -20,16 +20,13 @@ class RefineBase(ComponentBase):
         #: the value must be greater than or equal to 1.
         self.aspect_ratio = -1
 
-        #: float: initial wall spacing for the spalding option of refine
-        self.initial_wall_spacing = None
-
         #: bool: Set extrude_2d_mesh_to_3d flag to True when using a 2D mesh of
         #: triangles that needs to be extruded to a single layer of prisms.
         self.extrude_2d_mesh_to_3d = False
 
         #: bool: Create a buffer region of gradually coarsening the mesh as it approaches
         #        the X-extent outer boundary.
-        self.use_buffer = True
+        self.use_buffer = False
 
         #: bool: Use K-exact least-squares reconstruction.
         self.use_kexact = False
@@ -89,12 +86,6 @@ class RefineBase(ComponentBase):
     def _add_gradation_to_ref_loop_command(self, command: str) -> str:
         return command + f" --gradation {self.gradation}"
 
-    def _add_initial_wall_spacing_to_ref_loop_command(self, command: str) -> str:
-        if self.initial_wall_spacing is not None:
-            return command + f" --spalding {self.initial_wall_spacing}"
-        else:
-            return command
-
     def _add_uniform_refinement_regions_command(self, command: str) -> str:
         for region in self.uniform_regions:
             command += region.get_commandline_arguments()
@@ -103,7 +94,6 @@ class RefineBase(ComponentBase):
     def _add_common_ref_loop_options(self, command: str) -> str:
         command = self._add_aspect_ratio_to_ref_loop_command(command)
         command = self._add_gradation_to_ref_loop_command(command)
-        command = self._add_initial_wall_spacing_to_ref_loop_command(command)
         command = self._add_uniform_refinement_regions_command(command)
         if self.use_buffer:
             command += " --buffer"

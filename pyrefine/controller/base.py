@@ -22,6 +22,10 @@ class ControllerBase(ComponentBase):
         #: float: Complexity at iteration 1 of the adaptation cycle
         self.initial_complexity = 1000.0
 
+        #: float: Complexity at final iteration of the adaptation cycle.
+        #:  Number of iterations can be computed if defined using ControllerBasic.compute_iterations
+        self.final_complexity = None
+
         #: int: How often to save a meshb and -restart.solb file for restarting.
         self.restart_save_frequency = None
 
