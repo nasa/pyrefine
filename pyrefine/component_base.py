@@ -1,4 +1,6 @@
+import subprocess
 from typing import List
+
 from pbs4py import PBS
 
 
@@ -27,4 +29,25 @@ class ComponentBase:
         return []
 
     def _create_project_rootname(self, istep: int) -> str:
-        return f'{self.project_name}{istep:02d}'
+        return f"{self.project_name}{istep:02d}"
+
+    def _get_vertex_count(self, istep: int):
+        """
+        Calls ref examine on the mesh to determine the number of nodes
+        """
+        filename = f"{self._create_project_rootname(istep)}.lb8.ugrid"
+        command = ["ref", "examine", filename]
+        try:
+            result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
+            command_output = result.stdout
+
+            lines = command_output.splitlines()
+            for line in lines:
+                if line.startswith(" 0:"):
+                    parts = line.split()
+                    if len(parts) > 1:
+                        return int(parts[1])
+            raise ValueError("Could not find a line starting with '0:'")
+
+        except subprocess.CalledProcessError as e:
+            raise RuntimeError(f"Cound not run ref examine on grid: {e.stderr}")
