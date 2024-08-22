@@ -98,6 +98,8 @@ if (phase_aflr3):
     print("AFLR3 Begin")
     tic = time.perf_counter()
     aflr = AFLR3(project_name, bl_type)
+    aflr.nbl = nlayers
+    aflr.initial_wall_spacing = first_layer
     aflr.run()
     toc = time.perf_counter()
     elapsed = int(toc-tic)
