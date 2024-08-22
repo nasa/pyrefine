@@ -127,8 +127,12 @@ def mkdir(directory):
 def concatenate_files(file1: str, file2: str, output_file: str, chunk_size: int = 1024 * 1024):
     with open(output_file, "w") as f_out:
         with open(file1, "r") as f1:
-            while chunk := f1.read(chunk_size):
+            chunk = f1.read(chunk_size)
+            while chunk:
                 f_out.write(chunk)
+                chunk = f1.read(chunk_size)
         with open(file2, "r") as f2:
-            while chunk := f2.read(chunk_size):
+            chunk = f2.read(chunk_size)
+            while chunk:
                 f_out.write(chunk)
+                chunk = f2.read(chunk_size)
