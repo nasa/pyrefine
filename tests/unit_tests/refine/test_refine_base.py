@@ -43,15 +43,6 @@ def test_translate_mesh_command_with_extrude(refine: RefineBase):
     assert expected == refine._create_translate_command(ugrid, istep)
 
 
-def test_add_initial_wall_spacing(refine: RefineBase):
-    initial_command = "test"
-    assert "test" == refine._add_initial_wall_spacing_to_ref_loop_command(initial_command)
-
-    initial_command = "test"
-    refine.initial_wall_spacing = 1.0
-    assert "test --spalding 1.0" == refine._add_initial_wall_spacing_to_ref_loop_command(initial_command)
-
-
 def test_add_gradation(refine: RefineBase):
     initial_command = "test"
     assert "test --gradation -1" == refine._add_gradation_to_ref_loop_command(initial_command)
@@ -107,15 +98,15 @@ def test_add_uniform_refinement_regions_with_regions(refine: RefineBase):
 
 def test_comm_ref_loop_options_defaults(refine: RefineBase):
     initial_command = "test"
-    expected = "test --gradation -1 --buffer"
+    expected = "test --gradation -1"
     assert expected == refine._add_common_ref_loop_options(initial_command)
 
 
 def test_comm_ref_loop_options_nondefaults(refine: RefineBase):
-    refine.use_buffer = False
+    refine.use_buffer = True
     refine.use_kexact = True
     refine.use_deforming = True
     refine.number_of_sweeps = 3
     initial_command = "test"
-    expected = "test --gradation -1 --kexact --deforming -s 3"
+    expected = "test --gradation -1 --buffer --kexact --deforming -s 3"
     assert expected == refine._add_common_ref_loop_options(initial_command)

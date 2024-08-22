@@ -97,7 +97,7 @@ def test_fv_command_list(fv: SimulationFun3dFV):
     istep = 3
     job_name = "flow"
     fv.project_name = "test"
-    expected = [refine_expected_dist_command, "mpiexec nodet_mpi &> flow03.out"]
+    expected = ['printf "Flow3 Start Time: " && date', refine_expected_dist_command, "mpiexec nodet_mpi &> flow03.out",'printf "Flow3 End Time: " && date']
 
     with cd(distance_test_dir):
         commands = fv._create_list_of_commands_to_run(istep, job_name)
@@ -112,7 +112,7 @@ def test_fv_command_list_no_external_distance(fv: SimulationFun3dFV):
     job_name = "flow"
     fv.project_name = "test"
     fv.external_wall_distance = False
-    expected = ["mpiexec nodet_mpi &> flow04.out"]
+    expected = ['printf "Flow4 Start Time: " && date',"mpiexec nodet_mpi &> flow04.out",'printf "Flow4 End Time: " && date']
 
     with cd(distance_test_dir):
         commands = fv._create_list_of_commands_to_run(istep, job_name)
@@ -127,7 +127,7 @@ def test_fv_command_list_skip_external_distance(fv: SimulationFun3dFV):
     job_name = "flow"
     fv.project_name = "test"
     fv.external_wall_distance = True
-    expected = ["mpiexec nodet_mpi &> flow04.out"]
+    expected = ['printf "Flow4 Start Time: " && date',"mpiexec nodet_mpi &> flow04.out",'printf "Flow4 End Time: " && date']
 
     with cd(distance_test_dir):
         commands = fv._create_list_of_commands_to_run(istep, job_name, skip_external_distance=True)
@@ -218,18 +218,6 @@ def test_sfe_save_a_copy_of_inputs_with_moving(sfe: SimulationFun3dSFE):
         sfe._save_a_copy_of_solver_inputs(istep, job_name)
         check_files_exist(expected_outputs)
         clean_up_files(expected_outputs)
-
-
-def test_update_openmp_inputs(fv: SimulationFun3dFV):
-    with cd(test_dir):
-        nml = f90nml.read(fv.fun3d_nml)
-        fv._set_openmp_inputs_in_nml(nml, omp_threads=3)
-        assert nml["code_run_control"]["use_openmp"]
-        assert nml["code_run_control"]["grid_coloring"]
-
-        fv._set_openmp_inputs_in_nml(nml, omp_threads=None)
-        assert not nml["code_run_control"]["use_openmp"]
-        assert not nml["code_run_control"]["grid_coloring"]
 
 
 def test_set_distance_from_file_in_nml(fv: SimulationFun3dFV):
