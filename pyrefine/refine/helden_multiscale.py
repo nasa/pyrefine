@@ -21,9 +21,7 @@ class HeldenMultiscale(RefineBase):
         #:  lower gradient regions too much. The default value is 4.
         self.lp_norm = 4
 
-
         # ref source options
-
 
         #: float. Can be set to limit the smallest size of the mesh edges default is not to include
         self.mininum_allowed_spacing = None
@@ -36,7 +34,6 @@ class HeldenMultiscale(RefineBase):
         #: Can be used to stop the adaptation closer or further from the surface than what refine's
         #: buffer will do.
         self.maximum_source_distance = None
-
 
         #: heldenmesh options.
 
@@ -97,26 +94,25 @@ class HeldenMultiscale(RefineBase):
         return command
 
     def _get_commands_to_append_sources_to_input_template(self, istep):
-        project = self._create_project_rootname(istep+1)
+        project = self._create_project_rootname(istep + 1)
         input_file = self._get_heldenmesh_input_file_name()
-        return[f"cat {input_file} > {project}.input",
-               f"cat hm_src.txt  >> {project}.input"]
+        return [f"cat {input_file} > {project}.input", f"cat hm_src.txt  >> {project}.input"]
 
     def _get_heldenmesh_input_file_name(self):
         return self.heldenmesh_input_template or f"{self.project_name}.hm"
 
     def _get_command_to_run_heldenmesh(self, istep):
-        project = self._create_project_rootname(istep+1)
+        project = self._create_project_rootname(istep + 1)
         input_file = f"{project}.input"
-        command = f"heldenmesh {input_file} > helden{istep+1:02d}.out 2>&1"
+        command = f"heldenmesh_64bit {input_file} > helden{istep+1:02d}.out 2>&1"
         return command
 
     def _get_command_to_move_heldenmesh_output_mesh_to_next_iteration_number(self, istep):
-        project = self._create_project_rootname(istep+1)
+        project = self._create_project_rootname(istep + 1)
         return f"mv {self.project_name}.lb8.ugrid {project}.lb8.ugrid"
 
     def _get_command_to_interpolate_solution_to_new_mesh(self, istep):
         project = self._create_project_rootname(istep)
-        next_project = self._create_project_rootname(istep+1)
-        command =f"refmpi interpolate {project}.lb8.ugrid {project}_volume.solb {next_project}.lb8.ugrid {next_project}-restart.solb"
+        next_project = self._create_project_rootname(istep + 1)
+        command = f"refmpi interpolate {project}.lb8.ugrid {project}_volume.solb {next_project}.lb8.ugrid {next_project}-restart.solb"
         return self.pbs.create_mpi_command(command, f"ref_interpolate{istep:02d}")
