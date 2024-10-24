@@ -9,7 +9,7 @@ import datetime
 
 
 class SimulationFun3dFV(SimulationBase):
-    def __init__(self, project_name, pbs=None, external_wall_distance=True, omp_threads=None):
+    def __init__(self, project_name, pbs=None, external_wall_distance=True, omp_threads=None, ranks_per_node=None):
         """
         Runs fun3d finite volume analysis. Each time that run is called, the fun3d.nml
         in the adaptation root directory will be read, the distance and restart solb inputs will
@@ -32,6 +32,7 @@ class SimulationFun3dFV(SimulationBase):
         """
         super().__init__(project_name, pbs)
         self.omp_threads = omp_threads
+        self.ranks_per_node = ranks_per_node
 
         #: bool: Whether a distance field from an external calculator is needed
         self.external_wall_distance = external_wall_distance
@@ -180,7 +181,7 @@ class SimulationFun3dFV(SimulationBase):
         command = self._get_simulation_nodet(job_name)
         command += self._get_user_specified_fun3d_command_line_args_str()
         command += self._get_simulation_specific_fun3d_command_line_args_str(job_name)
-        return self.pbs.create_mpi_command(command, job_name_with_number, self.omp_threads)
+        return self.pbs.create_mpi_command(command, job_name_with_number, self.omp_threads, self.ranks_per_node)
 
     def _get_user_specified_fun3d_command_line_args_str(self):
         if len(self.fun3d_command_line_args) > 0:

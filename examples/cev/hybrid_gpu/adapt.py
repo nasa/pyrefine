@@ -29,9 +29,7 @@ phase_hybrid    = True
 pbs                  = FakePBS() # calling script inside a single PBS job
 pbs.ncpus_per_node   = int(sys.argv[1]) # ranks per node
 pbs.queue_node_limit = int(sys.argv[2]) # number of nodes
-ranks_per_gpu        = 4 # ranks per gpu
-ngpus                = 8 # number of gpus on node
-gpu_rank_divisor     = int(int(sys.argv[1])/(ranks_per_gpu*ngpus)) # this sets 4 ranks per GPU
+gpu_ranks_per_node   = 32 # 32 ranks for 8 GPUs - 4 ranks/GPU
 
 # General Inputs
 project_name = 'cev'
@@ -77,7 +75,7 @@ if (phase_c2s):
     adapt_driver.controller.initial_complexity = initial_complexity
     adapt_driver.controller.final_complexity = final_complexity
     adapt_driver.simulation.extra_input_files = ["tdata"]
-    adapt_driver.simulation.omp_threads = gpu_rank_divisor
+    adapt_driver.simulation.ranks_per_node = gpu_ranks_per_node
     adapt_driver.controller.steps_per_complexity = steps_per_complexity
     iterations = adapt_driver.controller.compute_iterations()
     adapt_driver.refine.lp_norm = 4
@@ -112,7 +110,7 @@ if (phase_hybrid):
     adapt_hybrid_driver.refine.vertices_per_cpu_core = 500 # use all ranks always
     adapt_hybrid_driver.controller.initial_complexity = hybrid_complexity
     adapt_hybrid_driver.simulation.extra_input_files = ["tdata"]
-    adapt_hybrid_driver.simulation.omp_threads = gpu_rank_divisor
+    adapt_hybrid_driver.simulation.ranks_per_node = gpu_ranks_per_node
     adapt_hybrid_driver.controller.steps_per_complexity = hybrid_steps
     adapt_hybrid_driver.refine.lp_norm = 2
     adapt_hybrid_driver.refine.number_of_sweeps = 10
