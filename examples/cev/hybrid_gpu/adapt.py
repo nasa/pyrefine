@@ -16,7 +16,9 @@ import time
 # nodes=$(cat $PBS_NODEFILE | sort | uniq | wc -l)
 # ranks=$(cat $PBS_NODEFILE | wc -l)
 # ranks_per_node=$(expr $ranks / $nodes)
-# python -u adapt.py $ranks_per_node $nodes > output.txt
+# gpus_per_node=4
+# ranks_per_gpu=4
+# python -u adapt.py $ranks_per_node $nodes $gpus_per_node $ranks_per_gpu > output.txt
 
 # Alternatively, it is possible to use split queues as in the onera_m6/steady_sa_gpu example to run refinement on CPU nodes and CFD on GPU nodes
 
@@ -29,7 +31,9 @@ phase_hybrid    = True
 pbs                  = FakePBS() # calling script inside a single PBS job
 pbs.ncpus_per_node   = int(sys.argv[1]) # ranks per node
 pbs.queue_node_limit = int(sys.argv[2]) # number of nodes
-gpu_ranks_per_node   = 32 # 32 ranks for 8 GPUs - 4 ranks/GPU
+gpus_per_node        = int(sys.argv[3]) # gpus per node
+ranks_per_gpu        = int(sys.argv[4]) # ranks per gpu
+gpu_ranks_per_node   = ranks_per_gpu*gpus_per_node
 
 # General Inputs
 project_name = 'cev'
