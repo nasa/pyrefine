@@ -27,16 +27,17 @@ STATES GOVERNMENT, ITS CONTRACTORS AND SUBCONTRACTORS, AS WELL AS ANY PRIOR
 RECIPIENT, TO THE EXTENT PERMITTED BY LAW.  RECIPIENT'S SOLE REMEDY FOR ANY SUCH
 MATTER SHALL BE THE IMMEDIATE, UNILATERAL TERMINATION OF THIS AGREEMENT.
 """
+
 import os
 from setuptools import setup, find_packages
 
 __package_name__ = "pyrefine"
 __package_version__ = "1.0.0"
 
-install_requires = ['numpy', 'f90nml', 'pbs4py']
+install_requires = ["numpy", "f90nml", "pbs4py"]
 
 root = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(root, 'README.md'), encoding='utf-8') as f:
+with open(os.path.join(root, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
 setup(
@@ -44,17 +45,20 @@ setup(
     version=__package_version__,
     description=("Python scripting for CFD mesh adaptation with refine"),
     long_description=long_description,
-    long_description_content_type='text/markdown',
-    scripts=["pyrefine/monitoring/pr_gui_fun3d_steady.py",
-             "pyrefine/monitoring/pr_gui_fun3d_sfe_steady.py",
-             "pyrefine/monitoring/pr_gui_fun3d_sfe_steady_adjoint.py",
-             "pyrefine/monitoring/pr_gui_fun3d_steady_live.py",
-             "pyrefine/post_processing/pr_post_fun3d_steady_hist_to_tec.py",
-             "pyrefine/simulation/sfe_cfg_update.py"],
+    long_description_content_type="text/markdown",
+    scripts=[
+        "pyrefine/monitoring/pr_gui_fun3d_steady.py",
+        "pyrefine/monitoring/pr_gui_fun3d_sfe_steady.py",
+        "pyrefine/monitoring/pr_gui_fun3d_sfe_steady_adjoint.py",
+        "pyrefine/monitoring/pr_gui_fun3d_steady_live.py",
+        "pyrefine/monitoring/pr_watch.py",
+        "pyrefine/post_processing/pr_post_fun3d_steady_hist_to_tec.py",
+        "pyrefine/simulation/sfe_cfg_update.py",
+    ],
     author="Kevin Jacobson",
     author_email="kevin.e.jacobson@nasa.gov",
     zip_safe=False,
     packages=find_packages(),
     install_requires=install_requires,
-    python_requires='>=3.6'
+    python_requires=">=3.6",
 )
