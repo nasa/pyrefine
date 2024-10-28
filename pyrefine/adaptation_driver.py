@@ -142,11 +142,11 @@ class AdaptationDriver:
         self.current_complexity = self.controller.compute_complexity(istep + 1, self.current_complexity)
         early_stop = self.controller.check_for_stop_condition(istep)
 
-        if self._skip_final_refine_call(skip_final_refine_call, istep, early_stop):
+        if not self._skip_refine_call(skip_final_refine_call, istep, early_stop):
             self.refine.run(istep, self.current_complexity)
         return early_stop
 
-    def _skip_final_refine_call(self, skip_final_refine_call, istep, early_stop):
+    def _skip_refine_call(self, skip_final_refine_call, istep, early_stop):
         if skip_final_refine_call:
             if istep == self.final_iteration or early_stop:
                 return True
