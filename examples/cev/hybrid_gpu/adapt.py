@@ -10,6 +10,7 @@ import time
 
 # This example uses all ranks to perform refinement and a subset to perform CFD more efficiently.
 # This script is called within a single queue scheduling script.
+# This script can also be easily changed to run both CFD and refinement on CPUs by setting gpus_per_node to ranks_per_node, ranks_per_gpu to 1, and commenting out the &gpu_support namelist in fun3d.nml
 # Example usage with PBS:
 # # load AFLR3, UG_IO/UGC, and FUN3D
 # mpirun -npernode 1 nvidia-cuda-mps-control -d # starts MPS one time instead of every FUN3D launch, can alternatively use cuda_start_mps
