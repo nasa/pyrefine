@@ -92,7 +92,7 @@ if (phase_c2s):
     adapt_driver.run()
     adapt_driver.simulation.fun3d_nml = 'fun3d.nml.2'
     adapt_driver.set_iterations(4, iterations)
-    adapt_driver.run()
+    adapt_driver.run(skip_final_refine_call=True)
     toc = time.perf_counter()
     elapsed = int(toc-tic)
     print("C2S End. Elapsed Time = ",'{:02}h:{:02}m:{:02}s'.format(elapsed//3600, elapsed%3600//60, elapsed%60))
@@ -125,7 +125,7 @@ if (phase_hybrid):
     adapt_hybrid_driver.run() 
     adapt_hybrid_driver.simulation.fun3d_nml = 'fun3d.nml.2'
     adapt_hybrid_driver.set_iterations(4, hybrid_steps)
-    adapt_hybrid_driver.run(skip_final_refine_call=True) 
+    adapt_hybrid_driver.run(skip_final_refine_call=True)
     toc = time.perf_counter()
     elapsed = int(toc-tic)
     print("Hybrid End. Elapsed Time = ",'{:02}h:{:02}m:{:02}s'.format(elapsed//3600, elapsed%3600//60, elapsed%60))
