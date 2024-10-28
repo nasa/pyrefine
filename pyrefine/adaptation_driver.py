@@ -74,9 +74,15 @@ class AdaptationDriver:
         self.start_iteration = start_iteration
         self.final_iteration = final_iteration
 
-    def run(self):
+    def run(self, skip_final_refine_call=False):
         """
         Perform the adaptation
+
+        Parameters
+        ----------
+        skip_final_refine_call: bool
+            Skip the call to refine on the final cycle that would generate the mesh for the
+            final_iteration + 1 cycle.
         """
         self.component_list: List[ComponentBase] = [self.simulation, self.controller, self.refine]
 
@@ -92,7 +98,7 @@ class AdaptationDriver:
             for istep in range(self.start_iteration, self.final_iteration + 1):
                 print(f"Begin adaptation step {istep}")
                 self._check_for_stop_file(istep)
-                early_stop = self._run_adapt_iteration(istep)
+                early_stop = self._run_adapt_iteration(istep, skip_final_refine_call)
                 self.controller.cleanup(istep)
                 if early_stop:
                     break
@@ -116,7 +122,7 @@ class AdaptationDriver:
             if component.vertices_per_cpu_core is None:
                 component.vertices_per_cpu_core = self.vertices_per_cpu_core
 
-    def _run_adapt_iteration(self, istep: int) -> bool:
+    def _run_adapt_iteration(self, istep: int, skip_final_refine_call: bool) -> bool:
         """
         | Run the steps of a cycle of the adaptation. For a steady
         | adaptation, the steps are:
@@ -133,12 +139,18 @@ class AdaptationDriver:
 
         self.simulation.run(istep)
 
-        # adaptation prep for next step
         self.current_complexity = self.controller.compute_complexity(istep + 1, self.current_complexity)
-        self.refine.run(istep, self.current_complexity)
+        early_stop = self.controller.check_for_stop_condition(istep)
 
-        early_stop = self.controller.check_for_early_stop_condition(istep)
+        if self._skip_final_refine_call(skip_final_refine_call, istep, early_stop):
+            self.refine.run(istep, self.current_complexity)
         return early_stop
+
+    def _skip_final_refine_call(self, skip_final_refine_call, istep, early_stop):
+        if skip_final_refine_call:
+            if istep == self.final_iteration or early_stop:
+                return True
+        return False
 
     def _set_node_request_size(self, istep: int):
         """
