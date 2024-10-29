@@ -10,13 +10,16 @@ import time
 
 # This example uses all ranks to perform refinement and a subset to perform CFD more efficiently.
 # This script is called within a single queue scheduling script.
+# This script can also be easily changed to run both CFD and refinement on CPUs by setting gpus_per_node to ranks_per_node, ranks_per_gpu to 1, and commenting out the &gpu_support namelist in fun3d.nml
 # Example usage with PBS:
 # # load AFLR3, UG_IO/UGC, and FUN3D
 # mpirun -npernode 1 nvidia-cuda-mps-control -d # starts MPS one time instead of every FUN3D launch, can alternatively use cuda_start_mps
 # nodes=$(cat $PBS_NODEFILE | sort | uniq | wc -l)
 # ranks=$(cat $PBS_NODEFILE | wc -l)
 # ranks_per_node=$(expr $ranks / $nodes)
-# python -u adapt.py $ranks_per_node $nodes > output.txt
+# gpus_per_node=4
+# ranks_per_gpu=4
+# python -u adapt.py $ranks_per_node $nodes $gpus_per_node $ranks_per_gpu > output.txt
 
 # Alternatively, it is possible to use split queues as in the onera_m6/steady_sa_gpu example to run refinement on CPU nodes and CFD on GPU nodes
 
@@ -29,9 +32,9 @@ phase_hybrid    = True
 pbs                  = FakePBS() # calling script inside a single PBS job
 pbs.ncpus_per_node   = int(sys.argv[1]) # ranks per node
 pbs.queue_node_limit = int(sys.argv[2]) # number of nodes
-ranks_per_gpu        = 4 # ranks per gpu
-ngpus                = 8 # number of gpus on node
-gpu_rank_divisor     = int(int(sys.argv[1])/(ranks_per_gpu*ngpus)) # this sets 4 ranks per GPU
+gpus_per_node        = int(sys.argv[3]) # gpus per node
+ranks_per_gpu        = int(sys.argv[4]) # ranks per gpu
+gpu_ranks_per_node   = ranks_per_gpu*gpus_per_node
 
 # General Inputs
 project_name = 'cev'
@@ -48,7 +51,7 @@ steps_per_complexity = 5
 
 # AFLR3 Phase Inputs
 # bl_type = 'yplus'   # requires FUN3D v14.2+, defaults: initial wall spacing = 1, bl height = 1000
-# bl_type = 're_cell' # requires FUN3D v14.2+, defaults: initial wall spacing = 1, bl height = 5000
+# bl_type = 're_cell' # requires FUN3D v14.2+, defaults: initial wall spacing = 1, bl height = 3000
 bl_type     = 'manual'
 # for manual, can alternatively call aflr.compute_spacing_from_reynolds_number(re, bl_initial=None, bl_full=None) below
 # which will compute y+=1 from flat plate theory and generate BL from y+=1 to y+=1000 (adjustable with optional args bl_initial and bl_full)
@@ -77,7 +80,7 @@ if (phase_c2s):
     adapt_driver.controller.initial_complexity = initial_complexity
     adapt_driver.controller.final_complexity = final_complexity
     adapt_driver.simulation.extra_input_files = ["tdata"]
-    adapt_driver.simulation.omp_threads = gpu_rank_divisor
+    adapt_driver.simulation.ranks_per_node = gpu_ranks_per_node
     adapt_driver.controller.steps_per_complexity = steps_per_complexity
     iterations = adapt_driver.controller.compute_iterations()
     adapt_driver.refine.lp_norm = 4
@@ -89,7 +92,7 @@ if (phase_c2s):
     adapt_driver.run()
     adapt_driver.simulation.fun3d_nml = 'fun3d.nml.2'
     adapt_driver.set_iterations(4, iterations)
-    adapt_driver.run()
+    adapt_driver.run(skip_final_refine_call=True)
     toc = time.perf_counter()
     elapsed = int(toc-tic)
     print("C2S End. Elapsed Time = ",'{:02}h:{:02}m:{:02}s'.format(elapsed//3600, elapsed%3600//60, elapsed%60))
@@ -112,7 +115,7 @@ if (phase_hybrid):
     adapt_hybrid_driver.refine.vertices_per_cpu_core = 500 # use all ranks always
     adapt_hybrid_driver.controller.initial_complexity = hybrid_complexity
     adapt_hybrid_driver.simulation.extra_input_files = ["tdata"]
-    adapt_hybrid_driver.simulation.omp_threads = gpu_rank_divisor
+    adapt_hybrid_driver.simulation.ranks_per_node = gpu_ranks_per_node
     adapt_hybrid_driver.controller.steps_per_complexity = hybrid_steps
     adapt_hybrid_driver.refine.lp_norm = 2
     adapt_hybrid_driver.refine.number_of_sweeps = 10
@@ -122,7 +125,7 @@ if (phase_hybrid):
     adapt_hybrid_driver.run() 
     adapt_hybrid_driver.simulation.fun3d_nml = 'fun3d.nml.2'
     adapt_hybrid_driver.set_iterations(4, hybrid_steps)
-    adapt_hybrid_driver.run() 
+    adapt_hybrid_driver.run(skip_final_refine_call=True)
     toc = time.perf_counter()
     elapsed = int(toc-tic)
     print("Hybrid End. Elapsed Time = ",'{:02}h:{:02}m:{:02}s'.format(elapsed//3600, elapsed%3600//60, elapsed%60))

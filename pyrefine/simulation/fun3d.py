@@ -9,7 +9,7 @@ import datetime
 
 
 class SimulationFun3dFV(SimulationBase):
-    def __init__(self, project_name, pbs=None, external_wall_distance=True, omp_threads=None):
+    def __init__(self, project_name, pbs=None, external_wall_distance=True, omp_threads=None, ranks_per_node=None):
         """
         Runs fun3d finite volume analysis. Each time that run is called, the fun3d.nml
         in the adaptation root directory will be read, the distance and restart solb inputs will
@@ -29,9 +29,13 @@ class SimulationFun3dFV(SimulationBase):
             Number of OpenMP threads per mpi process to run if doing hybrid
             parallelism. If not doing hybrid parallelism, this optional argument
             should be left as None.
+        ranks_per_node: int
+            Number of mpi ranks per node. By default, all available ranks are used. This option is used
+            for hybrid CPU/GPU simulations and should be left as None otherwise.
         """
         super().__init__(project_name, pbs)
         self.omp_threads = omp_threads
+        self.ranks_per_node = ranks_per_node
 
         #: bool: Whether a distance field from an external calculator is needed
         self.external_wall_distance = external_wall_distance
@@ -180,7 +184,7 @@ class SimulationFun3dFV(SimulationBase):
         command = self._get_simulation_nodet(job_name)
         command += self._get_user_specified_fun3d_command_line_args_str()
         command += self._get_simulation_specific_fun3d_command_line_args_str(job_name)
-        return self.pbs.create_mpi_command(command, job_name_with_number, self.omp_threads)
+        return self.pbs.create_mpi_command(command, job_name_with_number, self.omp_threads, self.ranks_per_node)
 
     def _get_user_specified_fun3d_command_line_args_str(self):
         if len(self.fun3d_command_line_args) > 0:
@@ -195,7 +199,7 @@ class SimulationFun3dFV(SimulationBase):
 
 
 class SimulationFun3dSFE(SimulationFun3dFV):
-    def __init__(self, project_name, pbs=None, external_wall_distance=True, omp_threads=None):
+    def __init__(self, project_name, pbs=None, external_wall_distance=True, omp_threads=None, ranks_per_node=None):
         """
         Runs fun3d stabilized finite element analysis. Does the same actions as the
         FV version but also handles the sfe.cfg file.
@@ -213,6 +217,9 @@ class SimulationFun3dSFE(SimulationFun3dFV):
             Number of OpenMP threads per mpi process to run if doing hybrid
             parallelism. If not doing hybrid parallelism, this optional argument
             should be left as None.
+        ranks_per_node: int
+            Number of mpi ranks per node. By default, all available ranks are used. This option is used
+            for hybrid CPU/GPU simulations and should be left as None otherwise.
         """
         super().__init__(project_name, pbs, external_wall_distance, omp_threads)
 

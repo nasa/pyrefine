@@ -28,7 +28,7 @@ class AFLR3:
         #: int: Full boundary layer height in wall units based on bl_type ('yplus' or 're_cell').
         self.bl_full = 1000
         if (self.bl_type == 're_cell'):
-            self.bl_full = 5000
+            self.bl_full = 3000
 
         #: str: Additional arguments passed into aflr3
         self.aflr_extra_args = ''
@@ -98,13 +98,15 @@ class AFLR3:
         subprocess.run('rm -r aflr/ hybrid/', shell=True)
 
         # Find the latest *.lb8.ugrid file from Flow folder
-        list_of_files = glob.glob('./Flow/*.lb8.ugrid')
+        list_of_files = glob.glob('./Flow/*.meshb')
         latest_file = max(list_of_files, key=os.path.getctime)
+        desired_file = latest_file.replace(".meshb",".lb8.ugrid")
+        subprocess.run(f'ref translate {latest_file} {desired_file}', shell=True)
 
         # Make a new directory and load the necessary ugrid file to begin aflr3 process:
         subprocess.run(
         f'mkdir aflr \
-        \ncp {latest_file} ./aflr/{self.project_name}.lb8.ugrid', shell=True)
+        \ncp {desired_file} ./aflr/{self.project_name}.lb8.ugrid', shell=True)
         os.chdir('./aflr')
 
         # Print important input parameters for AFLR3:
