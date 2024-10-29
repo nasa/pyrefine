@@ -28,7 +28,7 @@ class AFLR3:
         #: int: Full boundary layer height in wall units based on bl_type ('yplus' or 're_cell').
         self.bl_full = 1000
         if (self.bl_type == 're_cell'):
-            self.bl_full = 5000
+            self.bl_full = 3000
 
         #: str: Additional arguments passed into aflr3
         self.aflr_extra_args = ''

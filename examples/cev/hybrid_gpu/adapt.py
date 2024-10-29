@@ -51,7 +51,7 @@ steps_per_complexity = 5
 
 # AFLR3 Phase Inputs
 # bl_type = 'yplus'   # requires FUN3D v14.2+, defaults: initial wall spacing = 1, bl height = 1000
-# bl_type = 're_cell' # requires FUN3D v14.2+, defaults: initial wall spacing = 1, bl height = 5000
+# bl_type = 're_cell' # requires FUN3D v14.2+, defaults: initial wall spacing = 1, bl height = 3000
 bl_type     = 'manual'
 # for manual, can alternatively call aflr.compute_spacing_from_reynolds_number(re, bl_initial=None, bl_full=None) below
 # which will compute y+=1 from flat plate theory and generate BL from y+=1 to y+=1000 (adjustable with optional args bl_initial and bl_full)
