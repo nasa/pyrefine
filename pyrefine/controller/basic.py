@@ -69,5 +69,5 @@ class ControllerBasic(ControllerBase):
         if (self.final_complexity < self.initial_complexity):
             raise ValueError('final_complexity must be equal or greater than initial_complexity.')
 
-        iterations = int(math.ceil(math.log(self.final_complexity/self.initial_complexity)/math.log(self.complexity_multiplier))*self.steps_per_complexity)
+        iterations = int(math.ceil(math.log(self.final_complexity/self.initial_complexity)/math.log(self.complexity_multiplier))*self.steps_per_complexity)+self.steps_per_complexity
         return iterations
