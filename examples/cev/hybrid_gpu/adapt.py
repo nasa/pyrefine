@@ -46,7 +46,7 @@ bootstrap_initial_wall_spacing = 1E-5
 
 # C2S Phase Inputs
 initial_complexity   = 200_000
-final_complexity     = 3_200_000
+final_complexity     = 1_600_000
 steps_per_complexity = 5
 
 # AFLR3 Phase Inputs
