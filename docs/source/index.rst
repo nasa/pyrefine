@@ -37,6 +37,7 @@ The methods to access this functionality are defined in :class:`~pyrefine.refine
    refine/multiscale.rst
    refine/goal_oriented.rst
    refine/uniform_regions.rst
+   refine/aflr3.rst
 
 .. _controller:
 
