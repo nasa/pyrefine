@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>Standard Adaptation Driver &#8212; pyrefine  documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -18,7 +18,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Refine Base Class" href="refine/base.html" />
-    <link rel="prev" title="Adaptation Driver" href="index.html" /> 
+    <link rel="prev" title="Refine Boostrap" href="refine/bootstrap.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -33,7 +33,7 @@
           <a href="refine/base.html" title="Refine Base Class"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Adaptation Driver"
+          <a href="refine/bootstrap.html" title="Refine Boostrap"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">pyrefine  documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Standard Adaptation Driver</a></li> 
@@ -119,7 +119,7 @@ restart information is saved, or how to turn off the clean up operations complet
 steady adaptation with FUN3D finite volume, increase the complexity
 after a fixed number of meshes, and use the Mach number multiscale metric.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>project_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The root name of the project (without any mesh numbers)</p></li>
 <li><p><strong>pbs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PBS</span></code>) – PBS queue helper</p></li>
@@ -131,7 +131,7 @@ after a fixed number of meshes, and use the Mach number multiscale metric.</p>
 <span class="sig-name descname"><span class="pre">project_name</span></span><a class="headerlink" href="#pyrefine.adaptation_driver.AdaptationDriver.project_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>The root name of the project (without any mesh numbers)</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -142,7 +142,7 @@ after a fixed number of meshes, and use the Mach number multiscale metric.</p>
 <span class="sig-name descname"><span class="pre">pbs</span></span><a class="headerlink" href="#pyrefine.adaptation_driver.AdaptationDriver.pbs" title="Permalink to this definition">¶</a></dt>
 <dd><p>PBS: The pbs queue helper object</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>class</p>
 </dd>
 </dl>
@@ -153,7 +153,7 @@ after a fixed number of meshes, and use the Mach number multiscale metric.</p>
 <span class="sig-name descname"><span class="pre">start_iteration</span></span><a class="headerlink" href="#pyrefine.adaptation_driver.AdaptationDriver.start_iteration" title="Permalink to this definition">¶</a></dt>
 <dd><p>First iteration to run in adaptation process</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -164,7 +164,7 @@ after a fixed number of meshes, and use the Mach number multiscale metric.</p>
 <span class="sig-name descname"><span class="pre">final_iteration</span></span><a class="headerlink" href="#pyrefine.adaptation_driver.AdaptationDriver.final_iteration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Last iteration to run in the adaptation process</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -176,7 +176,7 @@ after a fixed number of meshes, and use the Mach number multiscale metric.</p>
 <dd><p>How many mesh vertices per cpu core. Used when determining how many
 compute nodes to request. The default value is 10000.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -187,7 +187,7 @@ compute nodes to request. The default value is 10000.</p>
 <span class="sig-name descname"><span class="pre">simulation</span></span><a class="headerlink" href="#pyrefine.adaptation_driver.AdaptationDriver.simulation" title="Permalink to this definition">¶</a></dt>
 <dd><p>the simulation driver object</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="simulation/base.html#pyrefine.simulation.base.SimulationBase" title="pyrefine.simulation.base.SimulationBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimulationBase</span></code></a></p>
 </dd>
 </dl>
@@ -198,7 +198,7 @@ compute nodes to request. The default value is 10000.</p>
 <span class="sig-name descname"><span class="pre">controller</span></span><a class="headerlink" href="#pyrefine.adaptation_driver.AdaptationDriver.controller" title="Permalink to this definition">¶</a></dt>
 <dd><p>the complexity schedule controller object</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="controller/base.html#pyrefine.controller.base.ControllerBase" title="pyrefine.controller.base.ControllerBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ControllerBase</span></code></a></p>
 </dd>
 </dl>
@@ -209,7 +209,7 @@ compute nodes to request. The default value is 10000.</p>
 <span class="sig-name descname"><span class="pre">refine</span></span><a class="headerlink" href="#pyrefine.adaptation_driver.AdaptationDriver.refine" title="Permalink to this definition">¶</a></dt>
 <dd><p>the refine driver object</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="refine/base.html#pyrefine.refine.base.RefineBase" title="pyrefine.refine.base.RefineBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">RefineBase</span></code></a></p>
 </dd>
 </dl>
@@ -223,7 +223,7 @@ The default starting iteration is 1 which is a new adaptation.
 For restarts, set the starting value to the iteration you want to
 begin with. The default final iteration is 50.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>start_iteration</strong> (<em>int</em>) – </p></li>
 <li><p><strong>final_iteration</strong> (<em>int</em>) – </p></li>
@@ -234,8 +234,14 @@ begin with. The default final iteration is 50.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrefine.adaptation_driver.AdaptationDriver.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.adaptation_driver.AdaptationDriver.run" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_final_refine_call</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.adaptation_driver.AdaptationDriver.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform the adaptation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>skip_final_refine_call</strong> (<em>bool</em>) – Skip the call to refine on the final cycle that would generate the mesh for the
+final_iteration + 1 cycle.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -280,8 +286,8 @@ begin with. The default final iteration is 50.</p>
   </div>
   <div>
     <h4>Previous topic</h4>
-    <p class="topless"><a href="index.html"
-                          title="previous chapter">Adaptation Driver</a></p>
+    <p class="topless"><a href="refine/bootstrap.html"
+                          title="previous chapter">Refine Boostrap</a></p>
   </div>
   <div>
     <h4>Next topic</h4>
@@ -322,7 +328,7 @@ begin with. The default final iteration is 50.</p>
           <a href="refine/base.html" title="Refine Base Class"
              >next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Adaptation Driver"
+          <a href="refine/bootstrap.html" title="Refine Boostrap"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">pyrefine  documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Standard Adaptation Driver</a></li> 

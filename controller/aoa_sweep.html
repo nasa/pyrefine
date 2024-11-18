@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>Angle of Attack Sweep Controller &#8212; pyrefine  documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
@@ -59,7 +59,7 @@ An angle of attack adjustment phase occurs between fixed angle of attack
 phases. In the adjustment phase, complexity is held fixed while the
 problem is incremented to the next angle of attack.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>project_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The root name of the project (without any mesh numbers)</p></li>
 <li><p><strong>pbs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PBS</span></code>) – PBS queue helper</p></li>
@@ -71,7 +71,7 @@ problem is incremented to the next angle of attack.</p>
 <span class="sig-name descname"><span class="pre">steps_per_complexity_at_aoa</span></span><a class="headerlink" href="#pyrefine.controller.aoa_sweep.ControllerAoaSweep.steps_per_complexity_at_aoa" title="Permalink to this definition">¶</a></dt>
 <dd><p>At a fixed aoa, the number of adaptation cycles before increasing the complexity</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -82,7 +82,7 @@ problem is incremented to the next angle of attack.</p>
 <span class="sig-name descname"><span class="pre">complexity_multiplier</span></span><a class="headerlink" href="#pyrefine.controller.aoa_sweep.ControllerAoaSweep.complexity_multiplier" title="Permalink to this definition">¶</a></dt>
 <dd><p>The multiplicative factor to mutiple the complexity by</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -93,7 +93,7 @@ problem is incremented to the next angle of attack.</p>
 <span class="sig-name descname"><span class="pre">complexity_levels_per_aoa</span></span><a class="headerlink" href="#pyrefine.controller.aoa_sweep.ControllerAoaSweep.complexity_levels_per_aoa" title="Permalink to this definition">¶</a></dt>
 <dd><p>The number of complexity levels at each angle of attack</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -104,7 +104,7 @@ problem is incremented to the next angle of attack.</p>
 <span class="sig-name descname"><span class="pre">steps_per_aoa_transition</span></span><a class="headerlink" href="#pyrefine.controller.aoa_sweep.ControllerAoaSweep.steps_per_aoa_transition" title="Permalink to this definition">¶</a></dt>
 <dd><p>The number of adaptation cycles used to transition to the next angle of attack step</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -115,7 +115,7 @@ problem is incremented to the next angle of attack.</p>
 <span class="sig-name descname"><span class="pre">aoa_step_size</span></span><a class="headerlink" href="#pyrefine.controller.aoa_sweep.ControllerAoaSweep.aoa_step_size" title="Permalink to this definition">¶</a></dt>
 <dd><p>The angle of attack step size at which analyze. (transition moves between step_size)</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -126,7 +126,7 @@ problem is incremented to the next angle of attack.</p>
 <span class="sig-name descname"><span class="pre">initial_aoa</span></span><a class="headerlink" href="#pyrefine.controller.aoa_sweep.ControllerAoaSweep.initial_aoa" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initial angle of attack in degrees</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -137,7 +137,7 @@ problem is incremented to the next angle of attack.</p>
 <span class="sig-name descname"><span class="pre">fun3d_nml_list</span></span><a class="headerlink" href="#pyrefine.controller.aoa_sweep.ControllerAoaSweep.fun3d_nml_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>The list of fun3d namelist files to adjust the angle of attack in</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>list[str]</p>
 </dd>
 </dl>
@@ -153,14 +153,14 @@ problem is incremented to the next angle of attack.</p>
 <dt class="sig sig-object py" id="pyrefine.controller.aoa_sweep.ControllerAoaSweep.compute_complexity">
 <span class="sig-name descname"><span class="pre">compute_complexity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">istep</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_complexity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.controller.aoa_sweep.ControllerAoaSweep.compute_complexity" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>istep</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Adaptation step number</p></li>
 <li><p><strong>current_complexity</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – The current complexity in the driver. If doing a restart, the current
 complexity will be <cite>None</cite></p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>complexity</p>
 </dd>
 </dl>

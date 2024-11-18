@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>Uniform Refinement Regions &#8212; pyrefine  documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
@@ -64,7 +64,7 @@ They are added to the command line arguments when refine executes.</p>
 <span class="sig-name descname"><span class="pre">h0</span></span><a class="headerlink" href="#pyrefine.refine.uniform_region.UniformRegionBase.h0" title="Permalink to this definition">¶</a></dt>
 <dd><p>reference element length</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -76,7 +76,7 @@ They are added to the command line arguments when refine executes.</p>
 <dd><p>reference distance for quadratic decay of sizing constraint enforcement.
 Distance measured from shape surface (positive distance designates interior enforcement).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -87,7 +87,7 @@ Distance measured from shape surface (positive distance designates interior enfo
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">limit</span></span><a class="headerlink" href="#pyrefine.refine.uniform_region.UniformRegionBase.limit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Type of sizing constraint enforced in region (ceil or floor).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -98,7 +98,7 @@ Distance measured from shape surface (positive distance designates interior enfo
 <span class="sig-name descname"><span class="pre">get_commandline_arguments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.uniform_region.UniformRegionBase.get_commandline_arguments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the refine commandline arguments to activate a uniform refinement region.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
 </dd>
 </dl>
@@ -124,7 +124,7 @@ Distance measured from shape surface (positive distance designates interior enfo
 <span class="sig-name descname"><span class="pre">get_commandline_arguments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.uniform_region.UniformBox.get_commandline_arguments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the refine commandline arguments to activate a uniform refinement region.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
 </dd>
 </dl>
@@ -144,7 +144,7 @@ line, cone, fustrum, or cylinder.  A cylinder is defined by the coordinates
 of two points and the radius at those point.  The radii of the cylinder are
 perpendicular to the axis connecting the two points.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>base_x</strong> (<em>float</em>) – x coordinate of cylinder base center</p></li>
 <li><p><strong>base_y</strong> (<em>float</em>) – y coordinate of cylinder base center</p></li>
@@ -162,7 +162,7 @@ perpendicular to the axis connecting the two points.</p>
 <span class="sig-name descname"><span class="pre">set_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.uniform_region.UniformCylinder.set_base" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the center and radius of the bottom circle</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>float</em>) – x coordinate</p></li>
 <li><p><strong>y</strong> (<em>float</em>) – y coordinate</p></li>
@@ -178,7 +178,7 @@ perpendicular to the axis connecting the two points.</p>
 <span class="sig-name descname"><span class="pre">set_top</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.uniform_region.UniformCylinder.set_top" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the center and radius of the top circle</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>x</strong> (<em>float</em>) – x coordinate</p></li>
 <li><p><strong>y</strong> (<em>float</em>) – y coordinate</p></li>
@@ -194,7 +194,7 @@ perpendicular to the axis connecting the two points.</p>
 <span class="sig-name descname"><span class="pre">get_commandline_arguments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.uniform_region.UniformCylinder.get_commandline_arguments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the refine commandline arguments to activate a uniform refinement region.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
 </dd>
 </dl>

@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>Quantity Monitoring Controllers &#8212; pyrefine  documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
@@ -57,7 +57,7 @@
 <p>A controller to double the complexity of the adaptation based on the
 convergence of one or more integrated loads from the FUN3D forces file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>project_name</strong> (<em>str</em>) – The root name of the project (without any mesh numbers)</p></li>
 <li><p><strong>pbs</strong> (<em>:class:PBS</em>) – PBS queue helper</p></li>
@@ -78,13 +78,13 @@ convergence of one or more integrated loads from the FUN3D forces file.</p>
 <dd><p>function to extract list of quantities to be monitored from the
 simulation corresponding to adaptation cycle <cite>istep</cite>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>istep</strong> (<em>int</em>) – Adaptation step number</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p><strong>quantities</strong> – Variables to be monitored</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>list of floats</p>
 </dd>
 </dl>
@@ -104,7 +104,7 @@ convergence of CD and/or CL for SFE. SFE computes its own forces
 based on FE integration over the surface, but doesn’t write a separate
 force file, so we pull the CD and CL from the simulation log file</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>project_name</strong> (<em>str</em>) – The root name of the project (without any mesh numbers)</p></li>
 <li><p><strong>pbs</strong> (<em>:class:PBS</em>) – PBS queue helper</p></li>
@@ -119,13 +119,13 @@ force file, so we pull the CD and CL from the simulation log file</p>
 <dd><p>function to extract list of quantities to be monitored from the
 simulation corresponding to adaptation cycle <cite>istep</cite>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>istep</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Adaptation step number</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Variables to be monitored</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>quantities</p>
 </dd>
 </dl>
@@ -147,7 +147,7 @@ convergence of some quantity(s) of interest like lift or drag.</p>
 <p>To monitor a quantity, you should subclass and implement the
 <a class="reference internal" href="#pyrefine.controller.monitor_quantity.ControllerMonitorQuantity.get_monitored_quantities_for_step" title="pyrefine.controller.monitor_quantity.ControllerMonitorQuantity.get_monitored_quantities_for_step"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_monitored_quantities_for_step()</span></code></a> method.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>project_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The root name of the project (without any mesh numbers)</p></li>
 <li><p><strong>pbs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PBS</span></code>) – PBS queue helper</p></li>
@@ -160,7 +160,7 @@ convergence of some quantity(s) of interest like lift or drag.</p>
 <dd><p>The maximum number of steps to take per complexity level if
 the monitored quantities do not converge</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -172,7 +172,7 @@ the monitored quantities do not converge</p>
 <dd><p>The relative tolerance used in monitoring the convergence of
 the quantities of interest</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -184,7 +184,7 @@ the quantities of interest</p>
 <dd><p>the multiplier applied to the complexity when the complexity needs to be updated.
 The default value is 2.0.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -196,14 +196,14 @@ The default value is 2.0.</p>
 <dd><p>Compute the complexity for the upcoming step based in the convergence
 or one of more integrated quantities</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>istep</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Adaptation step number</p></li>
 <li><p><strong>current_complexity</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – The current complexity in the driver. If doing a restart, the current
 complexity will be <cite>None</cite></p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>complexity</p>
 </dd>
 </dl>
@@ -215,13 +215,13 @@ complexity will be <cite>None</cite></p></li>
 <dd><p>function to extract list of quantities to be monitored from the
 simulation corresponding to adaptation cycle <cite>istep</cite>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>istep</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Adaptation step number</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Variables to be monitored</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>quantities</p>
 </dd>
 </dl>

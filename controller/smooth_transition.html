@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>Smooth Transition Controller &#8212; pyrefine  documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
@@ -65,7 +65,7 @@ For step 10, the complexity will be double the initial complexity.
 This pattern of 5 fixed complexity steps and doubling over 4 transition
 steps will continue until the adaptation is stopped.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>project_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The root name of the project (without any mesh numbers)</p></li>
 <li><p><strong>pbs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PBS</span></code>) – PBS queue helper</p></li>
@@ -77,7 +77,7 @@ steps will continue until the adaptation is stopped.</p>
 <span class="sig-name descname"><span class="pre">steps_per_complexity</span></span><a class="headerlink" href="#pyrefine.controller.smooth_transition.ControllerSmoothTransition.steps_per_complexity" title="Permalink to this definition">¶</a></dt>
 <dd><p>The number of meshes at constant complexity.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -88,7 +88,7 @@ steps will continue until the adaptation is stopped.</p>
 <span class="sig-name descname"><span class="pre">complexity_multiplier</span></span><a class="headerlink" href="#pyrefine.controller.smooth_transition.ControllerSmoothTransition.complexity_multiplier" title="Permalink to this definition">¶</a></dt>
 <dd><p>The multiplicative factor to mutiple the complexity by</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -99,7 +99,7 @@ steps will continue until the adaptation is stopped.</p>
 <span class="sig-name descname"><span class="pre">steps_per_transition</span></span><a class="headerlink" href="#pyrefine.controller.smooth_transition.ControllerSmoothTransition.steps_per_transition" title="Permalink to this definition">¶</a></dt>
 <dd><p>The number of meshes used to transition to the next complexity</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -109,14 +109,14 @@ steps will continue until the adaptation is stopped.</p>
 <dt class="sig sig-object py" id="pyrefine.controller.smooth_transition.ControllerSmoothTransition.compute_complexity">
 <span class="sig-name descname"><span class="pre">compute_complexity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">istep</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_complexity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.controller.smooth_transition.ControllerSmoothTransition.compute_complexity" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>istep</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Adaptation step number</p></li>
 <li><p><strong>current_complexity</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – The current complexity in the driver. If doing a restart, the current
 complexity will be <cite>None</cite></p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>complexity</p>
 </dd>
 </dl>

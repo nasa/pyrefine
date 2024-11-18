@@ -1,0 +1,295 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>AFLR3 Hybrid driver &#8212; pyrefine  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Basic Controller" href="../controller/basic.html" />
+    <link rel="prev" title="Uniform Refinement Regions" href="uniform_regions.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../controller/basic.html" title="Basic Controller"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="uniform_regions.html" title="Uniform Refinement Regions"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AFLR3 Hybrid driver</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-pyrefine.refine.aflr3">
+<span id="aflr3-hybrid-driver"></span><h1>AFLR3 Hybrid driver<a class="headerlink" href="#module-pyrefine.refine.aflr3" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrefine.refine.aflr3.AFLR3">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.refine.aflr3.</span></span><span class="sig-name descname"><span class="pre">AFLR3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bl_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'manual'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.aflr3.AFLR3" title="Permalink to this definition">¶</a></dt>
+<dd><p>AFLR3 driver for boundary layer extrusion and hybrid mesh generation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_name</strong> – str: The root name of the project (without any mesh numbers).</p></li>
+<li><p><strong>bl_type</strong> – str: Boundary layer type: ‘manual’ (default), ‘yplus’, or ‘re_cell’. The latter options require FUN3D v14.2+.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.aflr3.AFLR3.project_name">
+<span class="sig-name descname"><span class="pre">project_name</span></span><a class="headerlink" href="#pyrefine.refine.aflr3.AFLR3.project_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The root name of the project (without any mesh numbers).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.aflr3.AFLR3.bl_type">
+<span class="sig-name descname"><span class="pre">bl_type</span></span><a class="headerlink" href="#pyrefine.refine.aflr3.AFLR3.bl_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>‘manual’ (default), ‘yplus’, or ‘re_cell’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p>Boundary layer type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.aflr3.AFLR3.bl_initial">
+<span class="sig-name descname"><span class="pre">bl_initial</span></span><a class="headerlink" href="#pyrefine.refine.aflr3.AFLR3.bl_initial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initial wall spacing in wall units based on bl_type (‘yplus’ or ‘re_cell’).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.aflr3.AFLR3.bl_full">
+<span class="sig-name descname"><span class="pre">bl_full</span></span><a class="headerlink" href="#pyrefine.refine.aflr3.AFLR3.bl_full" title="Permalink to this definition">¶</a></dt>
+<dd><p>Full boundary layer height in wall units based on bl_type (‘yplus’ or ‘re_cell’).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.aflr3.AFLR3.aflr_extra_args">
+<span class="sig-name descname"><span class="pre">aflr_extra_args</span></span><a class="headerlink" href="#pyrefine.refine.aflr3.AFLR3.aflr_extra_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Additional arguments passed into aflr3</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.aflr3.AFLR3.n_constant_layers">
+<span class="sig-name descname"><span class="pre">n_constant_layers</span></span><a class="headerlink" href="#pyrefine.refine.aflr3.AFLR3.n_constant_layers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of initial layers with constant spacing (aflr3 default = 5)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.aflr3.AFLR3.max_blgr">
+<span class="sig-name descname"><span class="pre">max_blgr</span></span><a class="headerlink" href="#pyrefine.refine.aflr3.AFLR3.max_blgr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum boundary layer geometric growth rate (aflr3 default = 1.5).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.aflr3.AFLR3.bldr">
+<span class="sig-name descname"><span class="pre">bldr</span></span><a class="headerlink" href="#pyrefine.refine.aflr3.AFLR3.bldr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Boundary layer geometric growth acceleration rate (aflr3 default = 1.05).
+This is set to 1.0 by default to enforce constant growth rate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.aflr3.AFLR3.BC_IDs">
+<span class="sig-name descname"><span class="pre">BC_IDs</span></span><a class="headerlink" href="#pyrefine.refine.aflr3.AFLR3.BC_IDs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Boundary condition IDs for AFLR3</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.aflr3.AFLR3.BC_Flags">
+<span class="sig-name descname"><span class="pre">BC_Flags</span></span><a class="headerlink" href="#pyrefine.refine.aflr3.AFLR3.BC_Flags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Boundary condition flags for AFLR3</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.aflr3.AFLR3.nbl">
+<span class="sig-name descname"><span class="pre">nbl</span></span><a class="headerlink" href="#pyrefine.refine.aflr3.AFLR3.nbl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of layers</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.aflr3.AFLR3.initial_wall_spacing">
+<span class="sig-name descname"><span class="pre">initial_wall_spacing</span></span><a class="headerlink" href="#pyrefine.refine.aflr3.AFLR3.initial_wall_spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initial wall spacing in grid units</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.refine.aflr3.AFLR3.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.aflr3.AFLR3.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the AFLR3 process.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">AFLR3 Hybrid driver</a><ul>
+<li><a class="reference internal" href="#pyrefine.refine.aflr3.AFLR3"><code class="docutils literal notranslate"><span class="pre">AFLR3</span></code></a><ul>
+<li><a class="reference internal" href="#pyrefine.refine.aflr3.AFLR3.project_name"><code class="docutils literal notranslate"><span class="pre">AFLR3.project_name</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.aflr3.AFLR3.bl_type"><code class="docutils literal notranslate"><span class="pre">AFLR3.bl_type</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.aflr3.AFLR3.bl_initial"><code class="docutils literal notranslate"><span class="pre">AFLR3.bl_initial</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.aflr3.AFLR3.bl_full"><code class="docutils literal notranslate"><span class="pre">AFLR3.bl_full</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.aflr3.AFLR3.aflr_extra_args"><code class="docutils literal notranslate"><span class="pre">AFLR3.aflr_extra_args</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.aflr3.AFLR3.n_constant_layers"><code class="docutils literal notranslate"><span class="pre">AFLR3.n_constant_layers</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.aflr3.AFLR3.max_blgr"><code class="docutils literal notranslate"><span class="pre">AFLR3.max_blgr</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.aflr3.AFLR3.bldr"><code class="docutils literal notranslate"><span class="pre">AFLR3.bldr</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.aflr3.AFLR3.BC_IDs"><code class="docutils literal notranslate"><span class="pre">AFLR3.BC_IDs</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.aflr3.AFLR3.BC_Flags"><code class="docutils literal notranslate"><span class="pre">AFLR3.BC_Flags</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.aflr3.AFLR3.nbl"><code class="docutils literal notranslate"><span class="pre">AFLR3.nbl</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.aflr3.AFLR3.initial_wall_spacing"><code class="docutils literal notranslate"><span class="pre">AFLR3.initial_wall_spacing</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.aflr3.AFLR3.run"><code class="docutils literal notranslate"><span class="pre">AFLR3.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="uniform_regions.html"
+                          title="previous chapter">Uniform Refinement Regions</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../controller/basic.html"
+                          title="next chapter">Basic Controller</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/refine/aflr3.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../controller/basic.html" title="Basic Controller"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="uniform_regions.html" title="Uniform Refinement Regions"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pyrefine  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AFLR3 Hybrid driver</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, NASA.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>

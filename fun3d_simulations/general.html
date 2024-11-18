@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>General FUN3D Simulations &#8212; pyrefine  documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
@@ -68,14 +68,14 @@ The methods to access this functionality are defined in <a class="reference inte
 <span id="finite-volume-simulation"></span><h2>Finite Volume Simulation<a class="headerlink" href="#module-pyrefine.simulation.fun3d" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyrefine.simulation.fun3d.SimulationFun3dFV">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.simulation.fun3d.</span></span><span class="sig-name descname"><span class="pre">SimulationFun3dFV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external_wall_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omp_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dFV" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.simulation.fun3d.</span></span><span class="sig-name descname"><span class="pre">SimulationFun3dFV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external_wall_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omp_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ranks_per_node</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dFV" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../simulation/base.html#pyrefine.simulation.base.SimulationBase" title="pyrefine.simulation.base.SimulationBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimulationBase</span></code></a></p>
 <p>Runs fun3d finite volume analysis. Each time that run is called, the fun3d.nml
 in the adaptation root directory will be read, the distance and restart solb inputs will
 be adjusted to account for the current adaptation cycle number, and then use nodet_mpi to
 run the simulation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>project_name</strong> (<em>str</em>) – The root name of the project (without any mesh numbers)</p></li>
 <li><p><strong>pbs</strong> (<em>:class:PBS</em>) – PBS queue helper</p></li>
@@ -84,6 +84,8 @@ distance calculator</p></li>
 <li><p><strong>omp_threads</strong> (<em>int</em>) – Number of OpenMP threads per mpi process to run if doing hybrid
 parallelism. If not doing hybrid parallelism, this optional argument
 should be left as None.</p></li>
+<li><p><strong>ranks_per_node</strong> (<em>int</em>) – Number of mpi ranks per node. By default, all available ranks are used. This option is used
+for hybrid CPU/GPU simulations and should be left as None otherwise.</p></li>
 </ul>
 </dd>
 </dl>
@@ -92,7 +94,7 @@ should be left as None.</p></li>
 <span class="sig-name descname"><span class="pre">external_wall_distance</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.external_wall_distance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether a distance field from an external calculator is needed</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -103,7 +105,7 @@ should be left as None.</p></li>
 <span class="sig-name descname"><span class="pre">fun3d_nml</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.fun3d_nml" title="Permalink to this definition">¶</a></dt>
 <dd><p>Name of the namelist file in the adaptation root directory</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -114,7 +116,7 @@ should be left as None.</p></li>
 <span class="sig-name descname"><span class="pre">fun3d_command_line_args</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.fun3d_command_line_args" title="Permalink to this definition">¶</a></dt>
 <dd><p>The command line arguments that will be added to calls to nodet_mpi</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -126,7 +128,7 @@ should be left as None.</p></li>
 <dd><p>Whether the simulation should read the refine-interpolated
 solution, i.e., whether or not to use the flow_initialization nml.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -137,7 +139,7 @@ solution, i.e., whether or not to use the flow_initialization nml.</p>
 <span class="sig-name descname"><span class="pre">expect_moving_body_input</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.expect_moving_body_input" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether to expect a moving_body.input file in the root directory</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -148,7 +150,7 @@ solution, i.e., whether or not to use the flow_initialization nml.</p>
 <span class="sig-name descname"><span class="pre">moving_body_input</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.moving_body_input" title="Permalink to this definition">¶</a></dt>
 <dd><p>moving_body.input file name in root directory</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -159,8 +161,30 @@ solution, i.e., whether or not to use the flow_initialization nml.</p>
 <span class="sig-name descname"><span class="pre">distance</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.distance" title="Permalink to this definition">¶</a></dt>
 <dd><p>the distance calculator</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="distance/base.html#pyrefine.simulation.distance_base.DistanceBase" title="pyrefine.simulation.distance_base.DistanceBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">DistanceBase</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d.SimulationFun3dFV.field_file_extension">
+<span class="sig-name descname"><span class="pre">field_file_extension</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.field_file_extension" title="Permalink to this definition">¶</a></dt>
+<dd><p>type of file to write expect for fields written</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d.SimulationFun3dFV.extra_input_files">
+<span class="sig-name descname"><span class="pre">extra_input_files</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.extra_input_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of extra input files that should also be copied into the Flow directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -171,11 +195,11 @@ solution, i.e., whether or not to use the flow_initialization nml.</p>
 <dd><p>Tell the adaptation driver what files related to this component
 should be in the adaptation root directory</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The list of strings with the names of files. If no root directory
 files are needed by this component, return None</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>expected_files</p>
 </dd>
 </dl>
@@ -187,6 +211,39 @@ files are needed by this component, return None</p>
 <dd><p>Run the sequence of simulations for a given adaptation cycle</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d.SimulationFun3dFV.project_name">
+<span class="sig-name descname"><span class="pre">project_name</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.project_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The root name of the project (without any mesh numbers)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d.SimulationFun3dFV.pbs">
+<span class="sig-name descname"><span class="pre">pbs</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.pbs" title="Permalink to this definition">¶</a></dt>
+<dd><p>PBS: The pbs queue helper object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>class</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d.SimulationFun3dFV.vertices_per_cpu_core">
+<span class="sig-name descname"><span class="pre">vertices_per_cpu_core</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.vertices_per_cpu_core" title="Permalink to this definition">¶</a></dt>
+<dd><p>target number of mesh vertices per cpu core for pbs jobs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -194,12 +251,12 @@ files are needed by this component, return None</p>
 <h2>Stabilized Finite Element Simulation<a class="headerlink" href="#stabilized-finite-element-simulation" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyrefine.simulation.fun3d.SimulationFun3dSFE">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.simulation.fun3d.</span></span><span class="sig-name descname"><span class="pre">SimulationFun3dSFE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external_wall_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omp_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.simulation.fun3d.</span></span><span class="sig-name descname"><span class="pre">SimulationFun3dSFE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external_wall_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omp_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ranks_per_node</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dFV" title="pyrefine.simulation.fun3d.SimulationFun3dFV"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimulationFun3dFV</span></code></a></p>
 <p>Runs fun3d stabilized finite element analysis. Does the same actions as the
 FV version but also handles the sfe.cfg file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>project_name</strong> (<em>str</em>) – The root name of the project (without any mesh numbers)</p></li>
 <li><p><strong>pbs</strong> (<em>:class:PBS</em>) – PBS queue helper</p></li>
@@ -208,6 +265,8 @@ distance calculator</p></li>
 <li><p><strong>omp_threads</strong> (<em>int</em>) – Number of OpenMP threads per mpi process to run if doing hybrid
 parallelism. If not doing hybrid parallelism, this optional argument
 should be left as None.</p></li>
+<li><p><strong>ranks_per_node</strong> (<em>int</em>) – Number of mpi ranks per node. By default, all available ranks are used. This option is used
+for hybrid CPU/GPU simulations and should be left as None otherwise.</p></li>
 </ul>
 </dd>
 </dl>
@@ -217,11 +276,11 @@ should be left as None.</p></li>
 <dd><p>Tell the adaptation driver what files related to this component
 should be in the adaptation root directory</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The list of strings with the names of files. If no root directory
 files are needed by this component, return None</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>expected_files</p>
 </dd>
 </dl>
@@ -238,7 +297,7 @@ files are needed by this component, return None</p>
 <span class="sig-name descname"><span class="pre">external_wall_distance</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.external_wall_distance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether a distance field from an external calculator is needed</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -249,7 +308,7 @@ files are needed by this component, return None</p>
 <span class="sig-name descname"><span class="pre">fun3d_nml</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.fun3d_nml" title="Permalink to this definition">¶</a></dt>
 <dd><p>Name of the namelist file in the adaptation root directory</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -260,7 +319,7 @@ files are needed by this component, return None</p>
 <span class="sig-name descname"><span class="pre">fun3d_command_line_args</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.fun3d_command_line_args" title="Permalink to this definition">¶</a></dt>
 <dd><p>The command line arguments that will be added to calls to nodet_mpi</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -272,7 +331,7 @@ files are needed by this component, return None</p>
 <dd><p>Whether the simulation should read the refine-interpolated
 solution, i.e., whether or not to use the flow_initialization nml.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -283,7 +342,7 @@ solution, i.e., whether or not to use the flow_initialization nml.</p>
 <span class="sig-name descname"><span class="pre">expect_moving_body_input</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.expect_moving_body_input" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether to expect a moving_body.input file in the root directory</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -294,7 +353,7 @@ solution, i.e., whether or not to use the flow_initialization nml.</p>
 <span class="sig-name descname"><span class="pre">moving_body_input</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.moving_body_input" title="Permalink to this definition">¶</a></dt>
 <dd><p>moving_body.input file name in root directory</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -305,8 +364,63 @@ solution, i.e., whether or not to use the flow_initialization nml.</p>
 <span class="sig-name descname"><span class="pre">distance</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.distance" title="Permalink to this definition">¶</a></dt>
 <dd><p>the distance calculator</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="distance/base.html#pyrefine.simulation.distance_base.DistanceBase" title="pyrefine.simulation.distance_base.DistanceBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">DistanceBase</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d.SimulationFun3dSFE.field_file_extension">
+<span class="sig-name descname"><span class="pre">field_file_extension</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.field_file_extension" title="Permalink to this definition">¶</a></dt>
+<dd><p>type of file to write expect for fields written</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d.SimulationFun3dSFE.extra_input_files">
+<span class="sig-name descname"><span class="pre">extra_input_files</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.extra_input_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of extra input files that should also be copied into the Flow directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d.SimulationFun3dSFE.project_name">
+<span class="sig-name descname"><span class="pre">project_name</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.project_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The root name of the project (without any mesh numbers)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d.SimulationFun3dSFE.pbs">
+<span class="sig-name descname"><span class="pre">pbs</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.pbs" title="Permalink to this definition">¶</a></dt>
+<dd><p>PBS: The pbs queue helper object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>class</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d.SimulationFun3dSFE.vertices_per_cpu_core">
+<span class="sig-name descname"><span class="pre">vertices_per_cpu_core</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.vertices_per_cpu_core" title="Permalink to this definition">¶</a></dt>
+<dd><p>target number of mesh vertices per cpu core for pbs jobs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -337,8 +451,13 @@ solution, i.e., whether or not to use the flow_initialization nml.</p>
 <li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.expect_moving_body_input"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dFV.expect_moving_body_input</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.moving_body_input"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dFV.moving_body_input</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.distance"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dFV.distance</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.field_file_extension"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dFV.field_file_extension</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.extra_input_files"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dFV.extra_input_files</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.get_expected_file_list"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dFV.get_expected_file_list()</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.run"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dFV.run()</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.project_name"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dFV.project_name</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.pbs"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dFV.pbs</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.vertices_per_cpu_core"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dFV.vertices_per_cpu_core</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -354,6 +473,11 @@ solution, i.e., whether or not to use the flow_initialization nml.</p>
 <li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.expect_moving_body_input"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dSFE.expect_moving_body_input</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.moving_body_input"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dSFE.moving_body_input</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.distance"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dSFE.distance</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.field_file_extension"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dSFE.field_file_extension</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.extra_input_files"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dSFE.extra_input_files</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.project_name"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dSFE.project_name</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.pbs"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dSFE.pbs</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.vertices_per_cpu_core"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dSFE.vertices_per_cpu_core</span></code></a></li>
 </ul>
 </li>
 </ul>

@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>FUN3D Adjoint Simulations &#8212; pyrefine  documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
@@ -59,7 +59,7 @@ These simulation classes run one FUN3D forward analysis and an adjoint analysis.
 The preconditioners in the SFE adjoint benefit from larger partition sizes,
 so use of the <cite>adj_omp_threads</cite> argument is encouraged.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>project_name</strong> (<em>str</em>) – The root name of the project (without any mesh numbers)</p></li>
 <li><p><strong>pbs</strong> (<em>:class:PBS</em>) – PBS queue helper for forward and adjoint solves</p></li>
@@ -80,7 +80,7 @@ an external distance calculator</p></li>
 <dd><p>Name of the namelist file in the adaptation root directory to use for
 the adjoint portion of the simulation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -92,7 +92,7 @@ the adjoint portion of the simulation.</p>
 <dd><p>Name of the sfe.cfg file in the adaptation root directory to use for the
 adjoint portion of the simulation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -104,7 +104,7 @@ adjoint portion of the simulation.</p>
 <dd><p>Name of the sfe.cfg file in the adaptation root directory to use for the
 forward portion of the simulation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -116,7 +116,7 @@ forward portion of the simulation.</p>
 <dd><p>Whether the simulation should read the refine-interpolated
 adjoint, i.e., whether or not to use the adjoint initialization cfg.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -128,11 +128,11 @@ adjoint, i.e., whether or not to use the adjoint initialization cfg.</p>
 <dd><p>Tell the adaptation driver what files related to this component
 should be in the adaptation root directory</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The list of strings with the names of files. If no root directory
 files are needed by this component, return None</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>expected_files</p>
 </dd>
 </dl>

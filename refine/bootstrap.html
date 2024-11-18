@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Simulation Base Class &#8212; pyrefine  documentation</title>
+    <title>Refine Bootstrap &#8212; pyrefine  documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
@@ -17,8 +17,8 @@
     <script src="../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Refine Multiscale Metric" href="../refine/multiscale.html" />
-    <link rel="prev" title="Controller Base Class" href="../controller/base.html" /> 
+    <link rel="next" title="Standard Adaptation Driver" href="../adaptation_driver.html" />
+    <link rel="prev" title="Adaptation Driver" href="../index.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -30,13 +30,13 @@
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../refine/multiscale.html" title="Refine Multiscale Metric"
+          <a href="../adaptation_driver.html" title="Standard Adaptation Driver"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../controller/base.html" title="Controller Base Class"
+          <a href="../index.html" title="Adaptation Driver"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">pyrefine  documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Simulation Base Class</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Refine Bootstrap</a></li> 
       </ul>
     </div>  
 
@@ -45,16 +45,25 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="module-pyrefine.simulation.base">
-<span id="simulation-base-class"></span><h1>Simulation Base Class<a class="headerlink" href="#module-pyrefine.simulation.base" title="Permalink to this heading">¶</a></h1>
+  <section id="module-pyrefine.refine.bootstrap">
+<span id="refine-bootstrap"></span><h1>Refine Bootstrap<a class="headerlink" href="#module-pyrefine.refine.bootstrap" title="Permalink to this heading">¶</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="pyrefine.simulation.base.SimulationBase">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.simulation.base.</span></span><span class="sig-name descname"><span class="pre">SimulationBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.simulation.base.SimulationBase" title="Permalink to this definition">¶</a></dt>
-<dd><p>Driver for the simulation step</p>
+<dt class="sig sig-object py" id="pyrefine.refine.bootstrap.RefineBootstrap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.refine.bootstrap.</span></span><span class="sig-name descname"><span class="pre">RefineBootstrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_complexity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_wall_spacing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.bootstrap.RefineBootstrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>refine bootstrap driver to generate an initial mesh for refinement from a CSM file using ESP</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_name</strong> – str: The root name of the project (without any mesh numbers).</p></li>
+<li><p><strong>initial_complexity</strong> – int: Initial mesh complexity.</p></li>
+<li><p><strong>initial_wall_spacing</strong> – float: Initial wall spacing for the spalding option of refine.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="pyrefine.simulation.base.SimulationBase.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">istep</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.simulation.base.SimulationBase.run" title="Permalink to this definition">¶</a></dt>
-<dd><p>Run the sequence of simulations for a given adaptation cycle</p>
+<dt class="sig sig-object py" id="pyrefine.refine.bootstrap.RefineBootstrap.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.bootstrap.RefineBootstrap.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the bootstrap process. Expects serveESP to be in your PATH.</p>
 </dd></dl>
 
 </dd></dl>
@@ -71,9 +80,9 @@
   <div>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">Simulation Base Class</a><ul>
-<li><a class="reference internal" href="#pyrefine.simulation.base.SimulationBase"><code class="docutils literal notranslate"><span class="pre">SimulationBase</span></code></a><ul>
-<li><a class="reference internal" href="#pyrefine.simulation.base.SimulationBase.run"><code class="docutils literal notranslate"><span class="pre">SimulationBase.run()</span></code></a></li>
+<li><a class="reference internal" href="#">Refine Bootstrap</a><ul>
+<li><a class="reference internal" href="#pyrefine.refine.bootstrap.RefineBootstrap"><code class="docutils literal notranslate"><span class="pre">RefineBootstrap</span></code></a><ul>
+<li><a class="reference internal" href="#pyrefine.refine.bootstrap.RefineBootstrap.run"><code class="docutils literal notranslate"><span class="pre">RefineBootstrap.run()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -83,18 +92,18 @@
   </div>
   <div>
     <h4>Previous topic</h4>
-    <p class="topless"><a href="../controller/base.html"
-                          title="previous chapter">Controller Base Class</a></p>
+    <p class="topless"><a href="../index.html"
+                          title="previous chapter">Adaptation Driver</a></p>
   </div>
   <div>
     <h4>Next topic</h4>
-    <p class="topless"><a href="../refine/multiscale.html"
-                          title="next chapter">Refine Multiscale Metric</a></p>
+    <p class="topless"><a href="../adaptation_driver.html"
+                          title="next chapter">Standard Adaptation Driver</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/simulation/base.rst.txt"
+      <li><a href="../_sources/refine/bootstrap.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -122,13 +131,13 @@
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../refine/multiscale.html" title="Refine Multiscale Metric"
+          <a href="../adaptation_driver.html" title="Standard Adaptation Driver"
              >next</a> |</li>
         <li class="right" >
-          <a href="../controller/base.html" title="Controller Base Class"
+          <a href="../index.html" title="Adaptation Driver"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">pyrefine  documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Simulation Base Class</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Refine Bootstrap</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>Controller Base Class &#8212; pyrefine  documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
@@ -52,7 +52,7 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyrefine.controller.base.</span></span><span class="sig-name descname"><span class="pre">ControllerBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.controller.base.ControllerBase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Driver for the complexity controller and updating any other inputs</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>project_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The root name of the project (without any mesh numbers)</p></li>
 <li><p><strong>pbs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PBS</span></code>) – PBS queue helper</p></li>
@@ -60,33 +60,23 @@
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="pyrefine.controller.base.ControllerBase.project_name">
-<span class="sig-name descname"><span class="pre">project_name</span></span><a class="headerlink" href="#pyrefine.controller.base.ControllerBase.project_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>The root name of the project (without any mesh numbers)</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pyrefine.controller.base.ControllerBase.pbs">
-<span class="sig-name descname"><span class="pre">pbs</span></span><a class="headerlink" href="#pyrefine.controller.base.ControllerBase.pbs" title="Permalink to this definition">¶</a></dt>
-<dd><p>PBS: The pbs queue helper object</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>class</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="pyrefine.controller.base.ControllerBase.initial_complexity">
 <span class="sig-name descname"><span class="pre">initial_complexity</span></span><a class="headerlink" href="#pyrefine.controller.base.ControllerBase.initial_complexity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Complexity at iteration 1 of the adaptation cycle</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.controller.base.ControllerBase.final_complexity">
+<span class="sig-name descname"><span class="pre">final_complexity</span></span><a class="headerlink" href="#pyrefine.controller.base.ControllerBase.final_complexity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complexity at final iteration of the adaptation cycle.
+Number of iterations can be computed if defined using ControllerBasic.compute_iterations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
@@ -97,7 +87,7 @@
 <span class="sig-name descname"><span class="pre">restart_save_frequency</span></span><a class="headerlink" href="#pyrefine.controller.base.ControllerBase.restart_save_frequency" title="Permalink to this definition">¶</a></dt>
 <dd><p>How often to save a meshb and -restart.solb file for restarting.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -108,7 +98,7 @@
 <span class="sig-name descname"><span class="pre">save_all</span></span><a class="headerlink" href="#pyrefine.controller.base.ControllerBase.save_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set to True to keep all files (no clean up operations).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -124,7 +114,7 @@ the end of each adaptation cycle can be customized with this function.</p>
 <p>The cleanup functionality can be turned off with
 <code class="xref py py-func docutils literal notranslate"><span class="pre">save_all()</span></code></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>extensions</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – list of strings representing the end of the file names, e.g.
 for <cite>rm {project_name}*.txt {project_name}*.dat</cite>, set extensions=[‘.txt’, ‘.dat’]</p>
 </dd>
@@ -143,7 +133,7 @@ The default extensions are [“.meshb”, “-restart.solb”]</p>
 <p>The cleanup functionality can be turned off with
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">save_all</span></code></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>extensions</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – list of strings representing the end of the file names, e.g.
 for <cite>rm {project}*.txt {project}*.dat</cite>, set extensions=[‘.txt’, ‘.dat’]</p>
 </dd>
@@ -167,14 +157,14 @@ for <cite>rm {project}*.txt {project}*.dat</cite>, set extensions=[‘.txt’, �
 <span class="sig-name descname"><span class="pre">compute_complexity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">istep</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_complexity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.controller.base.ControllerBase.compute_complexity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the complexity for the upcoming adaptation cycle, istep.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>istep</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Adaptation step number</p></li>
 <li><p><strong>current_complexity</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – The current complexity in the driver. If doing a restart, the current
 complexity will be <cite>None</cite></p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>complexity</p>
 </dd>
 </dl>
@@ -186,10 +176,10 @@ complexity will be <cite>None</cite></p></li>
 <dd><p>Check whether some condition has been met to stop the adaptation cycle
 loop but not raise an exception to kill python altogether</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>istep</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Adaptation step number</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>early_stop</p>
 </dd>
 </dl>
@@ -211,9 +201,8 @@ loop but not raise an exception to kill python altogether</p>
     <ul>
 <li><a class="reference internal" href="#">Controller Base Class</a><ul>
 <li><a class="reference internal" href="#pyrefine.controller.base.ControllerBase"><code class="docutils literal notranslate"><span class="pre">ControllerBase</span></code></a><ul>
-<li><a class="reference internal" href="#pyrefine.controller.base.ControllerBase.project_name"><code class="docutils literal notranslate"><span class="pre">ControllerBase.project_name</span></code></a></li>
-<li><a class="reference internal" href="#pyrefine.controller.base.ControllerBase.pbs"><code class="docutils literal notranslate"><span class="pre">ControllerBase.pbs</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.controller.base.ControllerBase.initial_complexity"><code class="docutils literal notranslate"><span class="pre">ControllerBase.initial_complexity</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.controller.base.ControllerBase.final_complexity"><code class="docutils literal notranslate"><span class="pre">ControllerBase.final_complexity</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.controller.base.ControllerBase.restart_save_frequency"><code class="docutils literal notranslate"><span class="pre">ControllerBase.restart_save_frequency</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.controller.base.ControllerBase.save_all"><code class="docutils literal notranslate"><span class="pre">ControllerBase.save_all</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.controller.base.ControllerBase.set_file_extensions_to_cleanup_every_step"><code class="docutils literal notranslate"><span class="pre">ControllerBase.set_file_extensions_to_cleanup_every_step()</span></code></a></li>

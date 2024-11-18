@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>Refine Multiscale Metric &#8212; pyrefine  documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
@@ -59,7 +59,7 @@ the solution over the time period of interest and form an averaged metric.</p>
 <p>Refine for steady analysis (single solution field) and the multiscale
 metric based on Mach number</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>project_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The root name of the project (without any mesh numbers)</p></li>
 <li><p><strong>pbs</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PBS</span></code>) – PBS queue helper</p></li>
@@ -73,7 +73,7 @@ metric based on Mach number</p>
 will target the regions of highest error more but may underresolve
 lower gradient regions too much. The default value is 4.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>int or float</p>
 </dd>
 </dl>
@@ -82,11 +82,22 @@ lower gradient regions too much. The default value is 4.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyrefine.refine.multiscale.RefineMultiscale.interpolant">
 <span class="sig-name descname"><span class="pre">interpolant</span></span><a class="headerlink" href="#pyrefine.refine.multiscale.RefineMultiscale.interpolant" title="Permalink to this definition">¶</a></dt>
-<dd><p>The name of the scalar field used as the interpolant.
+<dd><p>The name or file of the scalar field used as the interpolant.
 mach (default), incomp (incompressible vel magnitude),
-htot, pressure, density, temperature.</p>
+htot, pressure, density, temperature, or file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.multiscale.RefineMultiscale.interpolant_label">
+<span class="sig-name descname"><span class="pre">interpolant_label</span></span><a class="headerlink" href="#pyrefine.refine.multiscale.RefineMultiscale.interpolant_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>The label for the interpolant file option.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -112,7 +123,7 @@ interpolate the solution to the new mesh.</p>
 snapshots of the flow field.
 Multiscale metric based on Mach number.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>project_name</strong> (<em>str</em>) – The root name of the project (without any mesh numbers)</p></li>
 <li><p><strong>pbs</strong> (<em>:class:PBS</em>) – PBS queue helper</p></li>
@@ -124,7 +135,7 @@ Multiscale metric based on Mach number.</p>
 <span class="sig-name descname"><span class="pre">window_first_step</span></span><a class="headerlink" href="#pyrefine.refine.multiscale.RefineMultiscaleFixedPoint.window_first_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>The start of the sampling window from which refine should compute the metric.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -135,7 +146,7 @@ Multiscale metric based on Mach number.</p>
 <span class="sig-name descname"><span class="pre">window_last_step</span></span><a class="headerlink" href="#pyrefine.refine.multiscale.RefineMultiscaleFixedPoint.window_last_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>The end of the sampling window from which refine should compute the metric.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -147,7 +158,7 @@ Multiscale metric based on Mach number.</p>
 <dd><p>The sampling frequency in the window from which refine should
 compute the metric.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
@@ -163,7 +174,7 @@ the part in square brackets before the timestep number
 (1000) and after the project name + adaptation cycle number (bscw-box20).
 The default name is “_sampling_geom1_timestep”</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -176,11 +187,27 @@ The default name is “_sampling_geom1_timestep”</p>
 and set the metric step frequency, i.e. the frequency at which solution
 files were saved during the analysis in window.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>first_step</strong> (<em>int</em>) – </p></li>
 <li><p><strong>last_step</strong> (<em>int</em>) – </p></li>
 <li><p><strong>metric_freq</strong> (<em>int</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrefine.refine.multiscale.RefineMultiscaleFixedPoint.set_hlres">
+<span class="sig-name descname"><span class="pre">set_hlres</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mach</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reynolds_number</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.refine.multiscale.RefineMultiscaleFixedPoint.set_hlres" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the window of timesteps from which refine should compute the metric
+and set the metric step frequency, i.e. the frequency at which solution
+files were saved during the analysis in window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mach</strong> (<em>float</em>) – The reference Mach number</p></li>
+<li><p><strong>reynolds_number</strong> (<em>float</em>) – The reference Reynolds number per unit length</p></li>
 </ul>
 </dd>
 </dl>
@@ -212,6 +239,7 @@ files were saved during the analysis in window.</p>
 <li><a class="reference internal" href="#pyrefine.refine.multiscale.RefineMultiscale"><code class="docutils literal notranslate"><span class="pre">RefineMultiscale</span></code></a><ul>
 <li><a class="reference internal" href="#pyrefine.refine.multiscale.RefineMultiscale.lp_norm"><code class="docutils literal notranslate"><span class="pre">RefineMultiscale.lp_norm</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.refine.multiscale.RefineMultiscale.interpolant"><code class="docutils literal notranslate"><span class="pre">RefineMultiscale.interpolant</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.multiscale.RefineMultiscale.interpolant_label"><code class="docutils literal notranslate"><span class="pre">RefineMultiscale.interpolant_label</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.refine.multiscale.RefineMultiscale.run"><code class="docutils literal notranslate"><span class="pre">RefineMultiscale.run()</span></code></a></li>
 </ul>
 </li>
@@ -224,6 +252,7 @@ files were saved during the analysis in window.</p>
 <li><a class="reference internal" href="#pyrefine.refine.multiscale.RefineMultiscaleFixedPoint.window_metric_freq"><code class="docutils literal notranslate"><span class="pre">RefineMultiscaleFixedPoint.window_metric_freq</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.refine.multiscale.RefineMultiscaleFixedPoint.sampling_data_filename_body"><code class="docutils literal notranslate"><span class="pre">RefineMultiscaleFixedPoint.sampling_data_filename_body</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.refine.multiscale.RefineMultiscaleFixedPoint.set_timestep_range_and_frequency"><code class="docutils literal notranslate"><span class="pre">RefineMultiscaleFixedPoint.set_timestep_range_and_frequency()</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.multiscale.RefineMultiscaleFixedPoint.set_hlres"><code class="docutils literal notranslate"><span class="pre">RefineMultiscaleFixedPoint.set_hlres()</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.refine.multiscale.RefineMultiscaleFixedPoint.run"><code class="docutils literal notranslate"><span class="pre">RefineMultiscaleFixedPoint.run()</span></code></a></li>
 </ul>
 </li>
