@@ -23,5 +23,5 @@ def main():
     reader.write_data_to_tec(args.output_file)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
