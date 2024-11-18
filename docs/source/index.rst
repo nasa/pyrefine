@@ -1,10 +1,12 @@
 Adaptation Driver
 ==================
 The adaptatation driver orchestrates the adaptation components to perform the adaptation.
+The bootstrap class generates the initial mesh from a CSM script.
 
 .. toctree::
    :maxdepth: 1
 
+   refine/bootstrap.rst
    adaptation_driver.rst
 
 Adaptation Components
