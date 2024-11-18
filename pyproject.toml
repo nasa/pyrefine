@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyrefine"
+version = "1.1.0"
+description = "Python scripting for CFD mesh adaptation with refine"
+readme = "README.md"
+requires-python = ">=3.7"
+authors = [{ name = "Kevin Jacobson", email = "kevin.e.jacobson@nasa.gov" }]
+dependencies = ["numpy", "f90nml", "pbs4py"]
+
+[project.scripts]
+"pr_gui_fun3d_steady.py" = "pyrefine.monitoring.pr_gui_fun3d_steady:main"
+"pr_gui_fun3d_sfe_steady.py" = "pyrefine.monitoring.pr_gui_fun3d_sfe_steady:main"
+"pr_gui_fun3d_sfe_steady_adjoint.py" = "pyrefine.monitoring.pr_gui_fun3d_sfe_steady_adjoint:main"
+"pr_gui_fun3d_steady_live.py" = "pyrefine.monitoring.pr_gui_fun3d_steady_live:main"
+"pr_watch.py" = "pyrefine.monitoring.pr_watch:main"
+"pr_post_fun3d_steady_hist_to_tec.py" = "pyrefine.post_processing.pr_post_fun3d_steady_hist_to_tec:main"
+"sfe_cfg_update.py" = "pyrefine.simulation.sfe_cfg_update:main"
+
+[tool.setuptools.packages.find]
+where = ["pyrefine"]
