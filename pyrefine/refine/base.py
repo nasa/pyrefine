@@ -41,6 +41,9 @@ class RefineBase(ComponentBase):
         #: list: uniform refinement regions to be applied :class:`~pyrefine.refine.uniform_region.UniformRegionBase`:
         self.uniform_regions: List[UniformRegionBase] = []
 
+        #: float: rescale the y (spanwise) direction to this length for 2D meshes
+        self.rescale_2D_length = -1.0
+
     def translate_mesh(self, istep=1):
         """
         Convert the meshb file into a ugrid file
@@ -104,3 +107,18 @@ class RefineBase(ComponentBase):
         if self.number_of_sweeps is not None:
             command += f" -s {self.number_of_sweeps}"
         return command
+
+    def create_rescale_2d_command_list(self, istep: int):
+        project = self._create_project_rootname(istep)
+        grid_name = f"{project}.lb8.ugrid"
+        scaled_grid_name = f"{project}_scaled.lb8.ugrid"
+
+        commands = [
+            f"""scale_aflr3 <<EOF
+{grid_name}
+{scaled_grid_name}
+1 {self.rescale_2D_length} 1
+EOF"""
+        ]
+        commands.append(f"mv {scaled_grid_name} {grid_name}")
+        return commands

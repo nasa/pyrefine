@@ -28,70 +28,71 @@ class RefineMultiscale(RefineBase):
         #: str: The name or file of the scalar field used as the interpolant.
         #:  mach (default), incomp (incompressible vel magnitude),
         #:  htot, pressure, density, temperature, or file.
-        self.interpolant = 'mach'
+        self.interpolant = "mach"
 
         #: str: The label for the interpolant file option.
-        self.interpolant_label = 'sampling_geom1'
+        self.interpolant_label = "sampling_geom1"
 
     def run(self, istep: int, complexity: float):
         """
         Runs refine to calculate a multiscale metric, generate a new mesh, and
         interpolate the solution to the new mesh.
         """
-        print('Running multiscale refine')
+        print("Running multiscale refine")
         start_time = datetime.datetime.now()
-        print(f'Refine{istep} Queue Start Time: {start_time}')
+        print(f"Refine{istep} Queue Start Time: {start_time}")
         self._run_multiscale_refine(istep, complexity)
         end_time = datetime.datetime.now()
         elapsed_time = end_time - start_time
-        print(f'Refine{istep} Queue End Time: {end_time}')
-        print(f'Refine{istep} Elapsed Time: {elapsed_time}')
+        print(f"Refine{istep} Queue End Time: {end_time}")
+        print(f"Refine{istep} Elapsed Time: {elapsed_time}")
 
     def _run_multiscale_refine(self, istep: int, complexity: float):
         ref_command = self._create_multiscale_refine_command(istep, complexity)
-        job_name = f'refine{istep:02d}'
+        job_name = f"refine{istep:02d}"
 
-        command_list = [self.pbs.create_mpi_command(ref_command, job_name)]
         time_command_start = f'printf "Refine{istep} Start Time: " && date'
         time_command_end = f'printf "Refine{istep} End Time: " && date'
-        command_list.insert(0, time_command_start)
+
+        command_list = [time_command_start, self.pbs.create_mpi_command(ref_command, job_name)]
+        if self.rescale_2D_length > 0:
+            command_list.extend(self.create_rescale_2d_command_list(istep))
         command_list.append(time_command_end)
+
         self.pbs.launch(job_name, command_list)
         self._check_for_refine_output_files(istep)
 
     def _check_for_refine_output_files(self, istep):
-        next = self._create_project_rootname(istep+1)
-        expected_files = [f'{next}.meshb',
-                          f'{next}.lb8.ugrid',
-                          f'{next}-restart.solb']
+        next = self._create_project_rootname(istep + 1)
+        expected_files = [f"{next}.meshb", f"{next}.lb8.ugrid", f"{next}-restart.solb"]
         for expected_file in expected_files:
             if not os.path.isfile(expected_file):
-                raise FileNotFoundError(
-                    f'Expected file: {expected_file} was not found. Something failed with refine')
+                raise FileNotFoundError(f"Expected file: {expected_file} was not found. Something failed with refine")
 
     def _create_multiscale_refine_command(self, istep: int, complexity: float) -> str:
         current = self._create_project_rootname(istep)
-        next = self._create_project_rootname(istep+1)
+        next = self._create_project_rootname(istep + 1)
 
         self._create_interpolant_option(istep)
 
-        command = f'refmpi loop {current} {next} {complexity}'
+        command = f"refmpi loop {current} {next} {complexity}"
         command += self._create_multiscale_command_line_options()
         return self._add_common_ref_loop_options(command)
 
     def _create_multiscale_command_line_options(self) -> str:
-        return f' --norm-power {self.lp_norm} --interpolant {self.interpolant}'
+        return f" --norm-power {self.lp_norm} --interpolant {self.interpolant}"
 
     def _create_interpolant_option(self, istep):
         current = self._create_project_rootname(istep)
-        last = self._create_project_rootname(istep-1)
+        last = self._create_project_rootname(istep - 1)
 
-        print(f'current, last = {current}, {last}')
-        if self.interpolant == 'file':
-            self.interpolant = f'{current}_{self.interpolant_label}.solb'
+        print(f"current, last = {current}, {last}")
+        if self.interpolant == "file":
+            self.interpolant = f"{current}_{self.interpolant_label}.solb"
 
-        if self.interpolant == f'{last}_{self.interpolant_label}.solb':
-            self.interpolant = f'{current}_{self.interpolant_label}.solb'
+        if self.interpolant == f"{last}_{self.interpolant_label}.solb":
+            self.interpolant = f"{current}_{self.interpolant_label}.solb"
+
 
 class RefineMultiscaleFixedPoint(RefineMultiscale):
     """
@@ -127,7 +128,7 @@ class RefineMultiscaleFixedPoint(RefineMultiscale):
         #: the part in square brackets before the timestep number
         #: (1000) and after the project name + adaptation cycle number (bscw-box20).
         #: The default name is "_sampling_geom1_timestep"
-        self.sampling_data_filename_body = '_sampling_geom1_timestep'
+        self.sampling_data_filename_body = "_sampling_geom1_timestep"
 
         self.hlres = False
         self.mach = -1.0
@@ -170,7 +171,7 @@ class RefineMultiscaleFixedPoint(RefineMultiscale):
         """
         Run refine in fixed-point mode for unsteady problems
         """
-        print('Running multiscale refine (fixed point)')
+        print("Running multiscale refine (fixed point)")
         self._check_that_window_values_are_valid()
         self._run_multiscale_refine(istep, complexity)
 
@@ -181,25 +182,25 @@ class RefineMultiscaleFixedPoint(RefineMultiscale):
         first_step = self.window_first_step
         freq = self.window_metric_freq
         last_step = self.window_last_step
-        options += f' --fixed-point {file_body} {first_step} {freq} {last_step}'
+        options += f" --fixed-point {file_body} {first_step} {freq} {last_step}"
 
         if self.hlres:
             self._check_that_hrles_values_are_valid()
             # tags should be the same so just use the project01 mapbc
             project = self._create_project_rootname(1)
-            options += f' --hrles {self.mach} {self.reynolds_number} --fun3d-mapbc {project}.mapbc'
+            options += f" --hrles {self.mach} {self.reynolds_number} --fun3d-mapbc {project}.mapbc"
         return options
 
     def _check_that_window_values_are_valid(self):
         if self.window_first_step < 0:
-            raise ValueError('Refine window_first_step not set. Must specify window parameters')
+            raise ValueError("Refine window_first_step not set. Must specify window parameters")
         if self.window_last_step < 0:
-            raise ValueError('Refine window_last_step not set. Must specify window parameters')
+            raise ValueError("Refine window_last_step not set. Must specify window parameters")
         if self.window_metric_freq < 0:
-            raise ValueError('Refine window_metric_freq not set. Must specify window parameters')
+            raise ValueError("Refine window_metric_freq not set. Must specify window parameters")
 
     def _check_that_hrles_values_are_valid(self):
         if self.mach < 0.0:
-            raise ValueError('Refine mach not set. Must specify if running with hrles option')
+            raise ValueError("Refine mach not set. Must specify if running with hrles option")
         if self.reynolds_number < 0.0:
-            raise ValueError('Refine reynolds number not set. Must specify if running with hrles option')
+            raise ValueError("Refine reynolds number not set. Must specify if running with hrles option")
