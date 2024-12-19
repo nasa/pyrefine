@@ -127,9 +127,21 @@ class AFLR3:
         \naflr3 -i {self.project_name}_boundary.lb8.ugrid -ogrid {self.project_name}_aflr3.lb8.ugrid -blc -blds \
         {self.initial_wall_spacing} -nbl {self.nbl} -BC_IDs {self.BC_IDs} -Grid_BC_Flag {self.BC_Flags} \
         -blpr -bli {self.n_constant_layers} -bldr {self.bldr} \
-        -blrm {self.max_blgr} -tmp $PWD -log {self.aflr_extra_args}",
+        -blrm {self.max_blgr} {self.aflr_extra_args} -tmp $PWD -log",
             shell=True,
         )
+        # if AFLR3 fails, try again with extra arguments
+        with open(f'{self.project_name}_aflr3.aflr3.log') as aflr3_log:
+            if 'ERROR' in aflr3_log.read():
+                self.aflr_extra_args = '-mrecm 3 -mrecqm 3 -mrecbm 2 -mrecbdw 1 -mrec4 1 -mlsr 1 -mdsblf 0 -mdf 2 -mdfb 1'
+                print(f"\nAFLR3 had errors, trying again with different aflr_extra_args = '{self.aflr_extra_args}'\n")
+                subprocess.run(
+                    f'aflr3 -i {self.project_name}_boundary.lb8.ugrid -ogrid {self.project_name}_aflr3.lb8.ugrid -blc -blds \
+                {self.initial_wall_spacing} -nbl {self.nbl} -BC_IDs {self.BC_IDs} -Grid_BC_Flag {self.BC_Flags} \
+                -blpr -bli {self.n_constant_layers} -bldr {self.bldr} \
+                -blrm {self.max_blgr} {self.aflr_extra_args} -tmp $PWD -log',
+                    shell=True,
+                )
 
         # Create new directory for hybrid run:
         subprocess.run(
