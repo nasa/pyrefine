@@ -133,7 +133,7 @@ class AFLR3:
         # if AFLR3 fails, try again with extra arguments
         with open(f'{self.project_name}_aflr3.aflr3.log') as aflr3_log:
             if 'ERROR' in aflr3_log.read():
-                self.aflr_extra_args = '-mrecm 3 -mrecqm 3 -mrecbm 2 -mrecbdw 1 -mrec4 1 -mlsr 1 -mdsblf 0 -mdf 2 -mdfb 1'
+                self.aflr_extra_args = '-mrecbm 2 -mrecbdw 1 -mrec4 1 -mdsblf 0 -mdf 2 -mdfb 1 -mbv_mode 1'
                 print(f"\nAFLR3 had errors, trying again with different aflr_extra_args = '{self.aflr_extra_args}'\n")
                 subprocess.run(
                     f'aflr3 -i {self.project_name}_boundary.lb8.ugrid -ogrid {self.project_name}_aflr3.lb8.ugrid -blc -blds \
