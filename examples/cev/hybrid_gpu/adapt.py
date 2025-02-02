@@ -7,6 +7,7 @@ from pyrefine.refine.bootstrap import RefineBootstrap
 import subprocess
 import sys
 import time
+import os  # chdir
 
 # This example uses all ranks to perform refinement and a subset to perform CFD more efficiently.
 # This script is called within a single queue scheduling script.
@@ -22,6 +23,8 @@ import time
 # python -u adapt.py $ranks_per_node $nodes $gpus_per_node $ranks_per_gpu > output.txt
 
 # Alternatively, it is possible to use split queues as in the onera_m6/steady_sa_gpu example to run refinement on CPU nodes and CFD on GPU nodes
+
+# For restarting, set phases to False which have fully completed and change either c2s_starting_iteration or hybrid_starting_step depending on restart phase
 
 phase_bootstrap = True
 phase_c2s       = True
@@ -45,11 +48,13 @@ bootstrap_complexity           = 100_000
 bootstrap_initial_wall_spacing = 1E-5
 
 # C2S Phase Inputs
-initial_complexity   = 200_000
-final_complexity     = 1_600_000
-steps_per_complexity = 5
+initial_complexity     = 200_000
+final_complexity       = 1_600_000
+steps_per_complexity   = 3
+c2s_starting_iteration = 1
 
 # AFLR3 Phase Inputs
+# To dynamically adapt the boundary layer from the flow solution, change bl_type from 'manual' to either 'yplus' or 're_cell'
 # bl_type = 'yplus'   # requires FUN3D v14.2+, defaults: initial wall spacing = 1, bl height = 1000
 # bl_type = 're_cell' # requires FUN3D v14.2+, defaults: initial wall spacing = 1, bl height = 3000
 bl_type     = 'manual'
@@ -60,8 +65,9 @@ first_layer = 2.5e-7 # max re_cell ~ 1
 nlayers     = 35     # bl height ~ 3000 wall units based on re_cell
 
 # Hybrid Phase Inputs:
-hybrid_complexity = 2_000_000 # fixed complexity
-hybrid_steps      = 10
+hybrid_complexity    = 2_000_000 # fixed complexity
+hybrid_steps         = 10
+hybrid_starting_step = 1
 
 if (phase_bootstrap):
     print("Bootstrap Begin")
@@ -87,11 +93,13 @@ if (phase_c2s):
     adapt_driver.refine.gradation = 10
     adapt_driver.refine.number_of_sweeps = 10
     adapt_driver.refine.interpolant = interpolant
-    adapt_driver.simulation.fun3d_nml = 'fun3d.nml.1'
-    adapt_driver.set_iterations(1, 3)
-    adapt_driver.run()
+    if (c2s_starting_iteration <= 3):
+        adapt_driver.simulation.fun3d_nml = 'fun3d.nml.1'
+        adapt_driver.set_iterations(c2s_starting_iteration, 3)
+        adapt_driver.run()
+        c2s_starting_iteration = 4
     adapt_driver.simulation.fun3d_nml = 'fun3d.nml.2'
-    adapt_driver.set_iterations(4, iterations)
+    adapt_driver.set_iterations(c2s_starting_iteration, iterations)
     adapt_driver.run(skip_final_refine_call=True)
     toc = time.perf_counter()
     elapsed = int(toc-tic)
@@ -101,8 +109,10 @@ if (phase_aflr3):
     print("AFLR3 Begin")
     tic = time.perf_counter()
     aflr = AFLR3(project_name, bl_type)
-    aflr.nbl = nlayers
-    aflr.initial_wall_spacing = first_layer
+    if bl_type == "manual":
+        aflr.initial_wall_spacing = first_layer
+        aflr.nbl = nlayers
+        # aflr.compute_spacing_from_reynolds_number(re)
     aflr.run()
     toc = time.perf_counter()
     elapsed = int(toc-tic)
@@ -110,6 +120,8 @@ if (phase_aflr3):
 
 if (phase_hybrid):
     print("Hybrid Begin")
+    if not (phase_c2s):
+        os.chdir("./hybrid")
     tic = time.perf_counter()
     adapt_hybrid_driver = AdaptationDriver('%s' % (project_name), pbs)
     adapt_hybrid_driver.refine.vertices_per_cpu_core = 500 # use all ranks always
@@ -120,11 +132,13 @@ if (phase_hybrid):
     adapt_hybrid_driver.refine.lp_norm = 2
     adapt_hybrid_driver.refine.number_of_sweeps = 10
     adapt_hybrid_driver.refine.interpolant = interpolant
-    adapt_hybrid_driver.simulation.fun3d_nml = 'fun3d.nml.1'
-    adapt_hybrid_driver.set_iterations(1, 3)
-    adapt_hybrid_driver.run() 
+    if (hybrid_starting_step <= 3):
+        adapt_hybrid_driver.simulation.fun3d_nml = 'fun3d.nml.1'
+        adapt_hybrid_driver.set_iterations(hybrid_starting_step, 3)
+        adapt_hybrid_driver.run()
+        hybrid_starting_step = 4
     adapt_hybrid_driver.simulation.fun3d_nml = 'fun3d.nml.2'
-    adapt_hybrid_driver.set_iterations(4, hybrid_steps)
+    adapt_hybrid_driver.set_iterations(hybrid_starting_step, hybrid_steps)
     adapt_hybrid_driver.run(skip_final_refine_call=True)
     toc = time.perf_counter()
     elapsed = int(toc-tic)
