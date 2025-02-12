@@ -106,7 +106,8 @@ def test_comm_ref_loop_options_nondefaults(refine: RefineBase):
     refine.use_buffer = True
     refine.use_kexact = True
     refine.use_deforming = True
+    refine.use_balance_full = True
     refine.number_of_sweeps = 3
     initial_command = "test"
-    expected = "test --gradation -1 --buffer --kexact --deforming -s 3"
+    expected = "test --gradation -1 --buffer --kexact --deforming --balance-full -s 3"
     assert expected == refine._add_common_ref_loop_options(initial_command)
