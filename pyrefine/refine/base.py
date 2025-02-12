@@ -35,6 +35,9 @@ class RefineBase(ComponentBase):
         #: simulation are different from the original mesh
         self.use_deforming = False
 
+        #: bool: Use all ranks for load balancing rather than heuristic.
+        self.use_balance_full = False
+
         #: None or int: The number of sweeps for refine. If None, use the refine default
         self.number_of_sweeps = None
 
@@ -101,6 +104,8 @@ class RefineBase(ComponentBase):
             command += " --kexact"
         if self.use_deforming:
             command += " --deforming"
+        if self.use_balance_full:
+            command += " --balance-full"
         if self.number_of_sweeps is not None:
             command += f" -s {self.number_of_sweeps}"
         return command
