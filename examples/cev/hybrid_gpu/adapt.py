@@ -91,7 +91,7 @@ if (phase_c2s):
     iterations = adapt_driver.controller.compute_iterations()
     adapt_driver.refine.lp_norm = 4
     adapt_driver.refine.gradation = 10
-    adapt_driver.refine.number_of_sweeps = 10
+    adapt_driver.refine.number_of_sweeps = 5
     adapt_driver.refine.interpolant = interpolant
     if (c2s_starting_iteration <= 3):
         adapt_driver.simulation.fun3d_nml = 'fun3d.nml.1'
@@ -130,7 +130,7 @@ if (phase_hybrid):
     adapt_hybrid_driver.simulation.ranks_per_node = gpu_ranks_per_node
     adapt_hybrid_driver.controller.steps_per_complexity = hybrid_steps
     adapt_hybrid_driver.refine.lp_norm = 2
-    adapt_hybrid_driver.refine.number_of_sweeps = 10
+    adapt_hybrid_driver.refine.number_of_sweeps = 5
     adapt_hybrid_driver.refine.interpolant = interpolant
     if (hybrid_starting_step <= 3):
         adapt_hybrid_driver.simulation.fun3d_nml = 'fun3d.nml.1'
