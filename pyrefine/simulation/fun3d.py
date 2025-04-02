@@ -65,10 +65,18 @@ class SimulationFun3dFV(SimulationBase):
         #: list: list of extra input files that should also be copied into the Flow directory
         self.extra_input_files = []
 
+        #: bool: Whether to expect an ascent_actions_default.yaml file in the root directory
+        self.ascent_visualization = False
+
+        #: str: ascent_actions_default.yaml file name in root directory
+        self.ascent_visualization_input = "ascent_actions_default.yaml"
+
     def get_expected_file_list(self):
         expected_files = [self.fun3d_nml]
         if self.expect_moving_body_input:
             expected_files.append(self.moving_body_input)
+        if self.ascent_visualization:
+            expected_files.append(self.ascent_visualization_input)
         expected_files.extend(self.extra_input_files)
         return expected_files
 
@@ -109,6 +117,8 @@ class SimulationFun3dFV(SimulationBase):
         self._prepare_fun3d_nml(istep, job_name)
         if self.expect_moving_body_input:
             self._prepare_moving_body_input(istep, job_name)
+        if self.ascent_visualization:
+            self._prepare_ascent_visualization_input(istep, job_name)
 
     def _prepare_fun3d_nml(self, istep, job_name):
         nml = f90nml.read(self._get_template_fun3d_nml_filename(job_name))
@@ -153,8 +163,19 @@ class SimulationFun3dFV(SimulationBase):
     def _prepare_moving_body_input(self, istep: int, job_name: str):
         cp(self._get_template_moving_body_filename(job_name), "moving_body.input")
 
+    def _prepare_ascent_visualization_input(self, istep: int, job_name: str):
+        cp(self._get_template_ascent_visualization_filename(job_name), "ascent_actions.yaml")
+        name = self._create_project_rootname(istep)
+        with open("ascent_actions.yaml") as f:
+            updated_file=f.read().replace('{project}', name)
+        with open("ascent_actions.yaml", "w") as f:
+            f.write(updated_file)
+
     def _get_template_moving_body_filename(self, job_name):
         return f"../{self.moving_body_input}"
+
+    def _get_template_ascent_visualization_filename(self, job_name):
+        return f"../{self.ascent_visualization_input}"
 
     def _save_a_copy_of_solver_inputs(self, istep, job_name):
         job_name_with_step_number = f"{job_name}{istep:02d}"

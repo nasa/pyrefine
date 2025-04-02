@@ -151,6 +151,7 @@ class AFLR3:
         \ncp ../tdata ../hybrid \
         \ncp ../*species* ../hybrid \
         \ncp ../*kinetic* ../hybrid \
+        \ncp ../*ascent_actions* ../hybrid \
         \ncp ../{self.project_name}01.mapbc ../hybrid \
         \ncd ../hybrid \
         \nref translate {self.project_name}.lb8.ugrid {self.project_name}01.meshb",
