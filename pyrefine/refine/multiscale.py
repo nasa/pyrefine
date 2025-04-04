@@ -1,8 +1,9 @@
+import datetime
 import os
 
-from .base import RefineBase
 from pbs4py import PBS
-import datetime
+
+from .base import RefineBase
 
 
 class RefineMultiscale(RefineBase):
@@ -56,7 +57,7 @@ class RefineMultiscale(RefineBase):
 
         command_list = [time_command_start, self.pbs.create_mpi_command(ref_command, job_name)]
         if self.rescale_2D_length > 0:
-            command_list.extend(self.create_rescale_2d_command_list(istep))
+            command_list.extend(self.create_rescale_2d_command_list(istep + 1))
         command_list.append(time_command_end)
 
         self.pbs.launch(job_name, command_list)
