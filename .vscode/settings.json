@@ -1,18 +1,24 @@
 {
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8",
+        "editor.formatOnSave": true, // autopep8 on save
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "always" // isort on save
+        },
+    },
+    "flake8.args": [
+        "--config",
+        ".flake8"
+    ],
     "python.testing.pytestArgs": [
         "tests"
     ],
     "python.testing.unittestEnabled": false,
-    "python.testing.nosetestsEnabled": false,
     "python.testing.pytestEnabled": true,
-    "python.testing.cwd": "${workspaceFolder}",
-    "python.formatting.autopep8Args": [
+    "python.testing.cwd": "${workshapeFolder}",
+    "autopep8.args": [
         "--max-line-length",
         "120",
         "--experimental"
-    ],
-    "python.analysis.useImportHeuristic": true,
-    "python.formatting.provider": "autopep8",
-    "editor.formatOnSave": true,
-    "esbonio.sphinx.confDir": "${workspaceFolder}/docs/source",
+    ]
 }
