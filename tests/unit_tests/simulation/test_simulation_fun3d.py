@@ -1,12 +1,12 @@
 import os
-import pytest
+
 import f90nml
-
-from pyrefine.simulation.fun3d import SimulationFun3dFV, SimulationFun3dSFE
+import pytest
 from pbs4py import FakePBS
-from pyrefine.directory_utils import cd
+from test_distance import distance_test_dir, refine_expected_dist_command
 
-from test_distance import refine_expected_dist_command, distance_test_dir
+from pyrefine.directory_utils import cd
+from pyrefine.simulation.fun3d import SimulationFun3dFV, SimulationFun3dSFE
 
 fv_project = "sphere"
 sfe_project = "box"
@@ -97,7 +97,8 @@ def test_fv_command_list(fv: SimulationFun3dFV):
     istep = 3
     job_name = "flow"
     fv.project_name = "test"
-    expected = ['printf "Flow3 Start Time: " && date', refine_expected_dist_command, "mpiexec nodet_mpi &> flow03.out",'printf "Flow3 End Time: " && date']
+    expected = ['printf "Flow3 Start Time: " && date', refine_expected_dist_command,
+                "mpiexec nodet_mpi &> flow03.out", 'printf "Flow3 End Time: " && date']
 
     with cd(distance_test_dir):
         commands = fv._create_list_of_commands_to_run(istep, job_name)
@@ -112,7 +113,8 @@ def test_fv_command_list_no_external_distance(fv: SimulationFun3dFV):
     job_name = "flow"
     fv.project_name = "test"
     fv.external_wall_distance = False
-    expected = ['printf "Flow4 Start Time: " && date',"mpiexec nodet_mpi &> flow04.out",'printf "Flow4 End Time: " && date']
+    expected = ['printf "Flow4 Start Time: " && date',
+                "mpiexec nodet_mpi &> flow04.out", 'printf "Flow4 End Time: " && date']
 
     with cd(distance_test_dir):
         commands = fv._create_list_of_commands_to_run(istep, job_name)
@@ -127,7 +129,8 @@ def test_fv_command_list_skip_external_distance(fv: SimulationFun3dFV):
     job_name = "flow"
     fv.project_name = "test"
     fv.external_wall_distance = True
-    expected = ['printf "Flow4 Start Time: " && date',"mpiexec nodet_mpi &> flow04.out",'printf "Flow4 End Time: " && date']
+    expected = ['printf "Flow4 Start Time: " && date',
+                "mpiexec nodet_mpi &> flow04.out", 'printf "Flow4 End Time: " && date']
 
     with cd(distance_test_dir):
         commands = fv._create_list_of_commands_to_run(istep, job_name, skip_external_distance=True)

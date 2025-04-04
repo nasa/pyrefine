@@ -1,7 +1,7 @@
-import os
-import subprocess
 import glob
 import math
+import os
+import subprocess
 
 
 class AFLR3:
@@ -161,7 +161,7 @@ class AFLR3:
 
     def compute_spacing(self):
         if self.bl_type == "manual":
-            if self.nbl == 0 or self.initial_wall_spacing == None:
+            if self.nbl == 0 or self.initial_wall_spacing is None:
                 raise ValueError(
                     """nbl and/or initial_wall_spacing undefined.
                                     Please manually specify these or call compute_spacing_from_reynolds_number."""

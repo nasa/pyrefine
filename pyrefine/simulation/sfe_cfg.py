@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import os
-from io import TextIOWrapper
 from collections import OrderedDict
+from io import TextIOWrapper
 
 import numpy as np
 
@@ -59,9 +59,9 @@ class SFEconfig(OrderedDict):
         else:
             with open(output_file, 'w') as fh:
                 for key, value in self.items():
-                    if type(value) == np.ndarray:
+                    if isinstance(value, np.ndarray):
                         self._write_array(key, value, fh)
-                    elif type(value) == list:
+                    elif isinstance(value, list):
                         self._write_array(key, np.array(value), fh)
                     else:
                         self._write_single_value(key, value, fh)
@@ -76,7 +76,7 @@ class SFEconfig(OrderedDict):
                 self._convert_arrays_with_plus_signs(key, value)
 
     def _value_is_a_plus_sign_array(self, value) -> bool:
-        if type(value) == str:
+        if isinstance(value, str):
             return "+" in value
         return False
 
@@ -137,7 +137,7 @@ class SFEconfig(OrderedDict):
         return array_keys
 
     def _convert_type(self, val_string: str):
-        if type(val_string) != str:
+        if not isinstance(val_string, str):
             return val_string
 
         if '.true.' == val_string.lower():
@@ -146,10 +146,10 @@ class SFEconfig(OrderedDict):
             return False
         try:
             value = int(val_string)
-        except:
+        except ValueError:
             try:
                 value = float(val_string)
-            except:
+            except ValueError:
                 value = val_string
         return value
 
@@ -202,6 +202,6 @@ class SFEconfig(OrderedDict):
                         self._write_single_value(f'{array_key}({i},{j},{k},{m})', value[i, j, k, m], fh)
 
     def _write_single_value(self, key: str, value, fh: TextIOWrapper):
-        if type(value) == bool or type(value) == np.bool_:
+        if isinstance(value, (bool, np.bool_)):
             value = '.true.' if value else '.false.'
         fh.write(f'{key} = {value}\n')

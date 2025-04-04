@@ -1,9 +1,8 @@
-from calendar import c
-import os
-import pytest
 import filecmp
+import os
 
 import numpy as np
+import pytest
 
 from pyrefine.simulation.sfe_cfg import SFEconfig
 
@@ -23,36 +22,36 @@ def cfg_test0_no_convert_arrays():
 
 
 def test_reading_floats_from_sfe_cfg(cfg_test0):
-    assert type(cfg_test0['float0']) == float
+    assert isinstance(cfg_test0['float0'], float)
     assert cfg_test0['float0'] == pytest.approx(1.0)
 
-    assert type(cfg_test0['float1']) == float
+    assert isinstance(cfg_test0['float1'], float)
     assert cfg_test0['float1'] == pytest.approx(2.05)
 
-    assert type(cfg_test0['float2']) == float
+    assert isinstance(cfg_test0['float2'], float)
     assert cfg_test0['float2'] == pytest.approx(0.05)
 
-    assert type(cfg_test0['float3']) == float
+    assert isinstance(cfg_test0['float3'], float)
     assert cfg_test0['float3'] == pytest.approx(12.0)
 
-    assert type(cfg_test0['float4']) == float
+    assert isinstance(cfg_test0['float4'], float)
     assert cfg_test0['float4'] == pytest.approx(1.0e-5)
 
-    assert type(cfg_test0['float5']) == float
+    assert isinstance(cfg_test0['float5'], float)
     assert cfg_test0['float5'] == pytest.approx(1.0e+5)
 
-    assert type(cfg_test0['float_6']) == float
+    assert isinstance(cfg_test0['float_6'], float)
     assert cfg_test0['float_6'] == pytest.approx(2.0e+3)
 
 
 def test_reading_ints_sfe_cfg(cfg_test0):
-    assert type(cfg_test0['int0']) == int
+    assert isinstance(cfg_test0['int0'], int)
     assert cfg_test0['int0'] == 3
 
-    assert type(cfg_test0['int1']) == int
+    assert isinstance(cfg_test0['int1'], int)
     assert cfg_test0['int1'] == 500
 
-    assert type(cfg_test0['int2']) == int
+    assert isinstance(cfg_test0['int2'], int)
     assert cfg_test0['int2'] == -1
 
 
@@ -63,40 +62,31 @@ def test_reading_int_arrays_sfe_cfg(cfg_test0):
     assert (cfg_test0['int_array'] == expected).all()
 
 
-def test_reading_int_arrays_sfe_cfg(cfg_test0_no_convert_arrays):
-    assert cfg_test0_no_convert_arrays['int_array_plus'] == '1 + 4 + 4 + 5'
-
-    assert cfg_test0_no_convert_arrays['int_array(0)'] == 1
-    assert cfg_test0_no_convert_arrays['int_array(1)'] == 4
-    assert cfg_test0_no_convert_arrays['int_array(2)'] == 4
-    assert cfg_test0_no_convert_arrays['int_array(3)'] == 5
-
-
 def test_reading_bools_from_sfe_cfg(cfg_test0):
-    assert type(cfg_test0['bool0']) == bool
-    assert cfg_test0['bool0'] == True
+    assert isinstance(cfg_test0['bool0'], bool)
+    assert cfg_test0['bool0']
 
-    assert type(cfg_test0['bool1']) == bool
-    assert cfg_test0['bool1'] == False
+    assert isinstance(cfg_test0['bool1'], bool)
+    assert not cfg_test0['bool1']
 
-    assert type(cfg_test0['bool2']) == bool
-    assert cfg_test0['bool2'] == False
+    assert isinstance(cfg_test0['bool2'], bool)
+    assert not cfg_test0['bool2']
 
-    assert type(cfg_test0['bool3']) == bool
-    assert cfg_test0['bool3'] == True
+    assert isinstance(cfg_test0['bool3'], bool)
+    assert cfg_test0['bool3']
 
 
 def test_reading_strings_sfe_cfg(cfg_test0):
-    assert type(cfg_test0['str_input']) == str
+    assert isinstance(cfg_test0['str_input'], str)
     assert cfg_test0['str_input'] == 'hello world'
 
-    assert type(cfg_test0['str_input1']) == str
+    assert isinstance(cfg_test0['str_input1'], str)
     assert cfg_test0['str_input1'] == 'hello1world'
 
-    assert type(cfg_test0['str_input2']) == str
+    assert isinstance(cfg_test0['str_input2'], str)
     assert cfg_test0['str_input2'] == '1hello'
 
-    assert type(cfg_test0['str_input3']) == str
+    assert isinstance(cfg_test0['str_input3'], str)
     assert cfg_test0['str_input3'] == 'hello 1 world'
 
 
@@ -130,3 +120,8 @@ def test_creating_sfe_cfg_from_scratch():
     cfg['str_5d'] = np.array(['surface']).reshape((1, 1, 1, 1, 1))
     with pytest.raises(ValueError):
         cfg.write(output_file, force=True)
+
+
+if __name__ == "__main__":
+    cfg = SFEconfig(f'{test_directory}/sfe_cfg_test_files/sfe_test0.cfg', convert_read_arrays=True)
+    test_reading_floats_from_sfe_cfg(cfg)

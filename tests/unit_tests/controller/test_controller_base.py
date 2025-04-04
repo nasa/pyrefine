@@ -1,5 +1,6 @@
-import pytest
 import os
+
+import pytest
 
 from pyrefine.controller.base import ControllerBase
 from pyrefine.directory_utils import cd
@@ -7,7 +8,7 @@ from pyrefine.directory_utils import cd
 test_dir = f'{os.path.dirname(os.path.abspath(__file__))}/test_controller_base_files'
 
 
-@ pytest.fixture
+@pytest.fixture
 def controller():
     controller = ControllerBase('test', pbs=None)
     return controller
@@ -20,7 +21,7 @@ def test_for_early_stop(controller: ControllerBase):
 
 def test_default_compute_complexity(controller: ControllerBase):
     with pytest.raises(NotImplementedError):
-        complexity = controller.compute_complexity(1, 1000.)
+        controller.compute_complexity(1, 1000.)
 
 
 def test_default_update_inputs(controller: ControllerBase):

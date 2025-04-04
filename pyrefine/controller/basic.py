@@ -1,6 +1,9 @@
-from .base import ControllerBase
-from pbs4py import PBS
 import math
+
+from pbs4py import PBS
+
+from .base import ControllerBase
+
 
 class ControllerBasic(ControllerBase):
     def __init__(self, project_name: str, pbs: PBS = None):
@@ -63,11 +66,12 @@ class ControllerBasic(ControllerBase):
         iterations:
         """
 
-        if (self.final_complexity == None):
+        if (self.final_complexity is None):
             raise ValueError('Can only call compute_iterations when final_complexity defined.')
 
         if (self.final_complexity < self.initial_complexity):
             raise ValueError('final_complexity must be equal or greater than initial_complexity.')
 
-        iterations = int(math.ceil(math.log(self.final_complexity/self.initial_complexity)/math.log(self.complexity_multiplier))*self.steps_per_complexity)+self.steps_per_complexity
+        iterations = int(math.ceil(math.log(self.final_complexity/self.initial_complexity)/math.log(
+            self.complexity_multiplier))*self.steps_per_complexity)+self.steps_per_complexity
         return iterations

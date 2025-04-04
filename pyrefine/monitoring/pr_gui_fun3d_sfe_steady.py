@@ -1,15 +1,16 @@
 #!/usr/bin/env python
-import numpy as np
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+import numpy as np
+import plotly.graph_objects as go
 from dash.dependencies import Input, Output, State
+from plotly.subplots import make_subplots
 
-from pyrefine.post_processing.fun3d_file_reader import Fun3dAdaptationSteadyHistoryReader
-from pyrefine.post_processing.sfe_file_reader import SFEForwardHistoryReader
 from pyrefine.monitoring.plotly_base import PyrefinePlotly
+from pyrefine.post_processing.fun3d_file_reader import \
+    Fun3dAdaptationSteadyHistoryReader
+from pyrefine.post_processing.sfe_file_reader import SFEForwardHistoryReader
 
 
 class GuiAdaptHistory(PyrefinePlotly):
@@ -365,7 +366,7 @@ def main():
     def create_sfe_tabs_outer_div(mesh_number, timing_normalization_radio):
         ap.normalized_timings = timing_normalization_radio
         if mesh_number < 1:
-            print(f"Mesh number must be an integer greater than 0")
+            print("Mesh number must be an integer greater than 0")
             mesh_number = 1
         elif mesh_number > ap.reader.number_of_meshes:
             print(f"Mesh number must be an integer less than {ap.reader.number_of_meshes+1}")

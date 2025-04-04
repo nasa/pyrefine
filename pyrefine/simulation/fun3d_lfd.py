@@ -1,19 +1,22 @@
 import os
+
 import f90nml
 import numpy as np
 
+from pyrefine.shell_utils import cp, mkdir, mv, rm
+
 from .fun3d import SimulationFun3dSFE
-from pyrefine.shell_utils import rm, cp, mv, mkdir
 
 try:
+    from pk_flutter_solver.pk_solver import PK
+    from pk_flutter_solver.read_fun3d_files import read_files
     from pyNastran.bdf.bdf import BDF
     from pyNastran.op2.op2 import OP2
-    from scipy.spatial.distance import cdist
     from scipy.linalg import lu_factor, lu_solve
-    from pk_flutter_solver.read_fun3d_files import read_files
-    from pk_flutter_solver.pk_solver import PK
-except:
-    print('modules needed for SimulationFlutterLfd not found: code can only be used for unit testing')
+    from scipy.spatial.distance import cdist
+except ImportError as e:
+    print(f'Modules needed for SimulationFlutterLfd not found: {e}. Code can only be used for unit testing.')
+
 
 class SimulationFlutterLfd(SimulationFun3dSFE):
     def __init__(self, project_name, pbs=None, external_wall_distance=True, omp_threads=None):

@@ -1,5 +1,7 @@
 import pytest
-from pyrefine.refine.uniform_region import UniformRegionBase, UniformBox, UniformCylinder
+
+from pyrefine.refine.uniform_region import (UniformBox, UniformCylinder,
+                                            UniformRegionBase)
 
 
 def test_base_class_command_exception():
@@ -23,7 +25,7 @@ def test_base_class_limit():
 
 def test_uniform_box_command_with_default_options():
     region = UniformBox()
-    expected_arg = f' --uniform box ceil 0.100000 0.100000 0.000000 0.000000 0.000000 1.000000 1.000000 1.000000'
+    expected_arg = ' --uniform box ceil 0.100000 0.100000 0.000000 0.000000 0.000000 1.000000 1.000000 1.000000'
     assert region.get_commandline_arguments() == expected_arg
 
 
@@ -38,13 +40,13 @@ def test_uniform_box_command_with_nondefault_options():
     region.limit = 'floor'
     region.decay_distance = 0.02
     region.h0 = 1.4
-    expected_arg = f' --uniform box floor 1.400000 0.020000 -1.000000 -2.000000 -3.000000 3.000000 4.000000 5.000000'
+    expected_arg = ' --uniform box floor 1.400000 0.020000 -1.000000 -2.000000 -3.000000 3.000000 4.000000 5.000000'
     assert region.get_commandline_arguments() == expected_arg
 
 
 def test_uniform_cylinder_command_with_default_options():
     region = UniformCylinder()
-    expected_arg = f' --uniform cyl ceil 0.100000 0.100000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000 1.000000 1.000000'
+    expected_arg = ' --uniform cyl ceil 0.100000 0.100000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000 1.000000 1.000000'
     assert region.get_commandline_arguments() == expected_arg
 
 
@@ -61,5 +63,5 @@ def test_uniform_cylinder_command_with_nondefault_options():
     region.limit = 'floor'
     region.decay_distance = 0.03
     region.h0 = 2.3
-    expected_arg = f' --uniform cyl floor 2.300000 0.030000 1.000000 -1.000000 2.000000 1.600000 4.300000 2.900000 4.000000 5.000000'
+    expected_arg = ' --uniform cyl floor 2.300000 0.030000 1.000000 -1.000000 2.000000 1.600000 4.300000 2.900000 4.000000 5.000000'
     assert region.get_commandline_arguments() == expected_arg

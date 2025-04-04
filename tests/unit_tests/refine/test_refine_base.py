@@ -111,3 +111,20 @@ def test_comm_ref_loop_options_nondefaults(refine: RefineBase):
     initial_command = "test"
     expected = "test --gradation -1 --buffer --kexact --deforming --balance-full -s 3"
     assert expected == refine._add_common_ref_loop_options(initial_command)
+
+
+def test_rescale_2D_length_commands(refine: RefineBase):
+    refine.rescale_2D_length = 2.0
+    commands = refine.create_rescale_2d_command_list(3)
+    expected = [
+        """scale_aflr3 <<EOF
+sphere03.lb8.ugrid
+sphere03_scaled.lb8.ugrid
+1 2.0 1
+EOF""",
+        "mv sphere03_scaled.lb8.ugrid sphere03.lb8.ugrid",
+    ]
+
+    assert len(commands) == len(expected)
+    for cmd, exp in zip(commands, expected):
+        assert cmd == exp

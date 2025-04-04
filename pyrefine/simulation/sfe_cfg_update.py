@@ -1,7 +1,7 @@
 import argparse
 
-from pyrefine.simulation.sfe_cfg import SFEconfig
 from pyrefine.shell_utils import cp
+from pyrefine.simulation.sfe_cfg import SFEconfig
 
 
 def update_sfe_cfg_parameter_keys(input_file_name="sfe_cfl_controller1.cfg", output_file_name="sfe_0.cfg"):

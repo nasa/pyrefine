@@ -1,16 +1,17 @@
 #!/usr/bin/env python
-import numpy as np
 import os
+from pathlib import Path
 from typing import List
 
+import numpy as np
 from pbs4py import PBS
-from .directory_utils import cd
-from .shell_utils import cp, mkdir
 
 from .component_base import ComponentBase
-from .refine.multiscale import RefineMultiscale
-from .simulation.fun3d import SimulationFun3dFV
 from .controller.basic import ControllerBasic
+from .directory_utils import cd
+from .refine.multiscale import RefineMultiscale
+from .shell_utils import cp, mkdir
+from .simulation.fun3d import SimulationFun3dFV
 
 
 class AdaptationDriver:
@@ -182,10 +183,11 @@ class AdaptationDriver:
         early termination
         """
         stop = 1e99
-        try:
-            stop = np.loadtxt("../stop.dat")
-        except:
+
+        if not Path("../stop.dat").exists():
             return
+
+        stop = np.loadtxt("../stop.dat")
         if stop < istep:
             print("Adaptation found stop.dat in root directory. Stopping...")
             os.remove("../stop.dat")

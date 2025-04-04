@@ -1,10 +1,12 @@
 import os
-import pytest
-import f90nml
 
-from pyrefine.simulation.fun3d_two_phase_unsteady import SimulationFun3dTwoPhase, SimulationSFETwoPhase
+import f90nml
+import pytest
 from pbs4py import FakePBS
+
 from pyrefine.directory_utils import cd
+from pyrefine.simulation.fun3d_two_phase_unsteady import (
+    SimulationFun3dTwoPhase, SimulationSFETwoPhase)
 
 test_dir = f"{os.path.dirname(os.path.abspath(__file__))}/test_fun3d_two_phase_unsteady_files"
 
@@ -48,9 +50,9 @@ def check_metric_nml_values(nml, fv: SimulationFun3dTwoPhase):
     assert nml["code_run_control"]["steps"] == fv.metric_steps
     assert nml["global"]["volume_animation_freq"] == fv.metric_frequency
     assert nml["code_run_control"]["restart_read"] == "on_nohistorykept"
-    assert nml["volume_output_variables"]["mach"] == True
-    assert nml["volume_output_variables"]["primitive_variables"] == False
-    assert nml["volume_output_variables"]["turb1"] == False
+    assert nml["volume_output_variables"]["mach"]
+    assert not nml["volume_output_variables"]["primitive_variables"]
+    assert not nml["volume_output_variables"]["turb1"]
 
 
 def test_fv_update_metric_inputs(fv: SimulationFun3dTwoPhase):

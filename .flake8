@@ -1,0 +1,14 @@
+[flake8]
+max-line-length = 120
+
+# ignore long lines
+extend-ignore = E501
+
+docstring-convention = numpy
+
+exclude =
+    .git,
+    __pycache__,
+    doc/conf.py,
+    __init__.py,
+    setup.py,

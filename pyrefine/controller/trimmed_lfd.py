@@ -1,7 +1,8 @@
-import numpy as np
 import f90nml
+import numpy as np
 
 from .monitor_quantity import ControllerMonitorQuantity
+
 
 class ControllerTrimmedLfdDriver(ControllerMonitorQuantity):
     def __init__(self, project_name, pbs=None):
