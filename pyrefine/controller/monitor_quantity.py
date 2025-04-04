@@ -1,9 +1,10 @@
-import numpy as np
 import ast
 from typing import List
 
-from .base import ControllerBase
+import numpy as np
 from pbs4py import PBS
+
+from .base import ControllerBase
 
 
 class ControllerMonitorQuantity(ControllerBase):

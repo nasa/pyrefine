@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 import os
 from pathlib import Path
+
 import pytest
-from pytest import approx
-from pyrefine.post_processing.fun3d_file_reader import Fun3dAdaptationSteadyHistoryReader as F3DReader
-from pyrefine.post_processing.post_processing_command import PostProcessingCommand
+
+from pyrefine.post_processing.fun3d_file_reader import \
+    Fun3dAdaptationSteadyHistoryReader as F3DReader
+from pyrefine.post_processing.post_processing_command import \
+    PostProcessingCommand
 
 test_directory = os.path.dirname(os.path.abspath(__file__))
 
@@ -26,13 +29,13 @@ def test_get_nnodes_from_flow_out():
 def test_f3d_reader():
     reader = F3DReader(f'{test_directory}/post_processing_test_files', 'test_m')
     print(reader.final_hist_values)
-    assert (reader.final_hist_values['C_L'][2] == approx(0.3300000000E+00))
-    assert (reader.final_hist_values['C_D'][2] == approx(0.1530000000E+01))
+    assert (reader.final_hist_values['C_L'][2] == pytest.approx(0.3300000000E+00))
+    assert (reader.final_hist_values['C_D'][2] == pytest.approx(0.1530000000E+01))
 
 
 def test_raise_error_if_no_files_found():
     with pytest.raises(RuntimeError):
-        reader = F3DReader(test_directory, 'test_m')
+        F3DReader(test_directory, 'test_m')
 
 
 def test_count_files_without_grid_info():
@@ -53,7 +56,7 @@ def test_lift_over_drag_without_user_defined_init():
     reader.register_command(LOverDCommand(reader))
     reader.execute_commands()
     expected_l_over_d = 0.3300000000E+00 / 0.1530000000E+01
-    assert (reader.final_hist_values['L/D'][2] == approx(expected_l_over_d))
+    assert (reader.final_hist_values['L/D'][2] == pytest.approx(expected_l_over_d))
 
 
 def test_lift_over_drag():
@@ -72,7 +75,7 @@ def test_lift_over_drag():
     reader.register_command(LOverDCommand(reader))
     reader.execute_commands()
     expected_l_over_d = 0.3300000000E+00 / 0.1530000000E+01
-    assert (reader.final_hist_values['L/D'][2] == approx(expected_l_over_d))
+    assert (reader.final_hist_values['L/D'][2] == pytest.approx(expected_l_over_d))
 
 
 def test_raise_error_on_invalid_command():

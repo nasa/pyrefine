@@ -1,15 +1,15 @@
 import os
-import pytest
 from pathlib import Path
-from pyrefine.shell_utils import rm
+
 import f90nml
-
-from pyrefine.simulation.fun3d_adjoint import SimulationFun3dSFEAdjoint
-from pbs4py import FakePBS, PBS
-from pyrefine.directory_utils import cd
-from pyrefine.simulation.sfe_cfg import SFEconfig
-
+import pytest
+from pbs4py import PBS, FakePBS
 from test_simulation_fun3d import check_expected_files
+
+from pyrefine.directory_utils import cd
+from pyrefine.shell_utils import rm
+from pyrefine.simulation.fun3d_adjoint import SimulationFun3dSFEAdjoint
+from pyrefine.simulation.sfe_cfg import SFEconfig
 
 test_dir = f"{os.path.dirname(os.path.abspath(__file__))}/test_fun3d_adjoint_files"
 
@@ -28,7 +28,6 @@ def test_expected_file_list(sim: SimulationFun3dSFEAdjoint):
 
 def test_check_for_prim_dual_solb(sim: SimulationFun3dSFEAdjoint):
     with cd(test_dir):
-        istep = 2
         expected_file = "prim_dual.solb"
         os.system(f"touch {expected_file}")
         sim._check_for_prim_dual_solb()

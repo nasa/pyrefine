@@ -1,7 +1,6 @@
-import os
-from pyrefine.refine.base import RefineBase
 from pbs4py import PBS
-from pyrefine.shell_utils import concatenate_files, mv
+
+from pyrefine.refine.base import RefineBase
 
 
 class HeldenMultiscale(RefineBase):
@@ -69,7 +68,7 @@ class HeldenMultiscale(RefineBase):
         command = f"ref multiscale {project}.lb8.ugrid {metric_scalar_file} {complexity} metric.solb"
         command += f" --norm-power {self.lp_norm}"
         if self.use_buffer:
-            command += f" --buffer"
+            command += " --buffer"
         return command
 
     def _get_command_to_generate_helden_sources_with_ref_source(self, istep):

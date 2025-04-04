@@ -1,5 +1,7 @@
-import numpy as np
 from typing import List
+
+import numpy as np
+
 
 def write_data_to_tecplot_format(filename: str, title: str, data: np.ndarray,
                                  variables: List[str], zone: str):

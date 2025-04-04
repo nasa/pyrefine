@@ -1,11 +1,13 @@
+import datetime
 import os
 from typing import List
+
 import f90nml
+
+from pyrefine.shell_utils import cp
 
 from .base import SimulationBase
 from .distance_refine import DistanceRefine
-from pyrefine.shell_utils import cp
-import datetime
 
 
 class SimulationFun3dFV(SimulationBase):
@@ -167,7 +169,7 @@ class SimulationFun3dFV(SimulationBase):
         if self.external_wall_distance and not skip_external_distance:
             command_list.append(self._create_distance_command(istep))
         command_list.append(self._create_fun3d_command(istep, job_name))
-        time_command_start = f'printf "Flow{istep} Start Time: " && date' # (command sent to pbs script)
+        time_command_start = f'printf "Flow{istep} Start Time: " && date'
         time_command_end = f'printf "Flow{istep} End Time: " && date'
         command_list.insert(0, time_command_start)
         command_list.append(time_command_end)

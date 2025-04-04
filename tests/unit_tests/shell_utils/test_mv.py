@@ -1,7 +1,7 @@
 import os
-import filecmp
-from pyrefine.shell_utils import mv, rm
+
 from pyrefine.directory_utils import cd
+from pyrefine.shell_utils import mv, rm
 
 test_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -111,6 +111,6 @@ def test_mv_relative_path_where_src_not_in_pwd():
         os.system(f'echo 23 > ../{file}')
         mv(f'../{file}', '.')
         file_contents = os.popen(f'cat {file}').read()
-        assert file_contents == f'23\n'
+        assert file_contents == '23\n'
         rm(file)
         assert not os.path.exists(f'../{file}')
