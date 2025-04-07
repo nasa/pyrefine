@@ -189,6 +189,28 @@ solution, i.e., whether or not to use the flow_initialization nml.</p>
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d.SimulationFun3dFV.ascent_visualization">
+<span class="sig-name descname"><span class="pre">ascent_visualization</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.ascent_visualization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to expect an ascent_actions_default.yaml file in the root directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d.SimulationFun3dFV.ascent_visualization_input">
+<span class="sig-name descname"><span class="pre">ascent_visualization_input</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.ascent_visualization_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>ascent_actions_default.yaml file name in root directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="pyrefine.simulation.fun3d.SimulationFun3dFV.get_expected_file_list">
 <span class="sig-name descname"><span class="pre">get_expected_file_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.get_expected_file_list" title="Permalink to this definition">¶</a></dt>
@@ -393,6 +415,28 @@ solution, i.e., whether or not to use the flow_initialization nml.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d.SimulationFun3dSFE.ascent_visualization">
+<span class="sig-name descname"><span class="pre">ascent_visualization</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.ascent_visualization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to expect an ascent_actions_default.yaml file in the root directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.simulation.fun3d.SimulationFun3dSFE.ascent_visualization_input">
+<span class="sig-name descname"><span class="pre">ascent_visualization_input</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.ascent_visualization_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>ascent_actions_default.yaml file name in root directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="pyrefine.simulation.fun3d.SimulationFun3dSFE.project_name">
 <span class="sig-name descname"><span class="pre">project_name</span></span><a class="headerlink" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.project_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>The root name of the project (without any mesh numbers)</p>
@@ -453,6 +497,8 @@ solution, i.e., whether or not to use the flow_initialization nml.</p>
 <li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.distance"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dFV.distance</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.field_file_extension"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dFV.field_file_extension</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.extra_input_files"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dFV.extra_input_files</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.ascent_visualization"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dFV.ascent_visualization</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.ascent_visualization_input"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dFV.ascent_visualization_input</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.get_expected_file_list"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dFV.get_expected_file_list()</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.run"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dFV.run()</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dFV.project_name"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dFV.project_name</span></code></a></li>
@@ -475,6 +521,8 @@ solution, i.e., whether or not to use the flow_initialization nml.</p>
 <li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.distance"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dSFE.distance</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.field_file_extension"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dSFE.field_file_extension</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.extra_input_files"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dSFE.extra_input_files</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.ascent_visualization"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dSFE.ascent_visualization</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.ascent_visualization_input"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dSFE.ascent_visualization_input</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.project_name"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dSFE.project_name</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.pbs"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dSFE.pbs</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.simulation.fun3d.SimulationFun3dSFE.vertices_per_cpu_core"><code class="docutils literal notranslate"><span class="pre">SimulationFun3dSFE.vertices_per_cpu_core</span></code></a></li>

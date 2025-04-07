@@ -111,6 +111,17 @@ simulation are different from the original mesh</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.base.RefineBase.use_balance_full">
+<span class="sig-name descname"><span class="pre">use_balance_full</span></span><a class="headerlink" href="#pyrefine.refine.base.RefineBase.use_balance_full" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use all ranks for load balancing rather than heuristic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="pyrefine.refine.base.RefineBase.number_of_sweeps">
 <span class="sig-name descname"><span class="pre">number_of_sweeps</span></span><a class="headerlink" href="#pyrefine.refine.base.RefineBase.number_of_sweeps" title="Permalink to this definition">¶</a></dt>
 <dd><p>The number of sweeps for refine. If None, use the refine default</p>
@@ -128,6 +139,17 @@ simulation are different from the original mesh</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyrefine.refine.base.RefineBase.rescale_2D_length">
+<span class="sig-name descname"><span class="pre">rescale_2D_length</span></span><a class="headerlink" href="#pyrefine.refine.base.RefineBase.rescale_2D_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>rescale the y (spanwise) direction to this length for 2D meshes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -181,8 +203,10 @@ files are needed by this component, return None</p>
 <li><a class="reference internal" href="#pyrefine.refine.base.RefineBase.extrude_2d_mesh_to_3d"><code class="docutils literal notranslate"><span class="pre">RefineBase.extrude_2d_mesh_to_3d</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.refine.base.RefineBase.use_kexact"><code class="docutils literal notranslate"><span class="pre">RefineBase.use_kexact</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.refine.base.RefineBase.use_deforming"><code class="docutils literal notranslate"><span class="pre">RefineBase.use_deforming</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.base.RefineBase.use_balance_full"><code class="docutils literal notranslate"><span class="pre">RefineBase.use_balance_full</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.refine.base.RefineBase.number_of_sweeps"><code class="docutils literal notranslate"><span class="pre">RefineBase.number_of_sweeps</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.refine.base.RefineBase.uniform_regions"><code class="docutils literal notranslate"><span class="pre">RefineBase.uniform_regions</span></code></a></li>
+<li><a class="reference internal" href="#pyrefine.refine.base.RefineBase.rescale_2D_length"><code class="docutils literal notranslate"><span class="pre">RefineBase.rescale_2D_length</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.refine.base.RefineBase.translate_mesh"><code class="docutils literal notranslate"><span class="pre">RefineBase.translate_mesh()</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.refine.base.RefineBase.get_expected_file_list"><code class="docutils literal notranslate"><span class="pre">RefineBase.get_expected_file_list()</span></code></a></li>
 <li><a class="reference internal" href="#pyrefine.refine.base.RefineBase.run"><code class="docutils literal notranslate"><span class="pre">RefineBase.run()</span></code></a></li>
