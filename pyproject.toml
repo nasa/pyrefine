@@ -21,4 +21,4 @@ dependencies = ["numpy", "f90nml", "pbs4py"]
 "sfe_cfg_update.py" = "pyrefine.simulation.sfe_cfg_update:main"
 
 [tool.setuptools.packages.find]
-where = ["pyrefine"]
+where = ["."]
