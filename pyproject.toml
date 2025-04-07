@@ -19,6 +19,3 @@ dependencies = ["numpy", "f90nml", "pbs4py"]
 "pr_watch.py" = "pyrefine.monitoring.pr_watch:main"
 "pr_post_fun3d_steady_hist_to_tec.py" = "pyrefine.post_processing.pr_post_fun3d_steady_hist_to_tec:main"
 "sfe_cfg_update.py" = "pyrefine.simulation.sfe_cfg_update:main"
-
-[tool.setuptools.packages.find]
-where = ["."]
