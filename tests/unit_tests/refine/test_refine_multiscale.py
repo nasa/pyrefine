@@ -1,9 +1,11 @@
-import pytest
 from pathlib import Path
-from pyrefine.shell_utils import rm
 
-from pyrefine.refine.multiscale import RefineMultiscale, RefineMultiscaleFixedPoint
+import pytest
 from pbs4py import PBS
+
+from pyrefine.refine.multiscale import (RefineMultiscale,
+                                        RefineMultiscaleFixedPoint)
+from pyrefine.shell_utils import rm
 
 project = 'sphere'
 
@@ -73,7 +75,7 @@ class PbsSpy(PBS):
         self.expected_commands = []
         self.expected_jobname = ''
         self.expected_output_files = []
-        super().__init__(profile_file=profile_filename)
+        super().__init__(profile_filename=profile_filename)
 
     def launch(self, job_name, job_body) -> str:
         assert job_name == self.expected_jobname
