@@ -1,6 +1,8 @@
 from typing import List
-from .monitor_quantity import ControllerMonitorQuantity
+
 from pyrefine.shell_utils import grep
+
+from .monitor_quantity import ControllerMonitorQuantity
 
 
 class ControllerMonitorForcesFUN3D(ControllerMonitorQuantity):
@@ -67,7 +69,7 @@ class ControllerMonitorForcesFUN3D(ControllerMonitorQuantity):
         return values
 
     def _read_cost_function_from_forces_file(self, forces_file, cost_function_name):
-        regex_scientific_number = '-*[0-9].[0-9]+[Ee]\+*-*[0-9][0-9]'
+        regex_scientific_number = '-*[0-9].[0-9]+[Ee]\\+*-*[0-9][0-9]'
         regex_for_cost_function_name_and_value = f'{cost_function_name}[ ]*=[ ]*{regex_scientific_number}'
         cost_function_string = grep(regex_for_cost_function_name_and_value, forces_file, tail=1, match_only=True)
         return float(cost_function_string[0].split("=")[-1])
@@ -121,7 +123,7 @@ class ControllerMonitorForcesSFE(ControllerMonitorQuantity):
         return values
 
     def _read_cost_function_from_log_file(self, log_file, cost_function_name):
-        regex_scientific_number = '-*[0-9].[0-9]+[Ee]\+*-*[0-9][0-9]'
+        regex_scientific_number = '-*[0-9].[0-9]+[Ee]\\+*-*[0-9][0-9]'
         regex_for_cost_function_name_and_value = f'{cost_function_name}[ ]*=[ ]*{regex_scientific_number}'
         cost_function_string = grep(regex_for_cost_function_name_and_value, log_file, tail=1, match_only=True)
         return float(cost_function_string[0].split("=")[-1])
