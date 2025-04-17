@@ -139,11 +139,16 @@ class AFLR3:
                     f'aflr3 -i {self.project_name}_boundary.lb8.ugrid -ogrid {self.project_name}_aflr3.lb8.ugrid -blc -blds \
                 {self.initial_wall_spacing} -nbl {self.nbl} -BC_IDs {self.BC_IDs} -Grid_BC_Flag {self.BC_Flags} \
                 -blpr -bli {self.n_constant_layers} -bldr {self.bldr} \
-                -blrm {self.max_blgr} {self.aflr_extra_args} -tmp $PWD -log',
-                    shell=True,
-                )
+                -blrm {self.max_blgr} {self.aflr_extra_args} -tmp $PWD -log', shell=True, )
 
         # Create new directory for hybrid run:
+        # MJO: Check for aflr.*b8.ugrid, aflr 16.32.50 didnt take -ogrid
+        aflr_ugrid = glob.glob(self.project_name+"_aflr3.*b8.ugrid")[0]
+        if aflr_ugrid.split(".")[-2] == 'b8':
+            subprocess.run(
+                f"ugc {aflr_ugrid} {self.project_name}_aflr3.lb8.ugrid \
+            \nrm {aflr_ugrid}",
+                shell=True,)
         subprocess.run(
             f"mkdir ../hybrid \
         \ncp {self.project_name}_aflr3.lb8.ugrid ../hybrid/{self.project_name}.lb8.ugrid \

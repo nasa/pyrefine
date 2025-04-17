@@ -1,6 +1,6 @@
 import pytest
-
 from pbs4py import PBS, FakePBS
+
 from pyrefine.refine.tinfinity_multiscale import TinfinityMultiscale
 from pyrefine.shell_utils import rm
 
@@ -105,7 +105,7 @@ class PbsSpy(PBS):
         self.expected_commands = []
         self.expected_jobname = ''
         self.expected_output_files = []
-        super().__init__(profile_file=profile_filename)
+        super().__init__(profile_filename=profile_filename)
 
     def launch(self, job_name, job_body) -> str:
         assert job_name == self.expected_jobname
