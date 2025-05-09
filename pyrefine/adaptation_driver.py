@@ -93,8 +93,7 @@ class AdaptationDriver:
         self._prepare_flow_directory()
 
         with cd("./Flow"):
-            if self.start_iteration == 1:
-                self.refine.translate_mesh()
+            self.refine.translate_mesh(self.start_iteration)
 
             for istep in range(self.start_iteration, self.final_iteration + 1):
                 print(f"Begin adaptation step {istep}")
