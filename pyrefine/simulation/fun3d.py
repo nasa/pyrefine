@@ -73,6 +73,9 @@ class SimulationFun3dFV(SimulationBase):
         #: str: ascent_actions_default.yaml file name in root directory
         self.ascent_visualization_input = "ascent_actions_default.yaml"
 
+        #: bool: Whether to launch NVIDIA MPS with pyrefine
+        self.launch_mps = False
+
     def get_expected_file_list(self):
         expected_files = [self.fun3d_nml]
         if self.expect_moving_body_input:
@@ -189,6 +192,8 @@ class SimulationFun3dFV(SimulationBase):
         command_list = []
         if self.external_wall_distance and not skip_external_distance:
             command_list.append(self._create_distance_command(istep))
+        if self.launch_mps:
+            command_list.append(self.pbs.create_mpi_command("nvidia-cuda-mps-control -d", "mps", ranks_per_node=1))
         command_list.append(self._create_fun3d_command(istep, job_name))
         time_command_start = f'printf "Flow{istep} Start Time: " && date'
         time_command_end = f'printf "Flow{istep} End Time: " && date'
