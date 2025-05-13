@@ -97,7 +97,9 @@ def test_fv_command_list(fv: SimulationFun3dFV):
     istep = 3
     job_name = "flow"
     fv.project_name = "test"
+    fv.launch_mps = True
     expected = ['printf "Flow3 Start Time: " && date', refine_expected_dist_command,
+                "mpiexec --npernode 1 nvidia-cuda-mps-control -d &> mps.out",
                 "mpiexec nodet_mpi &> flow03.out", 'printf "Flow3 End Time: " && date']
 
     with cd(distance_test_dir):
