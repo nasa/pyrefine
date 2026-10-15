@@ -198,7 +198,7 @@ class SFEconfig(OrderedDict):
         for i in range(value.shape[0]):
             for j in range(value.shape[1]):
                 for k in range(value.shape[2]):
-                    for m in range(value.shape[2]):
+                    for m in range(value.shape[3]):
                         self._write_single_value(f'{array_key}({i},{j},{k},{m})', value[i, j, k, m], fh)
 
     def _write_single_value(self, key: str, value, fh: TextIOWrapper):
